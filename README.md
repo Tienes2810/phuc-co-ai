@@ -22,13 +22,16 @@
 ## 🏛️ Không Gian Bảo Tàng Số & Tính Năng Nổi Bật
 
 1. **Phòng Trưng Bày Di Sản Cố Đô (Virtual Heritage Gallery):**
-   - Tích hợp tư liệu kiến trúc và hình ảnh thực địa của 4 di tích biểu trưng xứ Huế:
+   - **Tư liệu hiện vật & ảnh thực địa chân thực:** Tuyệt đối không dùng ảnh AI giả lập hay stock thương mại; 100% hình ảnh là tư liệu lịch sử và ảnh chụp thực địa độ phân giải cao được thẩm định:
+     * **Ảnh tư liệu Áo Ngũ Thân Lập Lĩnh** (Bưu thiếp Đông Dương 1904).
+     * **Ảnh Hoàng Hậu Nam Phương** mặc Áo Nhật Bình triều phục (Hôn lễ 1934).
      * **Cung An Định** (1917 - Vua Khải Định): Kiến trúc Romanesque x Triều Nguyễn.
      * **Đại Nội & Cửa Ngọ Môn** (1833 - Vua Minh Mạng): Lầu Ngũ Phụng hoàng gia uy nghiêm.
      * **Cầu Tràng Tiền & Sông Hương** (1897 - Vua Thành Thái): Bối cảnh dạo phố thơ mộng.
      * **THPT Chuyên Quốc Học Huế** (1896): Kỷ yếu thanh xuân tường gạch đỏ.
 
-2. **Bóc Tách Cấu Trúc Di Sản (Digital Costume Anatomy):**
+2. **Bóc Tách Cấu Trúc Di Sản & Bộ Chuyển Đổi Hiện Vật (Digital Costume Anatomy):**
+   - Tích hợp bộ chuyển đổi tương tác (Toggle) giữa ảnh tư liệu lịch sử thực tế và sơ đồ giải phẫu vector 5 thân (SVG Schematic).
    - Trực quan hóa 4 yếu tố bất biến của trang phục triều Nguyễn:
      * *Cổ lập lĩnh* (cao 2-3cm nghiêm cẩn).
      * *Vạt hò cài hữu* (vạt trái đè sang vạt phải).
