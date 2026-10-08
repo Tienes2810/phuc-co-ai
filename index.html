@@ -1826,16 +1826,19 @@ function generateMannequinSVG(state) {
     <!-- 6. Inner Top Layer -->
 `;
     if (innerTop === 'crop-top') {
+        // High-waist elegant knit top meeting the waistband smoothly with cap sleeves
         svg += `    <g id="m-inner-crop">
-      <path d="M 175 158 L 175 178 L 168 218 L 232 218 L 225 178 L 225 158 Z" fill="#18181B" stroke="#D4AF37" stroke-width="0.8"/>
-      <line x1="182" y1="175" x2="182" y2="218" stroke="#333338" stroke-width="1"/>
-      <line x1="188" y1="172" x2="188" y2="218" stroke="#333338" stroke-width="1"/>
-      <line x1="194" y1="170" x2="194" y2="218" stroke="#333338" stroke-width="1"/>
-      <line x1="200" y1="170" x2="200" y2="218" stroke="#333338" stroke-width="1"/>
-      <line x1="206" y1="170" x2="206" y2="218" stroke="#333338" stroke-width="1"/>
-      <line x1="212" y1="172" x2="212" y2="218" stroke="#333338" stroke-width="1"/>
-      <line x1="218" y1="175" x2="218" y2="218" stroke="#333338" stroke-width="1"/>
-      <line x1="168" y1="218" x2="232" y2="218" stroke="#D4AF37" stroke-width="1"/>
+      <!-- Cap sleeves covering shoulders and upper arms -->
+      <path d="M 158 158 L 140 192 L 154 196 L 168 174 L 168 248 L 232 248 L 232 174 L 246 196 L 260 192 L 242 158 Z" fill="#1E1E24" stroke="#121216" stroke-width="0.8"/>
+      <!-- Ribbed knit texture lines -->
+      <line x1="178" y1="170" x2="178" y2="246" stroke="#32323A" stroke-width="1.2"/>
+      <line x1="185" y1="166" x2="185" y2="246" stroke="#32323A" stroke-width="1.2"/>
+      <line x1="192" y1="164" x2="192" y2="246" stroke="#32323A" stroke-width="1.2"/>
+      <line x1="200" y1="164" x2="200" y2="246" stroke="#32323A" stroke-width="1.2"/>
+      <line x1="208" y1="164" x2="208" y2="246" stroke="#32323A" stroke-width="1.2"/>
+      <line x1="215" y1="166" x2="215" y2="246" stroke="#32323A" stroke-width="1.2"/>
+      <line x1="222" y1="170" x2="222" y2="246" stroke="#32323A" stroke-width="1.2"/>
+      <line x1="168" y1="246" x2="232" y2="246" stroke="#D4AF37" stroke-width="1"/>
     </g>`;
     } else if (innerTop === 'yem-lua') {
         svg += `    <g id="m-inner-yem">
@@ -1846,8 +1849,12 @@ function generateMannequinSVG(state) {
     </g>`;
     } else if (innerTop === 'tank-top') {
         svg += `    <g id="m-inner-tank">
-      <path d="M 172 158 L 172 174 L 168 244 L 232 244 L 228 174 L 228 158 Z" fill="#E8DEC8" stroke="#D4AF37" stroke-width="1"/>
-      <path d="M 184 174 L 216 174" stroke="#C5B28A" stroke-width="1.2"/>
+      <!-- Tank top tucked into waistband with modest armhole lines -->
+      <path d="M 166 158 L 166 176 L 168 248 L 232 248 L 234 176 L 234 158 Z" fill="#EAE3D2" stroke="#D4AF37" stroke-width="1"/>
+      <path d="M 180 172 Q 200 178 220 172" stroke="#C5B28A" stroke-width="1.2" fill="none"/>
+      <!-- Soft side shading -->
+      <path d="M 166 176 L 168 248 L 174 248 L 172 176 Z" fill="rgba(0,0,0,0.06)"/>
+      <path d="M 234 176 L 232 248 L 226 248 L 228 176 Z" fill="rgba(0,0,0,0.06)"/>
     </g>`;
     } else if (innerTop === 'hoodie-street' || innerTop === 'thin-hoodie') {
         svg += `    <g id="m-inner-hoodie">
@@ -1857,10 +1864,11 @@ function generateMannequinSVG(state) {
     </g>`;
     } else {
         svg += `    <g id="m-inner-babytee">
-      <path d="M 158 158 L 138 188 L 153 196 L 166 178 L 168 246 L 232 246 L 234 178 L 247 196 L 262 188 L 242 158 Q 200 174 158 158 Z" fill="#FAF7F2" stroke="#E2D9C8" stroke-width="1"/>
+      <!-- Short sleeve graphic tee tucked neatly into waistband -->
+      <path d="M 158 158 L 138 194 L 154 200 L 166 180 L 168 248 L 232 248 L 234 180 L 246 200 L 262 194 L 242 158 Q 200 170 158 158 Z" fill="#F8F6F0" stroke="#DDD7CA" stroke-width="1"/>
       <path d="M 185 158 Q 200 170 215 158" fill="none" stroke="#D4AF37" stroke-width="1.5"/>
-      <text x="200" y="200" font-family="'Cinzel', serif" font-size="7" font-weight="900" fill="#990000" text-anchor="middle" letter-spacing="1.5">HUE 2026</text>
-      <text x="200" y="208" font-family="'Plus Jakarta Sans', sans-serif" font-size="4" font-weight="bold" fill="#666" text-anchor="middle" letter-spacing="1">HERITAGE CLUB</text>
+      <text x="200" y="198" font-family="'Cinzel', serif" font-size="7" font-weight="900" fill="#990000" text-anchor="middle" letter-spacing="1.5">HUE 2026</text>
+      <text x="200" y="206" font-family="'Plus Jakarta Sans', sans-serif" font-size="4" font-weight="bold" fill="#666" text-anchor="middle" letter-spacing="1">HERITAGE CLUB</text>
     </g>`;
     }
 
@@ -2001,8 +2009,11 @@ function generateMannequinSVG(state) {
     </g>`;
         } else if (wearingStyle === 'half-drape') {
             svg += `    <g id="m-robe-halfdrape">
-      <path d="M 242 158 L 295 220 L 310 400 L 275 390 L 265 240 L 260 500 L 210 490 L 205 280 Q 170 300 150 360 L 120 480 L 160 470 L 180 340 Z" fill="${robePattern}" stroke="#D4AF37" stroke-width="1.5"/>
+      <!-- High fashion editorial diagonal drape covering left torso and sleeve gracefully -->
+      <path d="M 242 158 L 295 220 L 310 400 L 275 390 L 265 240 L 260 500 L 205 490 L 195 260 L 170 280 L 150 360 L 120 480 L 160 470 L 180 340 Z" fill="${robePattern}" stroke="#D4AF37" stroke-width="1.5"/>
       <path d="M 212 148 L 230 163 L 226 310 L 216 310 L 220 163 Z" fill="#990000" stroke="#D4AF37" stroke-width="1"/>
+      <!-- Elegant gold drape cord across the shoulder -->
+      <path d="M 185 170 Q 210 220 235 240" fill="none" stroke="url(#gold-metal)" stroke-width="2.5"/>
     </g>`;
         } else { // open-robe
             svg += `    <g id="m-robe-open">
@@ -2359,11 +2370,16 @@ function generateMannequinSVG(state) {
         // --- RANDOMIZE OUTFIT ---
         function randomizeOutfit() {
             playEquipSound(784);
-            const robes = appState.gender === 'female' ? ['nhat-binh', 'ao-tac-nu', 'giao-linh-nu'] : ['ngu-than-che-nam', 'ao-tac-nam', 'giao-linh-nam'];
-            const styles = ['open-robe', 'closed-five', 'half-drape'];
-            const inners = ['baby-tee', 'crop-top', 'tank-top', 'thin-hoodie'];
-            const bottoms = ['wide-denim', 'cargo-parachute', 'pleated-trousers', 'silk-skirt'];
-            const shoes = ['chunky-sneaker', 'derby-leather', 'mary-jane'];
+            const isMale = appState.gender === 'male';
+            const isSacred = appState.selectedContextId === 'dai-noi-hue';
+            
+            const robes = isMale ? ['ngu-than-che-nam', 'ao-tac-nam', 'giao-linh-nam'] : ['nhat-binh-do', 'ao-tac-nu', 'giao-linh-nu'];
+            // Never assign half-drape for male or sacred royal spaces
+            const styles = (isMale || isSacred) ? ['open-robe', 'closed-five'] : ['open-robe', 'closed-five', 'half-drape'];
+            const inners = isMale ? ['baby-tee', 'tank-top', 'thin-hoodie'] : ['baby-tee', 'crop-top', 'tank-top', 'thin-hoodie'];
+            // Never assign women skirt to male
+            const bottoms = isMale ? ['wide-denim', 'cargo-parachute', 'pleated-trousers'] : ['wide-denim', 'silk-skirt', 'pleated-trousers', 'cargo-parachute'];
+            const shoes = isMale ? ['chunky-sneaker', 'derby-leather'] : ['chunky-sneaker', 'mary-jane', 'derby-leather'];
             
             appState.selectedRobeId = robes[Math.floor(Math.random() * robes.length)];
             appState.wearingStyle = styles[Math.floor(Math.random() * styles.length)];
@@ -2392,11 +2408,17 @@ function setGender(g) {
             const fBtn = document.getElementById('gender-female-btn');
             const mBtn = document.getElementById('gender-male-btn');
             if (g === 'female') {
-                fBtn.className = "py-2.5 px-3 rounded-xl border border-imperial-red bg-silk-paper text-imperial-red shadow-sm flex items-center justify-center gap-2 transition-all";
+                fBtn.className = "py-2.5 px-3 rounded-xl border border-imperial-red bg-silk-paper text-imperial-red shadow-sm flex items-center justify-center gap-2 transition-all font-bold";
                 mBtn.className = "py-2.5 px-3 rounded-xl border border-hue-gold/30 bg-silk-ivory text-charcoal-muted hover:border-hue-gold flex items-center justify-center gap-2 transition-all";
             } else {
-                mBtn.className = "py-2.5 px-3 rounded-xl border border-imperial-red bg-silk-paper text-imperial-red shadow-sm flex items-center justify-center gap-2 transition-all";
+                mBtn.className = "py-2.5 px-3 rounded-xl border border-imperial-red bg-silk-paper text-imperial-red shadow-sm flex items-center justify-center gap-2 transition-all font-bold";
                 fBtn.className = "py-2.5 px-3 rounded-xl border border-hue-gold/30 bg-silk-ivory text-charcoal-muted hover:border-hue-gold flex items-center justify-center gap-2 transition-all";
+                
+                // Sanitize wardrobe items for male students to avoid awkward styling
+                if (appState.bottom === 'silk-skirt') appState.bottom = 'pleated-trousers';
+                if (appState.innerTop === 'crop-top' || appState.innerTop === 'yem-lua') appState.innerTop = 'baby-tee';
+                if (appState.wearingStyle === 'half-drape') appState.wearingStyle = 'open-robe';
+                if (appState.footwear === 'mary-jane') appState.footwear = 'derby-leather';
             }
             populateGarmentSelect();
             updateModelImages();
@@ -2534,6 +2556,17 @@ function setGender(g) {
                 const labelEl = document.getElementById('stage-landmark-label');
                 if (labelEl) {
                     labelEl.textContent = `${landmark.name} (${landmark.style})`;
+                }
+                
+                // Cultural Guardrail check for sacred royal spaces (Đại Nội Ngọ Môn)
+                if (landmarkId === 'dai-noi-hue') {
+                    if (appState.wearingStyle === 'half-drape') {
+                        appState.wearingStyle = 'open-robe';
+                        showToast("⚠️ Rào chắn di sản: Đại Nội Ngọ Môn là chốn cung đình đại lễ. Hệ thống tự động chuyển sang phong cách 'Buông Tà' trang nghiêm!");
+                    }
+                    if (appState.innerTop === 'crop-top' && appState.gender === 'male') {
+                        appState.innerTop = 'baby-tee';
+                    }
                 }
             }
             calculateFiveElements();
