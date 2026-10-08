@@ -517,28 +517,79 @@
                                 2
                             </div>
                             <div>
-                                <h3 class="font-serif font-bold text-sm sm:text-base text-charcoal-ink">Tủ Đồ Phối Lớp (Layering Wardrobe)</h3>
-                                <p class="text-[10px] text-charcoal-muted font-viet">Tùy biến từng món trang phục & kiểu mặc</p>
+                                <h3 class="font-serif font-bold text-sm sm:text-base text-charcoal-ink">Tủ Đồ Phối Lớp Trực Quan (Layering Rack)</h3>
+                                <p class="text-[10px] text-charcoal-muted font-viet">Bấm trực tiếp từng món trang phục để mặc lên Mannequin</p>
                             </div>
                         </div>
+                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-silk-paper text-royal-indigo border border-hue-gold/40">
+                            Interactive Rack
+                        </span>
                     </div>
 
                     <!-- Slot 1: Core Robe Selection -->
-                    <div>
-                        <label class="block text-xs font-bold uppercase tracking-wider text-charcoal-ink mb-1">
-                            1. Cổ Phục Cốt Lõi (Statement Robe):
-                        </label>
-                        <select id="garment-select" onchange="handleWardrobeChange()" class="w-full bg-silk-paper border border-hue-gold/50 rounded-xl px-3 py-2 text-xs sm:text-sm text-charcoal-ink focus:outline-none focus:ring-2 focus:ring-hue-gold font-viet">
+                    <div class="space-y-1.5">
+                        <div class="flex items-center justify-between">
+                            <label class="block text-xs font-bold uppercase tracking-wider text-charcoal-ink">
+                                1. Cổ Phục Cốt Lõi (Statement Robe):
+                            </label>
+                            <span class="text-[10px] text-imperial-red font-semibold">Chủ Mệnh</span>
+                        </div>
+                        
+                        <!-- Visual Chips for Robe -->
+                        <div id="robe-chips-container" class="grid grid-cols-2 gap-2 text-xs font-viet">
+                            <!-- Populated dynamically or defined below -->
+                            <button type="button" onclick="selectChip('robe', 'nhat-binh')" data-chip-cat="robe" data-chip-val="nhat-binh" class="garment-chip p-2.5 rounded-xl border border-hue-gold/50 bg-silk-paper hover:border-imperial-red text-left transition-all flex items-center gap-2">
+                                <span class="text-base">👘</span>
+                                <div class="overflow-hidden">
+                                    <strong class="block text-charcoal-ink truncate text-[11px]">Áo Nhật Bình</strong>
+                                    <span class="text-[9px] text-charcoal-muted block">Ngũ sắc hoàng tộc</span>
+                                </div>
+                            </button>
+                            <button type="button" onclick="selectChip('robe', 'ngu-than-che-nam')" data-chip-cat="robe" data-chip-val="ngu-than-che-nam" class="garment-chip p-2.5 rounded-xl border border-hue-gold/30 bg-silk-ivory hover:border-imperial-red text-left transition-all flex items-center gap-2">
+                                <span class="text-base">👔</span>
+                                <div class="overflow-hidden">
+                                    <strong class="block text-charcoal-ink truncate text-[11px]">Áo Ngũ Thân</strong>
+                                    <span class="text-[9px] text-charcoal-muted block">Tay chẽn 5 cúc</span>
+                                </div>
+                            </button>
+                            <button type="button" onclick="selectChip('robe', 'ao-tac-nu')" data-chip-cat="robe" data-chip-val="ao-tac-nu" class="garment-chip p-2.5 rounded-xl border border-hue-gold/30 bg-silk-ivory hover:border-imperial-red text-left transition-all flex items-center gap-2">
+                                <span class="text-base">🎎</span>
+                                <div class="overflow-hidden">
+                                    <strong class="block text-charcoal-ink truncate text-[11px]">Áo Tấc Nghi Lễ</strong>
+                                    <span class="text-[9px] text-charcoal-muted block">Tay thụng trang trọng</span>
+                                </div>
+                            </button>
+                            <button type="button" onclick="selectChip('robe', 'giao-linh-nu')" data-chip-cat="robe" data-chip-val="giao-linh-nu" class="garment-chip p-2.5 rounded-xl border border-hue-gold/30 bg-silk-ivory hover:border-imperial-red text-left transition-all flex items-center gap-2">
+                                <span class="text-base">🥻</span>
+                                <div class="overflow-hidden">
+                                    <strong class="block text-charcoal-ink truncate text-[11px]">Áo Giao Lĩnh</strong>
+                                    <span class="text-[9px] text-charcoal-muted block">Cổ chéo truyền thống</span>
+                                </div>
+                            </button>
+                        </div>
+
+                        <select id="garment-select" onchange="handleWardrobeChange()" class="w-full bg-silk-paper border border-hue-gold/40 rounded-xl px-3 py-1.5 text-xs text-charcoal-ink focus:outline-none focus:ring-1 focus:ring-hue-gold font-viet">
                             <!-- Populated according to Gender -->
                         </select>
                     </div>
 
                     <!-- Wearing Style (Kiểu Mặc) -->
-                    <div>
-                        <label class="block text-xs font-bold uppercase tracking-wider text-charcoal-ink mb-1">
+                    <div class="space-y-1.5">
+                        <label class="block text-xs font-bold uppercase tracking-wider text-charcoal-ink">
                             Kiểu mặc đương đại (Wearing Style):
                         </label>
-                        <select id="wearing-style-select" onchange="handleWardrobeChange()" class="w-full bg-silk-paper border border-hue-gold/50 rounded-xl px-3 py-2 text-xs font-viet text-charcoal-ink focus:outline-none focus:ring-2 focus:ring-hue-gold">
+                        <div class="grid grid-cols-3 gap-1.5 text-xs font-viet text-center">
+                            <button type="button" onclick="selectChip('style', 'open-robe')" data-chip-cat="style" data-chip-val="open-robe" class="garment-chip py-2 px-1.5 rounded-xl border border-imperial-red bg-silk-paper text-imperial-red font-bold text-[10px] transition-all">
+                                🌊 Buông Tà Y2K
+                            </button>
+                            <button type="button" onclick="selectChip('style', 'closed-five')" data-chip-cat="style" data-chip-val="closed-five" class="garment-chip py-2 px-1.5 rounded-xl border border-hue-gold/30 bg-silk-ivory text-charcoal-muted text-[10px] hover:border-hue-gold transition-all">
+                                🏛️ Cài 5 Cúc
+                            </button>
+                            <button type="button" onclick="selectChip('style', 'half-drape')" data-chip-cat="style" data-chip-val="half-drape" class="garment-chip py-2 px-1.5 rounded-xl border border-hue-gold/30 bg-silk-ivory text-charcoal-muted text-[10px] hover:border-hue-gold transition-all">
+                                ✨ Vắt Nửa Vai
+                            </button>
+                        </div>
+                        <select id="wearing-style-select" onchange="handleWardrobeChange()" class="w-full bg-silk-paper border border-hue-gold/40 rounded-xl px-3 py-1.5 text-xs font-viet text-charcoal-ink focus:outline-none focus:ring-1 focus:ring-hue-gold">
                             <option value="open-robe">Khoác buông tà phóng khoáng (Open front kimono jacket style)</option>
                             <option value="closed-five">Cài đủ 5 cúc lập lĩnh chuẩn mực (Closed buttoned etiquette)</option>
                             <option value="half-drape">Vắt tà hờ một bên vai (Half-draped avant-garde)</option>
@@ -546,24 +597,84 @@
                     </div>
 
                     <!-- Slot 2: Inner Base Top -->
-                    <div>
-                        <label class="block text-xs font-bold uppercase tracking-wider text-charcoal-ink mb-1">
+                    <div class="space-y-1.5">
+                        <label class="block text-xs font-bold uppercase tracking-wider text-charcoal-ink">
                             2. Áo Mặc Trong Gen Z (Inner Top):
                         </label>
-                        <select id="inner-top-select" onchange="handleWardrobeChange()" class="w-full bg-silk-paper border border-hue-gold/50 rounded-xl px-3 py-2 text-xs font-viet text-charcoal-ink focus:outline-none focus:ring-2 focus:ring-hue-gold">
-                            <option value="baby-tee">Baby Tee trắng trơn cotton 100% (Phom ôm trẻ trung)</option>
+                        <div class="grid grid-cols-2 gap-1.5 text-xs font-viet">
+                            <button type="button" onclick="selectChip('inner', 'crop-top')" data-chip-cat="inner" data-chip-val="crop-top" class="garment-chip p-2 rounded-xl border border-imperial-red bg-silk-paper text-left transition-all flex items-center gap-2">
+                                <span>🖤</span>
+                                <div>
+                                    <strong class="block text-charcoal-ink text-[11px]">Crop-top ôm eo</strong>
+                                    <span class="text-[9px] text-charcoal-muted">Len tăm tinh tế</span>
+                                </div>
+                            </button>
+                            <button type="button" onclick="selectChip('inner', 'baby-tee')" data-chip-cat="inner" data-chip-val="baby-tee" class="garment-chip p-2 rounded-xl border border-hue-gold/30 bg-silk-ivory text-left transition-all flex items-center gap-2">
+                                <span>🤍</span>
+                                <div>
+                                    <strong class="block text-charcoal-ink text-[11px]">Baby Tee Cotton</strong>
+                                    <span class="text-[9px] text-charcoal-muted">HUE 2026 Print</span>
+                                </div>
+                            </button>
+                            <button type="button" onclick="selectChip('inner', 'tank-top')" data-chip-cat="inner" data-chip-val="tank-top" class="garment-chip p-2 rounded-xl border border-hue-gold/30 bg-silk-ivory text-left transition-all flex items-center gap-2">
+                                <span>🎽</span>
+                                <div>
+                                    <strong class="block text-charcoal-ink text-[11px]">Tank-top lụa sa</strong>
+                                    <span class="text-[9px] text-charcoal-muted">Cổ vuông mát mẻ</span>
+                                </div>
+                            </button>
+                            <button type="button" onclick="selectChip('inner', 'thin-hoodie')" data-chip-cat="inner" data-chip-val="thin-hoodie" class="garment-chip p-2 rounded-xl border border-hue-gold/30 bg-silk-ivory text-left transition-all flex items-center gap-2">
+                                <span>🧥</span>
+                                <div>
+                                    <strong class="block text-charcoal-ink text-[11px]">Hoodie mỏng Street</strong>
+                                    <span class="text-[9px] text-charcoal-muted">Tối giản cá tính</span>
+                                </div>
+                            </button>
+                        </div>
+                        <select id="inner-top-select" onchange="handleWardrobeChange()" class="w-full bg-silk-paper border border-hue-gold/40 rounded-xl px-3 py-1.5 text-xs font-viet text-charcoal-ink focus:outline-none focus:ring-1 focus:ring-hue-gold">
                             <option value="crop-top">Crop-top lụa ngà ôm eo (Tôn dáng, tinh tế)</option>
+                            <option value="baby-tee">Baby Tee trắng trơn cotton 100% (Phom ôm trẻ trung)</option>
                             <option value="tank-top">Tank-top lụa sa cổ vuông (Mát mẻ, thanh thoát)</option>
                             <option value="thin-hoodie">Hoodie mỏng màu be không mũ (Đậm chất streetwear)</option>
                         </select>
                     </div>
 
                     <!-- Slot 3: Bottom (Quần/Váy) -->
-                    <div>
-                        <label class="block text-xs font-bold uppercase tracking-wider text-charcoal-ink mb-1">
+                    <div class="space-y-1.5">
+                        <label class="block text-xs font-bold uppercase tracking-wider text-charcoal-ink">
                             3. Quần / Chân Váy Gen Z (Bottom):
                         </label>
-                        <select id="bottom-select" onchange="handleWardrobeChange()" class="w-full bg-silk-paper border border-hue-gold/50 rounded-xl px-3 py-2 text-xs font-viet text-charcoal-ink focus:outline-none focus:ring-2 focus:ring-hue-gold">
+                        <div class="grid grid-cols-2 gap-1.5 text-xs font-viet">
+                            <button type="button" onclick="selectChip('bottom', 'wide-denim')" data-chip-cat="bottom" data-chip-val="wide-denim" class="garment-chip p-2 rounded-xl border border-imperial-red bg-silk-paper text-left transition-all flex items-center gap-2">
+                                <span>👖</span>
+                                <div>
+                                    <strong class="block text-charcoal-ink text-[11px]">Denim Wide-Leg</strong>
+                                    <span class="text-[9px] text-charcoal-muted">Ống suông rách gấu</span>
+                                </div>
+                            </button>
+                            <button type="button" onclick="selectChip('bottom', 'cargo-parachute')" data-chip-cat="bottom" data-chip-val="cargo-parachute" class="garment-chip p-2 rounded-xl border border-hue-gold/30 bg-silk-ivory text-left transition-all flex items-center gap-2">
+                                <span>🪂</span>
+                                <div>
+                                    <strong class="block text-charcoal-ink text-[11px]">Cargo Parachute</strong>
+                                    <span class="text-[9px] text-charcoal-muted">Túi hộp dây rút dù</span>
+                                </div>
+                            </button>
+                            <button type="button" onclick="selectChip('bottom', 'pleated-trousers')" data-chip-cat="bottom" data-chip-val="pleated-trousers" class="garment-chip p-2 rounded-xl border border-hue-gold/30 bg-silk-ivory text-left transition-all flex items-center gap-2">
+                                <span>👔</span>
+                                <div>
+                                    <strong class="block text-charcoal-ink text-[11px]">Quần Âu Xếp Ly</strong>
+                                    <span class="text-[9px] text-charcoal-muted">Cạp cao thư sinh</span>
+                                </div>
+                            </button>
+                            <button type="button" onclick="selectChip('bottom', 'silk-skirt')" data-chip-cat="bottom" data-chip-val="silk-skirt" class="garment-chip p-2 rounded-xl border border-hue-gold/30 bg-silk-ivory text-left transition-all flex items-center gap-2">
+                                <span>👗</span>
+                                <div>
+                                    <strong class="block text-charcoal-ink text-[11px]">Váy Lụa Xếp Ly</strong>
+                                    <span class="text-[9px] text-charcoal-muted">Dáng dài thướt tha</span>
+                                </div>
+                            </button>
+                        </div>
+                        <select id="bottom-select" onchange="handleWardrobeChange()" class="w-full bg-silk-paper border border-hue-gold/40 rounded-xl px-3 py-1.5 text-xs font-viet text-charcoal-ink focus:outline-none focus:ring-1 focus:ring-hue-gold">
                             <option value="wide-denim">Quần Denim Wide-leg ống suông rách gấu (Bụi bặm, hack dáng)</option>
                             <option value="cargo-parachute">Quần Cargo vải dù Parachute túi hộp (Utility / Gorpcore)</option>
                             <option value="pleated-trousers">Quần âu xếp ly cạp cao (Thanh lịch, chuẩn thư sinh)</option>
@@ -572,14 +683,25 @@
                     </div>
 
                     <!-- Slot 4: Footwear -->
-                    <div>
-                        <label class="block text-xs font-bold uppercase tracking-wider text-charcoal-ink mb-1">
+                    <div class="space-y-1.5">
+                        <label class="block text-xs font-bold uppercase tracking-wider text-charcoal-ink">
                             4. Giày Dép Gen Z (Footwear):
                         </label>
-                        <select id="footwear-select" onchange="handleWardrobeChange()" class="w-full bg-silk-paper border border-hue-gold/50 rounded-xl px-3 py-2 text-xs font-viet text-charcoal-ink focus:outline-none focus:ring-2 focus:ring-hue-gold">
+                        <div class="grid grid-cols-3 gap-1.5 text-xs font-viet text-center">
+                            <button type="button" onclick="selectChip('footwear', 'chunky-sneaker')" data-chip-cat="footwear" data-chip-val="chunky-sneaker" class="garment-chip py-2 px-1 rounded-xl border border-imperial-red bg-silk-paper text-imperial-red font-bold text-[10px] transition-all">
+                                👟 Chunky Sneaker
+                            </button>
+                            <button type="button" onclick="selectChip('footwear', 'mary-jane')" data-chip-cat="footwear" data-chip-val="mary-jane" class="garment-chip py-2 px-1 rounded-xl border border-hue-gold/30 bg-silk-ivory text-charcoal-muted text-[10px] hover:border-hue-gold transition-all">
+                                👠 Mary Jane Da
+                            </button>
+                            <button type="button" onclick="selectChip('footwear', 'derby-leather')" data-chip-cat="footwear" data-chip-val="derby-leather" class="garment-chip py-2 px-1 rounded-xl border border-hue-gold/30 bg-silk-ivory text-charcoal-muted text-[10px] hover:border-hue-gold transition-all">
+                                👞 Derby Đế Dày
+                            </button>
+                        </div>
+                        <select id="footwear-select" onchange="handleWardrobeChange()" class="w-full bg-silk-paper border border-hue-gold/40 rounded-xl px-3 py-1.5 text-xs font-viet text-charcoal-ink focus:outline-none focus:ring-1 focus:ring-hue-gold">
                             <option value="chunky-sneaker">Chunky Sneaker đế dày răng cưa (MLB / Salomon vibe)</option>
-                            <option value="derby-leather">Giày da Derby đế bánh mì (Nho nhã pha chút phá cách)</option>
                             <option value="mary-jane">Giày Mary Jane quai ngang da bóng (Retro tiểu thư)</option>
+                            <option value="derby-leather">Giày da Derby đế bánh mì (Nho nhã pha chút phá cách)</option>
                             <option value="retro-runner">Sneaker Retro Runner cổ điển (Năng động, di chuyển nhẹ nhàng)</option>
                         </select>
                     </div>
@@ -592,24 +714,24 @@
                         <div class="grid grid-cols-2 gap-2 text-xs font-viet">
                             <label class="flex items-center gap-2 p-2 rounded-xl border border-hue-gold/30 bg-silk-ivory cursor-pointer hover:border-imperial-red transition-all">
                                 <input type="checkbox" id="acc-bag" checked onchange="handleWardrobeChange()" class="accent-imperial-red w-4 h-4 rounded">
-                                <span>Túi kẹp nách thổ cẩm</span>
+                                <span>👜 Túi kẹp nách baguette</span>
                             </label>
                             <label class="flex items-center gap-2 p-2 rounded-xl border border-hue-gold/30 bg-silk-ivory cursor-pointer hover:border-imperial-red transition-all">
                                 <input type="checkbox" id="acc-glasses" checked onchange="handleWardrobeChange()" class="accent-imperial-red w-4 h-4 rounded">
-                                <span>Kính râm kim loại Y2K</span>
+                                <span>🕶️ Kính râm oval Y2K</span>
                             </label>
                             <label class="flex items-center gap-2 p-2 rounded-xl border border-hue-gold/30 bg-silk-ivory cursor-pointer hover:border-imperial-red transition-all">
                                 <input type="checkbox" id="acc-chain" checked onchange="handleWardrobeChange()" class="accent-imperial-red w-4 h-4 rounded">
-                                <span>Xà tích bạc đeo đỉa quần</span>
+                                <span>⛓️ Xà tích bạc đỉa quần</span>
                             </label>
                             <label class="flex items-center gap-2 p-2 rounded-xl border border-hue-gold/30 bg-silk-ivory cursor-pointer hover:border-imperial-red transition-all">
                                 <input type="checkbox" id="acc-earphone" onchange="handleWardrobeChange()" class="accent-imperial-red w-4 h-4 rounded">
-                                <span>Tai nghe over-ear Gen Z</span>
+                                <span>🎧 Tai nghe over-ear</span>
                             </label>
                         </div>
                     </div>
                 </section>
-
+                
                 <!-- MODULE 3: FABRIC & MATERIAL SPEC LAB (PHÒNG THÍ NGHIỆM CHẤT LIỆU) -->
                 <section id="fabric-module" class="dynasty-card rounded-2xl p-5 border border-hue-gold/40 shadow-paper space-y-3.5">
                     <div class="flex items-center justify-between pb-2.5 border-b border-hue-gold/20">
@@ -750,8 +872,193 @@
 
             </div>
 
-            <!-- RIGHT WORKSPACE: VISUAL OUTFIT BREAKDOWN & A/B SLIDER & CANVAS DECK -->
+            <!-- RIGHT WORKSPACE: LIVE INTERACTIVE MANNEQUIN STAGE & VISUAL BREAKDOWN -->
             <div class="lg:col-span-7 space-y-6">
+                
+                <!-- SÂN KHẤU THỬ ĐỒ ẢO TƯƠNG TÁC (INTERACTIVE MANNEQUIN FITTING STAGE) -->
+                <section id="mannequin-stage-card" class="dynasty-card rounded-2xl p-5 border-2 border-hue-gold/60 shadow-royal space-y-4 bg-gradient-to-b from-silk-paper/90 to-silk-ivory">
+                    <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-hue-gold/30">
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="relative flex h-2.5 w-2.5">
+                                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                    <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+                                </span>
+                                <span class="text-[10px] font-bold uppercase tracking-widest text-imperial-red font-sans">Live Dressing Stage</span>
+                            </div>
+                            <h3 class="font-serif font-bold text-lg sm:text-xl text-charcoal-ink flex items-center gap-2 mt-0.5">
+                                <span>Phòng Thử Đồ Mannequin Ảo</span>
+                                <span class="text-[11px] px-2 py-0.5 rounded-full bg-hue-gold/20 text-hue-gold-dark font-sans font-semibold border border-hue-gold/40">Phối Lớp Trực Quan</span>
+                            </h3>
+                            <p class="text-xs text-charcoal-muted font-viet mt-0.5">Từng món trang phục bạn chọn sẽ lập tức hiển thị sống động trên người mẫu</p>
+                        </div>
+                        
+                        <!-- Quick Action Buttons Bar -->
+                        <div class="flex flex-wrap items-center gap-2">
+                            <!-- Randomize Button -->
+                            <button onclick="randomizeOutfit()" class="px-3 py-1.5 rounded-xl bg-silk-paper hover:bg-hue-gold/20 border border-hue-gold/70 text-charcoal-ink text-xs font-viet font-bold flex items-center gap-1.5 shadow-sm transition-all hover:scale-105 active:scale-95" title="Phối ngẫu nhiên set đồ mới">
+                                <span>🎲 Phối Ngẫu Nhiên</span>
+                            </button>
+                            <!-- Toggle View Mode: Mannequin vs Photo A/B -->
+                            <div class="flex rounded-xl p-0.5 bg-silk-paper border border-hue-gold/40 text-xs font-semibold">
+                                <button type="button" id="stage-tab-mannequin" onclick="setStageView('mannequin')" class="px-3 py-1 rounded-lg bg-imperial-red text-white shadow-sm transition-all">
+                                    👗 Mannequin
+                                </button>
+                                <button type="button" id="stage-tab-compare" onclick="setStageView('compare')" class="px-3 py-1 rounded-lg text-charcoal-muted hover:text-charcoal-ink transition-all">
+                                    ⚖️ Tư Liệu Gốc
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STAGE VIEWPORT 1: DYNAMIC MANNEQUIN DRESSING ROOM (DEFAULT ACTIVE) -->
+                    <div id="stage-viewport-mannequin" class="relative w-full h-[520px] sm:h-[580px] rounded-2xl overflow-hidden border-2 border-hue-gold shadow-2xl bg-[#0D131F] flex items-center justify-center select-none group">
+                        
+                        <!-- Live SVG Character Container -->
+                        <div id="mannequin-container" class="w-full h-full flex items-center justify-center">
+                            <!-- Injected via generateMannequinSVG() -->
+                        </div>
+
+                        <!-- Landmark Architectural Badge (Top Left) -->
+                        <div class="absolute top-3.5 left-3.5 z-20 flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/60 border border-hue-gold/50 backdrop-blur text-silk-ivory text-[11px] font-viet">
+                            <i data-lucide="map-pin" class="w-3.5 h-3.5 text-hue-gold"></i>
+                            <span id="stage-landmark-label">Cung An Định (Kiến Trúc Tân Cổ)</span>
+                        </div>
+
+                        <!-- Google Gemini Badge (Top Right) -->
+                        <div class="absolute top-3.5 right-3.5 z-20 flex items-center gap-1">
+                            <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-imperial-red/90 text-silk-ivory border border-hue-gold/40 backdrop-blur shadow flex items-center gap-1">
+                                <i data-lucide="sparkles" class="w-3 h-3 text-hue-gold"></i>
+                                <span>Gemini AI Engine</span>
+                            </span>
+                        </div>
+
+                        <!-- FLOATING GARMENT CALLOUT PINS (Pointers showing each equipped piece!) -->
+                        <!-- Pin 1: Robe (Top-Left) -->
+                        <div id="pin-robe" class="absolute top-24 left-3 sm:left-5 z-20 flex items-center gap-2 px-3 py-1.5 rounded-xl bg-imperial-red/95 text-silk-ivory text-xs font-viet font-bold shadow-seal border border-hue-gold/60 backdrop-blur transition-all duration-300">
+                            <span class="w-2 h-2 rounded-full bg-hue-gold animate-pulse"></span>
+                            <span id="pin-robe-text">Áo Nhật Bình (Buông Tà)</span>
+                        </div>
+
+                        <!-- Pin 2: Inner Top (Top-Right) -->
+                        <div id="pin-inner" class="absolute top-36 right-3 sm:right-5 z-20 flex items-center gap-2 px-3 py-1.5 rounded-xl bg-royal-indigo/95 text-silk-ivory text-xs font-viet font-bold shadow-md border border-hue-gold/60 backdrop-blur transition-all duration-300">
+                            <span class="w-2 h-2 rounded-full bg-hue-gold-light"></span>
+                            <span id="pin-inner-text">Crop-Top Len Tăm</span>
+                        </div>
+
+                        <!-- Pin 3: Bottom (Mid-Left) -->
+                        <div id="pin-bottom" class="absolute top-72 left-3 sm:left-5 z-20 flex items-center gap-2 px-3 py-1.5 rounded-xl bg-charcoal-ink/95 text-hue-gold-light text-xs font-viet font-bold shadow-md border border-hue-gold/60 backdrop-blur transition-all duration-300">
+                            <span class="w-2 h-2 rounded-full bg-hue-gold"></span>
+                            <span id="pin-bottom-text">Quần Denim Wide-Leg</span>
+                        </div>
+
+                        <!-- Pin 4: Accessories (Mid-Right) -->
+                        <div id="pin-accs" class="absolute top-64 right-3 sm:right-5 z-20 flex items-center gap-2 px-3 py-1.5 rounded-xl bg-wood-green/95 text-silk-ivory text-xs font-viet font-bold shadow-md border border-hue-gold/60 backdrop-blur transition-all duration-300">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                            <span id="pin-accs-text">Kính Y2K • Xà Tích Bạc</span>
+                        </div>
+
+                        <!-- Pin 5: Footwear (Bottom-Center) -->
+                        <div id="pin-shoes" class="absolute bottom-5 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-silk-paper/95 text-charcoal-ink text-xs font-viet font-bold shadow-royal border border-hue-gold backdrop-blur transition-all duration-300">
+                            <i data-lucide="footprints" class="w-3.5 h-3.5 text-imperial-red"></i>
+                            <span id="pin-shoes-text">Chunky Sneaker Răng Cưa</span>
+                        </div>
+
+                        <!-- Stage Bottom Control Bar -->
+                        <div class="absolute bottom-3 left-4 right-4 z-10 flex items-center justify-between pointer-events-none">
+                            <div class="pointer-events-auto flex items-center gap-1.5 bg-black/70 px-2.5 py-1 rounded-full border border-white/10 backdrop-blur text-[11px] text-white/90 font-viet">
+                                <i data-lucide="volume-2" class="w-3.5 h-3.5 text-hue-gold"></i>
+                                <span>Âm thanh phối đồ: <strong>Bật</strong></span>
+                            </div>
+                            <button onclick="openExportModal()" class="pointer-events-auto px-4 py-1.5 rounded-full bg-hue-gold hover:bg-hue-gold-light text-charcoal-ink font-bold text-xs flex items-center gap-1.5 shadow-lg border border-silk-ivory hover:scale-105 active:scale-95 transition-all">
+                                <i data-lucide="sparkles" class="w-3.5 h-3.5 text-imperial-red"></i>
+                                <span>Xuất Thẻ Lookbook 4K</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- STAGE VIEWPORT 2: HISTORICAL A/B COMPARISON (COLLAPSIBLE / SWITCHABLE) -->
+                    <div id="stage-viewport-compare" class="hidden relative w-full h-[520px] sm:h-[580px] rounded-2xl overflow-hidden border-2 border-hue-gold shadow-2xl bg-charcoal-ink select-none">
+                        <!-- Layer B: Contemporary Heritage Mix (Right Side / Full Background) -->
+                        <div class="absolute inset-0 bg-gradient-to-tr from-[#1E293B] via-[#2B2B2B] to-[#3B1E22] flex flex-col justify-between p-5 text-silk-ivory">
+                            <div class="flex justify-end">
+                                <span class="px-3 py-1 rounded-full text-xs font-bold bg-hue-gold text-charcoal-ink shadow border border-silk-ivory">
+                                    Bản Phối Đương Đại (Gen Z Streetwear)
+                                </span>
+                            </div>
+                            
+                            <!-- Real Photo of Model Wearing Contemporary Heritage -->
+                            <div class="flex flex-col items-center justify-center my-auto space-y-2">
+                                <div class="relative w-40 h-56 rounded-xl border-2 border-hue-gold/70 overflow-hidden shadow-2xl bg-black/40 group">
+                                    <img id="modern-model-img" src="assets/phoi_nhat_binh_nu.jpg" alt="Bản phối thực tế" class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                                    <span class="absolute bottom-1 left-1 right-1 text-center text-[8px] font-bold text-hue-gold-light uppercase tracking-wider bg-black/60 py-0.5 rounded backdrop-blur">
+                                        Ảnh Người Mẫu Thật
+                                    </span>
+                                </div>
+                                <div class="text-center px-4">
+                                    <h4 class="font-serif font-bold text-sm sm:text-base text-hue-gold-light" id="preview-modern-title">Nhật Bình Phối Relaxed Streetwear</h4>
+                                    <p class="text-xs text-silk-paper/80 font-viet max-w-xs mx-auto" id="preview-modern-desc">
+                                        Khoác ngoài form buông tà như kimono, phối crop-top, denim suông và chunky sneaker.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center justify-between text-xs text-silk-paper/70 border-t border-white/10 pt-2 font-viet">
+                                <span>Tính Ứng Dụng: <strong class="text-hue-gold">96%</strong></span>
+                                <span>Streetwear Gen Z Ready</span>
+                            </div>
+                        </div>
+
+                        <!-- Layer A: Traditional (Clipped overlay on the Left with Authentic Historical Photo) -->
+                        <div id="traditional-clip-layer" class="absolute inset-0 bg-gradient-to-br from-imperial-red via-imperial-crimson to-charcoal-ink flex flex-col justify-between p-5 text-silk-ivory overflow-hidden transition-[clip-path] duration-75" style="clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);">
+                            <div class="flex justify-start">
+                                <span class="px-3 py-1 rounded-full text-xs font-bold bg-silk-paper text-imperial-red shadow border border-hue-gold">
+                                    100% Cổ Phục Lịch Sử
+                                </span>
+                            </div>
+
+                            <!-- Authentic Historical Photo Gallery Frame -->
+                            <div class="flex flex-col items-center justify-center my-auto space-y-2">
+                                <div class="relative w-40 h-56 rounded-xl border-2 border-hue-gold/70 overflow-hidden shadow-2xl bg-black/40 group">
+                                    <img id="trad-garment-img" src="assets/ao_nhat_binh.jpg" alt="Hiện vật cổ phục thật" class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                                    <span class="absolute bottom-1 left-1 right-1 text-center text-[8px] font-bold text-hue-gold-light uppercase tracking-wider bg-black/60 py-0.5 rounded backdrop-blur">
+                                        Tư Liệu Hiện Vật Thật
+                                    </span>
+                                </div>
+                                <div class="text-center px-4">
+                                    <h4 class="font-serif font-bold text-sm sm:text-base text-silk-ivory" id="preview-trad-title">Áo Nhật Bình Hoàng Triều Triều Nguyễn</h4>
+                                    <p class="text-[11px] text-silk-paper/80 font-viet max-w-xs mx-auto" id="preview-trad-desc">
+                                        Hoàng hậu Nam Phương (1934): Cổ áo chữ nhật viền ngũ sắc, vành kim tuyến, xà tích bạc.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center justify-between text-xs text-silk-paper/70 border-t border-white/10 pt-2 font-viet">
+                                <span>Điểm Di Sản: <strong class="text-hue-gold">100/100</strong></span>
+                                <span>Quy Thức Lễ Nghi Triều Đình</span>
+                            </div>
+                        </div>
+
+                        <!-- Divider line in the center -->
+                        <div id="slider-divider-line" class="absolute top-0 bottom-0 w-1 bg-hue-gold pointer-events-none shadow-[0_0_12px_#D4AF37]" style="left: 50%;">
+                            <div class="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-silk-ivory border-2 border-imperial-red flex items-center justify-center shadow-lg">
+                                <i data-lucide="split" class="w-4 h-4 text-imperial-red"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Range Input Controller for A/B view -->
+                    <div id="compare-slider-controls" class="hidden space-y-1 pt-1">
+                        <div class="flex justify-between text-xs font-viet font-bold text-charcoal-ink">
+                            <span class="text-imperial-red">← Nghi Lễ Cổ Điển (100% Cổ phục)</span>
+                            <span id="slider-percentage" class="text-hue-gold-dark font-mono text-sm">50% / 50%</span>
+                            <span class="text-royal-indigo">Đương Đại Phá Cách (Gen Z) →</span>
+                        </div>
+                        <input type="range" id="compare-slider-input" min="0" max="100" value="50" oninput="handleSliderChange(this.value)" class="w-full h-2 bg-silk-paper rounded-lg appearance-none cursor-pointer border border-hue-gold/40">
+                    </div>
+                </section>
                 
                 <!-- VISUAL OUTFIT BREAKDOWN BOARD (BẢNG BÓC TÁCH SET ĐỒ ĐƯƠNG ĐẠI) -->
                 <section class="dynasty-card rounded-2xl p-5 border border-hue-gold/40 shadow-paper space-y-4">
@@ -818,100 +1125,6 @@
                                 Sự kết hợp giữa tà áo <strong>Lụa Sa Hà Đông</strong> mềm rủ (98% drape) khoác buông ngoài và <strong>Quần Denim 13oz</strong> thô ráp tạo nên độ tương phản xúc giác mạnh mẽ, giữ trọn vẻ tôn nghiêm hoàng triều nhưng toát lên thần thái phóng khoáng của Gen Z.
                             </p>
                         </div>
-                    </div>
-                </section>
-
-                <!-- MODULE 3: TRADITIONAL VS CONTEMPORARY A/B COMPARE SLIDER (REAL PHOTOS) -->
-                <section id="compare-module" class="dynasty-card rounded-2xl p-5 border border-hue-gold/40 shadow-paper space-y-4">
-                    <div class="flex items-center justify-between pb-2.5 border-b border-hue-gold/20">
-                        <div class="flex items-center gap-2">
-                            <i data-lucide="sliders-horizontal" class="w-4 h-4 text-hue-gold"></i>
-                            <h3 class="font-serif font-bold text-sm sm:text-base text-charcoal-ink">So Sánh A/B: Cổ Phục Nguyên Bản vs Phối Đồ Hiện Đại</h3>
-                        </div>
-                        <span class="text-xs font-viet text-charcoal-muted italic">Kéo thanh trượt để so sánh</span>
-                    </div>
-
-                    <!-- A/B Comparison Visual Container with REAL PHOTOS -->
-                    <div class="relative w-full h-[360px] sm:h-[420px] rounded-2xl overflow-hidden border-2 border-hue-gold shadow-lg select-none bg-charcoal-ink">
-                        
-                        <!-- Layer B: Contemporary Heritage Mix (Right Side / Full Background) -->
-                        <div class="absolute inset-0 bg-gradient-to-tr from-[#1E293B] via-[#2B2B2B] to-[#3B1E22] flex flex-col justify-between p-5 text-silk-ivory">
-                            <div class="flex justify-end">
-                                <span class="px-3 py-1 rounded-full text-xs font-bold bg-hue-gold text-charcoal-ink shadow border border-silk-ivory">
-                                    Bản Phối Đương Đại (Gen Z Streetwear)
-                                </span>
-                            </div>
-                            
-                            <!-- Real Photo of Model Wearing Contemporary Heritage -->
-                            <div class="flex flex-col items-center justify-center my-auto space-y-2">
-                                <div class="relative w-36 h-48 rounded-xl border-2 border-hue-gold/70 overflow-hidden shadow-2xl bg-black/40 group">
-                                    <img id="modern-model-img" src="assets/phoi_nhat_binh_nu.jpg" alt="Bản phối thực tế" class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105">
-                                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
-                                    <span class="absolute bottom-1 left-1 right-1 text-center text-[8px] font-bold text-hue-gold-light uppercase tracking-wider bg-black/60 py-0.5 rounded backdrop-blur">
-                                        Ảnh Người Mẫu Thật
-                                    </span>
-                                </div>
-                                <div class="text-center px-4">
-                                    <h4 class="font-serif font-bold text-sm sm:text-base text-hue-gold-light" id="preview-modern-title">Nhật Bình Phối Relaxed Streetwear</h4>
-                                    <p class="text-xs text-silk-paper/80 font-viet max-w-xs mx-auto" id="preview-modern-desc">
-                                        Khoác ngoài form buông tà như kimono, phối crop-top, denim suông và chunky sneaker.
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div class="flex items-center justify-between text-xs text-silk-paper/70 border-t border-white/10 pt-2 font-viet">
-                                <span>Tính Ứng Dụng: <strong class="text-hue-gold">96%</strong></span>
-                                <span>Streetwear Gen Z Ready</span>
-                            </div>
-                        </div>
-
-                        <!-- Layer A: Traditional (Clipped overlay on the Left with Authentic Historical Photo) -->
-                        <div id="traditional-clip-layer" class="absolute inset-0 bg-gradient-to-br from-imperial-red via-imperial-crimson to-charcoal-ink flex flex-col justify-between p-5 text-silk-ivory overflow-hidden transition-[clip-path] duration-75" style="clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);">
-                            <div class="flex justify-start">
-                                <span class="px-3 py-1 rounded-full text-xs font-bold bg-silk-paper text-imperial-red shadow border border-hue-gold">
-                                    100% Cổ Phục Lịch Sử
-                                </span>
-                            </div>
-
-                            <!-- Authentic Historical Photo Gallery Frame -->
-                            <div class="flex flex-col items-center justify-center my-auto space-y-2">
-                                <div class="relative w-36 h-48 rounded-xl border-2 border-hue-gold/70 overflow-hidden shadow-2xl bg-black/40 group">
-                                    <img id="trad-garment-img" src="assets/ao_nhat_binh.jpg" alt="Hiện vật cổ phục thật" class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105">
-                                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
-                                    <span class="absolute bottom-1 left-1 right-1 text-center text-[8px] font-bold text-hue-gold-light uppercase tracking-wider bg-black/60 py-0.5 rounded backdrop-blur">
-                                        Tư Liệu Hiện Vật Thật
-                                    </span>
-                                </div>
-                                <div class="text-center px-4">
-                                    <h4 class="font-serif font-bold text-sm sm:text-base text-silk-ivory" id="preview-trad-title">Áo Nhật Bình Hoàng Triều Triều Nguyễn</h4>
-                                    <p class="text-[11px] text-silk-paper/80 font-viet max-w-xs mx-auto" id="preview-trad-desc">
-                                        Hoàng hậu Nam Phương (1934): Cổ áo chữ nhật viền ngũ sắc, vành kim tuyến, xà tích bạc.
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div class="flex items-center justify-between text-xs text-silk-paper/70 border-t border-white/10 pt-2 font-viet">
-                                <span>Điểm Di Sản: <strong class="text-hue-gold">100/100</strong></span>
-                                <span>Quy Thức Lễ Nghi Triều Đình</span>
-                            </div>
-                        </div>
-
-                        <!-- Divider line in the center -->
-                        <div id="slider-divider-line" class="absolute top-0 bottom-0 w-1 bg-hue-gold pointer-events-none shadow-[0_0_12px_#D4AF37]" style="left: 50%;">
-                            <div class="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-silk-ivory border-2 border-imperial-red flex items-center justify-center shadow-lg">
-                                <i data-lucide="split" class="w-4 h-4 text-imperial-red"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Range Input Controller -->
-                    <div class="space-y-1">
-                        <div class="flex justify-between text-xs font-viet font-bold text-charcoal-ink">
-                            <span class="text-imperial-red">← Nghi Lễ Cổ Điển (100% Cổ phục)</span>
-                            <span id="slider-percentage" class="text-hue-gold-dark font-mono text-sm">50% / 50%</span>
-                            <span class="text-royal-indigo">Đương Đại Phá Cách (Gen Z) →</span>
-                        </div>
-                        <input type="range" id="compare-slider-input" min="0" max="100" value="50" oninput="handleSliderChange(this.value)" class="w-full h-2 bg-silk-paper rounded-lg appearance-none cursor-pointer border border-hue-gold/40">
                     </div>
                 </section>
 
@@ -1230,7 +1443,570 @@
 
         // --- CONTROLLER FUNCTIONS ---
 
-        function setGender(g) {
+        
+function generateMannequinSVG(state) {
+    const gender = state.gender || 'female';
+    const robe = state.selectedRobeId || 'nhat-binh';
+    const wearingStyle = state.wearingStyle || 'open-robe';
+    const innerTop = state.innerTop || 'crop-top';
+    const bottom = state.bottom || 'wide-denim';
+    const footwear = state.footwear || 'chunky-sneaker';
+    const accBag = !!state.accessories?.bag;
+    const accGlasses = !!state.accessories?.glasses;
+    const accChain = !!state.accessories?.chain;
+    const accEarphone = !!state.accessories?.earphone;
+    const landmark = state.selectedContextId || 'cung-an-dinh';
+
+    // Background gradient based on landmark
+    let bgGradDef = '';
+    let archStroke = 'rgba(212,175,55,0.2)';
+    let archName = 'Cung An Định (Khải Định Triều)';
+    if (landmark === 'ngo-mon') {
+        archName = 'Ngọ Môn • Hoàng Thành Huế';
+        bgGradDef = '<stop offset="0%" stop-color="#4A0E17"/><stop offset="50%" stop-color="#240A10"/><stop offset="100%" stop-color="#120508"/>';
+    } else if (landmark === 'quoc-hoc') {
+        archName = 'Trường Quốc Học Huế';
+        bgGradDef = '<stop offset="0%" stop-color="#3B1C1D"/><stop offset="50%" stop-color="#211012"/><stop offset="100%" stop-color="#120A0B"/>';
+    } else { // cung-an-dinh / default
+        archName = 'Cung An Định • Kiến Trúc Tân Cổ';
+        bgGradDef = '<stop offset="0%" stop-color="#1F2A38"/><stop offset="50%" stop-color="#161E28"/><stop offset="100%" stop-color="#0E131A"/>';
+    }
+
+    let svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 650" width="100%" height="100%" id="fitting-stage-svg" class="w-full h-full select-none">
+    <defs>
+      <linearGradient id="m-bg-sky" x1="0%" y1="0%" x2="0%" y2="100%">
+        ${bgGradDef}
+      </linearGradient>
+      <linearGradient id="m-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#D4AF37"/>
+        <stop offset="50%" stop-color="#FFF3C4"/>
+        <stop offset="100%" stop-color="#997A15"/>
+      </linearGradient>
+      <linearGradient id="m-skin" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#FDE8D4"/>
+        <stop offset="100%" stop-color="#F2CFA8"/>
+      </linearGradient>
+      <linearGradient id="m-denim" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#3E6B89"/>
+        <stop offset="50%" stop-color="#27465E"/>
+        <stop offset="100%" stop-color="#182E40"/>
+      </linearGradient>
+      <linearGradient id="m-cargo" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#2D3139"/>
+        <stop offset="100%" stop-color="#121418"/>
+      </linearGradient>
+      <linearGradient id="m-crimson" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#C02828"/>
+        <stop offset="60%" stop-color="#800000"/>
+        <stop offset="100%" stop-color="#4A0000"/>
+      </linearGradient>
+      <linearGradient id="m-indigo" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#2B4C7E"/>
+        <stop offset="100%" stop-color="#132238"/>
+      </linearGradient>
+      <filter id="m-glow" x="-20%" y="-20%" width="140%" height="140%">
+        <feGaussianBlur stdDeviation="3" result="blur"/>
+        <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+      </filter>
+    </defs>
+
+    <!-- 1. Background Scene (Hue Architectural Backdrop) -->
+    <rect width="400" height="650" fill="url(#m-bg-sky)" rx="16"/>
+    <g opacity="0.45">
+      <path d="M 30 650 L 30 180 Q 200 40 370 180 L 370 650" fill="none" stroke="rgba(212,175,55,0.3)" stroke-width="2"/>
+      <path d="M 60 650 L 60 210 Q 200 90 340 210 L 340 650" fill="none" stroke="rgba(212,175,55,0.18)" stroke-width="1.5" stroke-dasharray="6,4"/>
+      <circle cx="200" cy="180" r="110" fill="none" stroke="rgba(212,175,55,0.2)" stroke-width="1"/>
+      <circle cx="200" cy="180" r="85" fill="none" stroke="rgba(212,175,55,0.12)" stroke-dasharray="4,4"/>
+    </g>
+    <!-- Stage Floor & Drop Shadow -->
+    <ellipse cx="200" cy="595" rx="145" ry="24" fill="rgba(212,175,55,0.08)" stroke="rgba(212,175,55,0.3)" stroke-width="1"/>
+    <ellipse cx="200" cy="600" rx="75" ry="12" fill="rgba(0,0,0,0.6)"/>
+    <text x="200" y="32" font-family="'Cinzel', serif" font-size="9" font-weight="bold" fill="rgba(212,175,55,0.7)" text-anchor="middle" letter-spacing="2">${archName.toUpperCase()}</text>
+
+    <!-- 2. Character Model Body Base -->
+    <g id="layer-body">
+      <!-- Bare Legs undergarment -->
+      <path d="M 174 300 L 165 440 L 160 560 L 176 560 L 186 440 L 193 300 Z" fill="url(#m-skin)"/>
+      <path d="M 226 300 L 235 440 L 240 560 L 224 560 L 214 440 L 207 300 Z" fill="url(#m-skin)"/>
+      <!-- Torso Base -->
+      <path d="M 158 158 Q 148 215 168 258 L 232 258 Q 252 215 242 158 Z" fill="url(#m-skin)"/>
+      <!-- Neck -->
+      <path d="M 188 118 L 188 158 L 212 158 L 212 118 Z" fill="url(#m-skin)"/>
+      <!-- Head / Face -->
+      <ellipse cx="200" cy="94" rx="25" ry="31" fill="url(#m-skin)"/>
+      <!-- Eyes & Brows -->
+      <path d="M 185 91 Q 192 88 196 91" fill="none" stroke="#5C3D2E" stroke-width="1.5" stroke-linecap="round"/>
+      <path d="M 204 91 Q 208 88 215 91" fill="none" stroke="#5C3D2E" stroke-width="1.5" stroke-linecap="round"/>
+      <circle cx="191" cy="95" r="2.2" fill="#2B1810"/>
+      <circle cx="209" cy="95" r="2.2" fill="#2B1810"/>
+      <path d="M 199 96 L 198 106 L 202 106" fill="none" stroke="#DDAA88" stroke-width="1.2"/>
+      <path d="M 194 113 Q 200 117 206 113" fill="none" stroke="#C84B4B" stroke-width="2" stroke-linecap="round"/>
+      <!-- Hair styling -->
+      ${gender === 'female' ? `
+      <!-- Female Gen Z Updo / Soft Bob with face-framing strands -->
+      <path d="M 170 94 C 168 58, 232 58, 230 94 C 235 125, 232 145, 224 148 C 218 115, 215 105, 214 99 C 205 101, 195 101, 186 99 C 185 105, 182 115, 176 148 C 168 145, 165 125, 170 94 Z" fill="#1C1819"/>
+      <path d="M 175 92 Q 170 120 178 142" fill="none" stroke="#2B2426" stroke-width="2"/>
+      <path d="M 225 92 Q 230 120 222 142" fill="none" stroke="#2B2426" stroke-width="2"/>
+      ` : `
+      <!-- Male Gen Z Textured Fringe / Undercut -->
+      <path d="M 172 90 C 170 60, 230 60, 228 90 C 232 102, 226 112, 224 115 C 220 100, 215 95, 200 95 C 185 95, 180 100, 176 115 C 174 112, 168 102, 172 90 Z" fill="#18181A"/>
+      <path d="M 180 82 Q 195 90 205 82" fill="none" stroke="#2D2D30" stroke-width="2"/>
+      `}
+      <!-- Arms Base -->
+      <path d="M 158 162 Q 133 218 143 278 L 153 278 Q 146 222 168 168 Z" fill="url(#m-skin)"/>
+      <path d="M 242 162 Q 267 218 257 282 L 247 282 Q 254 222 232 168 Z" fill="url(#m-skin)"/>
+    </g>`;
+
+    // 3. Inner Top Layer
+    svg += '\n    <!-- 3. Inner Top Layer -->\n';
+    if (innerTop === 'baby-tee') {
+        svg += `    <g id="m-inner-top">
+      <path d="M 158 158 L 138 188 L 153 196 L 166 178 L 168 246 L 232 246 L 234 178 L 247 196 L 262 188 L 242 158 Q 200 174 158 158 Z" fill="#FAF7F2" stroke="#E2D9C8" stroke-width="1"/>
+      <path d="M 185 158 Q 200 170 215 158" fill="none" stroke="#D4AF37" stroke-width="1.5"/>
+      <text x="200" y="202" font-family="'Cinzel', serif" font-size="7" font-weight="bold" fill="#990000" text-anchor="middle" letter-spacing="1.5">HUE 2026</text>
+    </g>`;
+    } else if (innerTop === 'tank-top') {
+        svg += `    <g id="m-inner-top">
+      <path d="M 172 158 L 172 174 L 168 244 L 232 244 L 228 174 L 228 158 Z" fill="#E8DEC8" stroke="#D4AF37" stroke-width="1"/>
+      <path d="M 184 174 L 216 174" stroke="#C5B28A" stroke-width="1"/>
+    </g>`;
+    } else if (innerTop === 'thin-hoodie') {
+        svg += `    <g id="m-inner-top">
+      <path d="M 155 158 L 132 195 L 150 205 L 165 185 L 166 256 L 234 256 L 235 185 L 250 205 L 268 195 L 245 158 Q 200 172 155 158 Z" fill="#D3C7B4" stroke="#B8AA94" stroke-width="1"/>
+      <path d="M 188 170 L 188 200" stroke="#7A6E5D" stroke-width="1.5"/>
+      <path d="M 212 170 L 212 200" stroke="#7A6E5D" stroke-width="1.5"/>
+    </g>`;
+    } else { // default 'crop-top'
+        svg += `    <g id="m-inner-top">
+      <path d="M 175 158 L 175 178 L 168 218 L 232 218 L 225 178 L 225 158 Z" fill="#18181B" stroke="#D4AF37" stroke-width="0.8"/>
+      <line x1="185" y1="178" x2="185" y2="218" stroke="#333" stroke-width="0.5"/>
+      <line x1="200" y1="178" x2="200" y2="218" stroke="#333" stroke-width="0.5"/>
+      <line x1="215" y1="178" x2="215" y2="218" stroke="#333" stroke-width="0.5"/>
+    </g>`;
+    }
+
+    // 4. Bottoms Layer
+    svg += '\n    <!-- 4. Bottoms Layer -->\n';
+    if (bottom === 'cargo-parachute') {
+        svg += `    <g id="m-bottom">
+      <rect x="168" y="246" width="64" height="10" fill="#1E232A" rx="2"/>
+      <path d="M 168 256 L 152 320 L 132 556 L 186 556 L 198 340 L 202 340 L 214 556 L 268 556 L 248 320 L 232 256 Z" fill="url(#m-cargo)" stroke="#0D0E12" stroke-width="1"/>
+      <rect x="135" y="340" width="22" height="42" fill="#282B36" rx="3" stroke="#D4AF37" stroke-width="0.7"/>
+      <rect x="133" y="337" width="26" height="10" fill="#1C1E26" rx="2"/>
+      <path d="M 146 382 L 146 415 L 160 415" fill="none" stroke="#D4AF37" stroke-width="1.5"/>
+      <rect x="243" y="340" width="22" height="42" fill="#282B36" rx="3" stroke="#D4AF37" stroke-width="0.7"/>
+      <rect x="241" y="337" width="26" height="10" fill="#1C1E26" rx="2"/>
+      <ellipse cx="159" cy="556" rx="27" ry="5" fill="#111" stroke="#D4AF37" stroke-width="1.5"/>
+      <ellipse cx="241" cy="556" rx="27" ry="5" fill="#111" stroke="#D4AF37" stroke-width="1.5"/>
+    </g>`;
+    } else if (bottom === 'silk-skirt') {
+        svg += `    <g id="m-bottom">
+      <rect x="168" y="246" width="64" height="8" fill="#111827"/>
+      <path d="M 168 254 L 140 450 L 260 450 L 232 254 Z" fill="#222B38" stroke="#111827" stroke-width="1"/>
+      <line x1="160" y1="254" x2="150" y2="450" stroke="#111" stroke-width="1.5"/>
+      <line x1="180" y1="254" x2="175" y2="450" stroke="#111" stroke-width="1.5"/>
+      <line x1="200" y1="254" x2="200" y2="450" stroke="#111" stroke-width="1.5"/>
+      <line x1="220" y1="254" x2="225" y2="450" stroke="#111" stroke-width="1.5"/>
+      <line x1="240" y1="254" x2="250" y2="450" stroke="#111" stroke-width="1.5"/>
+      <path d="M 140 450 Q 200 460 260 450" stroke="#D4AF37" stroke-width="1" fill="none"/>
+    </g>`;
+    } else if (bottom === 'pleated-trousers') {
+        svg += `    <g id="m-bottom">
+      <rect x="168" y="244" width="64" height="10" fill="#2B2625" rx="1"/>
+      <path d="M 168 254 L 155 315 L 140 570 L 186 570 L 198 340 L 202 340 L 214 570 L 260 570 L 245 315 L 232 254 Z" fill="#3D3836" stroke="#221E1C" stroke-width="1"/>
+      <line x1="163" y1="260" x2="163" y2="568" stroke="#524C4A" stroke-width="1"/>
+      <line x1="237" y1="260" x2="237" y2="568" stroke="#524C4A" stroke-width="1"/>
+    </g>`;
+    } else { // default 'wide-denim'
+        svg += `    <g id="m-bottom">
+      <rect x="168" y="246" width="64" height="9" fill="#3D2619" rx="1"/>
+      <rect x="195" y="245" width="10" height="11" fill="none" stroke="#D4AF37" stroke-width="1.5"/>
+      <path d="M 168 255 L 160 310 L 130 575 L 188 575 L 198 340 L 202 340 L 212 575 L 270 575 L 240 310 L 232 255 Z" fill="url(#m-denim)" stroke="#1B2936" stroke-width="1"/>
+      <path d="M 172 263 Q 185 268 188 283" fill="none" stroke="#D4AF37" stroke-width="1" stroke-dasharray="2,2"/>
+      <path d="M 228 263 Q 215 268 212 283" fill="none" stroke="#D4AF37" stroke-width="1" stroke-dasharray="2,2"/>
+      <line x1="200" y1="255" x2="200" y2="330" stroke="#D4AF37" stroke-width="1" stroke-dasharray="3,2"/>
+      <!-- Distressed knee rips -->
+      <g stroke="#E8EDF2" stroke-width="1.2">
+        <line x1="148" y1="410" x2="168" y2="410"/>
+        <line x1="146" y1="414" x2="170" y2="414"/>
+        <line x1="230" y1="425" x2="252" y2="425"/>
+        <line x1="232" y1="429" x2="250" y2="429"/>
+      </g>
+      <!-- Frayed Cuffs -->
+      <line x1="130" y1="575" x2="188" y2="575" stroke="#FFF" stroke-width="2" stroke-dasharray="2,2"/>
+      <line x1="212" y1="575" x2="270" y2="575" stroke="#FFF" stroke-width="2" stroke-dasharray="2,2"/>
+    </g>`;
+    }
+
+    // 5. Footwear Layer
+    svg += '\n    <!-- 5. Footwear Layer -->\n';
+    if (footwear === 'mary-jane') {
+        svg += `    <g id="m-footwear">
+      <rect x="145" y="555" width="22" height="15" fill="#FFF" stroke="#E2E8F0" stroke-width="1" rx="2"/>
+      <circle cx="156" cy="555" r="4" fill="#FFF"/>
+      <rect x="233" y="555" width="22" height="15" fill="#FFF" stroke="#E2E8F0" stroke-width="1" rx="2"/>
+      <circle cx="244" cy="555" r="4" fill="#FFF"/>
+      <ellipse cx="155" cy="595" rx="24" ry="12" fill="#0A0A0A"/>
+      <rect x="135" y="598" width="40" height="12" fill="#171717" rx="2"/>
+      <rect x="145" y="582" width="22" height="5" fill="#0A0A0A"/>
+      <rect x="154" y="581" width="5" height="7" fill="none" stroke="#D4AF37" stroke-width="1.5"/>
+      <ellipse cx="245" cy="595" rx="24" ry="12" fill="#0A0A0A"/>
+      <rect x="225" y="598" width="40" height="12" fill="#171717" rx="2"/>
+      <rect x="233" y="582" width="22" height="5" fill="#0A0A0A"/>
+      <rect x="242" y="581" width="5" height="7" fill="none" stroke="#D4AF37" stroke-width="1.5"/>
+    </g>`;
+    } else if (footwear === 'derby-leather') {
+        svg += `    <g id="m-footwear">
+      <path d="M 135 585 L 180 585 L 182 605 L 130 605 Z" fill="#18181B"/>
+      <rect x="130" y="600" width="16" height="8" fill="#3E2723"/>
+      <path d="M 220 585 L 265 585 L 270 605 L 218 605 Z" fill="#18181B"/>
+      <rect x="254" y="600" width="16" height="8" fill="#3E2723"/>
+    </g>`;
+    } else { // default 'chunky-sneaker'
+        svg += `    <g id="m-footwear">
+      <path d="M 125 588 L 185 588 L 190 608 L 120 608 Z" fill="#E2E8F0" stroke="#94A3B8" stroke-width="1"/>
+      <line x1="130" y1="608" x2="130" y2="614" stroke="#475569" stroke-width="3"/>
+      <line x1="145" y1="608" x2="145" y2="614" stroke="#475569" stroke-width="3"/>
+      <line x1="160" y1="608" x2="160" y2="614" stroke="#475569" stroke-width="3"/>
+      <line x1="175" y1="608" x2="175" y2="614" stroke="#475569" stroke-width="3"/>
+      <path d="M 130 588 Q 145 565 170 572 L 185 588 Z" fill="#FFF" stroke="#CBD5E1" stroke-width="1"/>
+      <path d="M 148 578 L 165 585" stroke="#D4AF37" stroke-width="2"/>
+      <path d="M 215 588 L 275 588 L 280 608 L 210 608 Z" fill="#E2E8F0" stroke="#94A3B8" stroke-width="1"/>
+      <line x1="225" y1="608" x2="225" y2="614" stroke="#475569" stroke-width="3"/>
+      <line x1="240" y1="608" x2="240" y2="614" stroke="#475569" stroke-width="3"/>
+      <line x1="255" y1="608" x2="255" y2="614" stroke="#475569" stroke-width="3"/>
+      <line x1="270" y1="608" x2="270" y2="614" stroke="#475569" stroke-width="3"/>
+      <path d="M 215 588 L 230 572 Q 255 565 270 588 Z" fill="#FFF" stroke="#CBD5E1" stroke-width="1"/>
+      <path d="M 235 585 L 252 578" stroke="#D4AF37" stroke-width="2"/>
+    </g>`;
+    }
+
+    // 6. Statement Robe Layer
+    svg += '\n    <!-- 6. Statement Robe Layer -->\n';
+    if (robe === 'nhat-binh') {
+        if (wearingStyle === 'closed-five') {
+            svg += `    <g id="m-robe">
+      <path d="M 158 158 L 105 220 L 90 400 L 125 390 L 135 240 L 140 490 L 260 490 L 265 240 L 275 390 L 310 400 L 295 220 L 242 158 Z" fill="url(#m-crimson)" stroke="#D4AF37" stroke-width="1.5"/>
+      <rect x="175" y="150" width="50" height="150" rx="3" fill="none" stroke="#D4AF37" stroke-width="4"/>
+      <rect x="179" y="154" width="42" height="142" rx="2" fill="none" stroke="#1D3557" stroke-width="3"/>
+      <rect x="182" y="157" width="36" height="136" rx="2" fill="none" stroke="#2D6A4F" stroke-width="3"/>
+      <circle cx="200" cy="200" r="4" fill="#D4AF37"/>
+      <circle cx="200" cy="240" r="4" fill="#D4AF37"/>
+      <circle cx="200" cy="280" r="4" fill="#D4AF37"/>
+    </g>`;
+        } else if (wearingStyle === 'half-drape') {
+            svg += `    <g id="m-robe">
+      <path d="M 242 158 L 295 220 L 310 400 L 275 390 L 265 240 L 260 500 L 210 490 L 205 280 Q 170 300 150 360 L 120 480 L 160 470 L 180 340 Z" fill="url(#m-crimson)" stroke="#D4AF37" stroke-width="1.5"/>
+      <path d="M 212 148 L 230 163 L 226 310 L 216 310 L 220 163 Z" fill="#990000" stroke="#D4AF37" stroke-width="1"/>
+    </g>`;
+        } else { // default 'open-robe'
+            svg += `    <g id="m-robe">
+      <path d="M 158 158 L 105 220 L 90 400 L 125 390 L 135 240 L 140 480 L 175 470 L 172 163 Z" fill="url(#m-crimson)" stroke="#D4AF37" stroke-width="1.5"/>
+      <path d="M 242 158 L 295 220 L 310 400 L 275 390 L 265 240 L 260 480 L 225 470 L 228 163 Z" fill="url(#m-crimson)" stroke="#D4AF37" stroke-width="1.5"/>
+      <!-- 5-Color Collar Bands Left -->
+      <path d="M 188 148 L 170 163 L 174 310 L 184 310 L 180 163 Z" fill="#990000"/>
+      <path d="M 180 163 L 174 310 L 171 310 L 177 163 Z" fill="#D4AF37"/>
+      <path d="M 177 163 L 171 310 L 168 310 L 174 163 Z" fill="#1D3557"/>
+      <path d="M 174 163 L 168 310 L 165 310 L 171 163 Z" fill="#2D6A4F"/>
+      <path d="M 171 163 L 165 310 L 163 310 L 169 163 Z" fill="#FFFFFF"/>
+      <!-- 5-Color Collar Bands Right -->
+      <path d="M 212 148 L 230 163 L 226 310 L 216 310 L 220 163 Z" fill="#990000"/>
+      <path d="M 220 163 L 226 310 L 229 310 L 223 163 Z" fill="#D4AF37"/>
+      <path d="M 223 163 L 229 310 L 232 310 L 226 163 Z" fill="#1D3557"/>
+      <path d="M 226 163 L 232 310 L 235 310 L 229 163 Z" fill="#2D6A4F"/>
+      <path d="M 229 163 L 235 310 L 237 310 L 231 163 Z" fill="#FFFFFF"/>
+      <!-- Sleeve Cuffs 5 Bands -->
+      <rect x="90" y="380" width="35" height="4" fill="#990000"/>
+      <rect x="90" y="384" width="35" height="4" fill="#D4AF37"/>
+      <rect x="90" y="388" width="35" height="4" fill="#1D3557"/>
+      <rect x="90" y="392" width="35" height="4" fill="#2D6A4F"/>
+      <rect x="90" y="396" width="35" height="4" fill="#FFFFFF"/>
+      <rect x="275" y="380" width="35" height="4" fill="#990000"/>
+      <rect x="275" y="384" width="35" height="4" fill="#D4AF37"/>
+      <rect x="275" y="388" width="35" height="4" fill="#1D3557"/>
+      <rect x="275" y="392" width="35" height="4" fill="#2D6A4F"/>
+      <rect x="275" y="396" width="35" height="4" fill="#FFFFFF"/>
+      <!-- Gold Phoenix & Cloud Medallions -->
+      <circle cx="120" cy="300" r="14" fill="none" stroke="#D4AF37" stroke-width="1.5" stroke-dasharray="3,2"/>
+      <circle cx="120" cy="300" r="8" fill="rgba(212,175,55,0.2)"/>
+      <circle cx="280" cy="300" r="14" fill="none" stroke="#D4AF37" stroke-width="1.5" stroke-dasharray="3,2"/>
+      <circle cx="280" cy="300" r="8" fill="rgba(212,175,55,0.2)"/>
+      <!-- Wave Embroidery Hem -->
+      <path d="M 140 475 Q 148 468 157 475 Q 166 468 175 475" fill="none" stroke="#D4AF37" stroke-width="1.8"/>
+      <path d="M 225 475 Q 234 468 243 475 Q 252 468 260 475" fill="none" stroke="#D4AF37" stroke-width="1.8"/>
+    </g>`;
+        }
+    } else if (robe.indexOf('ngu-than') !== -1) {
+        svg += `    <g id="m-robe">
+      <path d="M 158 158 L 115 220 L 125 320 L 145 315 L 140 240 L 142 510 L 185 505 L 195 270 L 205 270 L 215 505 L 258 510 L 260 240 L 255 315 L 275 320 L 285 220 L 242 158 Z" fill="url(#m-indigo)" stroke="#D4AF37" stroke-width="1.2"/>
+      <rect x="187" y="145" width="26" height="15" fill="#132238" stroke="#D4AF37" stroke-width="1.5" rx="2"/>
+      <circle cx="208" cy="152" r="3" fill="#D4AF37"/>
+      <circle cx="218" cy="170" r="3" fill="#D4AF37"/>
+      <circle cx="222" cy="195" r="3" fill="#D4AF37"/>
+      <circle cx="225" cy="225" r="3" fill="#D4AF37"/>
+      <circle cx="227" cy="255" r="3" fill="#D4AF37"/>
+    </g>`;
+    } else if (robe.indexOf('ao-tac') !== -1) {
+        svg += `    <g id="m-robe">
+      <path d="M 158 158 L 80 230 L 60 410 L 130 395 L 140 240 L 142 520 L 258 520 L 260 240 L 270 395 L 340 410 L 320 230 L 242 158 Z" fill="#2C5E43" stroke="#D4AF37" stroke-width="1.5"/>
+      <rect x="187" y="145" width="26" height="15" fill="#1E3F2D" stroke="#D4AF37" stroke-width="1.5" rx="2"/>
+      <path d="M 60 405 L 130 390" stroke="#D4AF37" stroke-width="3"/>
+      <path d="M 340 405 L 270 390" stroke="#D4AF37" stroke-width="3"/>
+      <path d="M 142 515 L 258 515" stroke="#D4AF37" stroke-width="3"/>
+    </g>`;
+    } else { // 'giao-linh'
+        svg += `    <g id="m-robe">
+      <path d="M 158 158 L 110 220 L 105 380 L 135 370 L 140 240 L 140 500 L 260 500 L 260 240 L 265 370 L 295 380 L 290 220 L 242 158 Z" fill="#3D2B56" stroke="#D4AF37" stroke-width="1.2"/>
+      <polygon points="158,158 215,225 210,240 155,175" fill="#D4AF37"/>
+      <polygon points="242,158 185,225 190,240 245,175" fill="#FAF7F2"/>
+    </g>`;
+    }
+
+    // 7. Accessories Layer
+    svg += '\n    <!-- 7. Accessories Layer -->\n';
+    if (accGlasses) {
+        svg += `    <g id="m-acc-glasses">
+      <ellipse cx="188" cy="93" rx="11" ry="6" fill="#09090B" stroke="#D4AF37" stroke-width="1.5"/>
+      <ellipse cx="212" cy="93" rx="11" ry="6" fill="#09090B" stroke="#D4AF37" stroke-width="1.5"/>
+      <line x1="199" y1="93" x2="201" y2="93" stroke="#D4AF37" stroke-width="2"/>
+      <line x1="184" y1="91" x2="192" y2="91" stroke="#FFF" stroke-width="1" opacity="0.6"/>
+      <line x1="208" y1="91" x2="216" y2="91" stroke="#FFF" stroke-width="1" opacity="0.6"/>
+    </g>`;
+    }
+    if (accChain) {
+        svg += `    <g id="m-acc-chain">
+      <path d="M 172 255 Q 160 290 170 330 Q 185 300 186 257" fill="none" stroke="#E2E8F0" stroke-width="2" stroke-dasharray="3,1.5" filter="url(#m-glow)"/>
+      <circle cx="170" cy="330" r="4" fill="#D4AF37"/>
+    </g>`;
+    }
+    if (accBag) {
+        svg += `    <g id="m-acc-bag">
+      <rect x="252" y="245" width="32" height="18" rx="4" fill="#3E2723" stroke="#D4AF37" stroke-width="1"/>
+      <path d="M 254 245 Q 248 190 242 165" fill="none" stroke="#D4AF37" stroke-width="1.5" stroke-dasharray="2,1"/>
+    </g>`;
+    }
+    if (accEarphone) {
+        svg += `    <g id="m-acc-earphone">
+      <path d="M 175 140 Q 200 155 225 140" fill="none" stroke="#94A3B8" stroke-width="4"/>
+      <ellipse cx="175" cy="140" rx="7" ry="10" fill="#E2E8F0" stroke="#475569" stroke-width="1"/>
+      <ellipse cx="225" cy="140" rx="7" ry="10" fill="#E2E8F0" stroke="#475569" stroke-width="1"/>
+    </g>`;
+    }
+
+    svg += '\n</svg>';
+    return svg;
+}
+
+
+        // --- WEB AUDIO SYNTHESIZER SOUND EFFECTS ---
+        function playEquipSound(freq = 587) {
+            try {
+                const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                if (!AudioCtx) return;
+                const ctx = new AudioCtx();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freq, ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(freq * 1.4, ctx.currentTime + 0.08);
+                gain.gain.setValueAtTime(0.12, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.1);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start();
+                osc.stop(ctx.currentTime + 0.11);
+            } catch(e) {}
+        }
+
+        // --- STAGE VIEW TOGGLE ---
+        function setStageView(view) {
+            playEquipSound(440);
+            const mPort = document.getElementById('stage-viewport-mannequin');
+            const cPort = document.getElementById('stage-viewport-compare');
+            const sliderCtrl = document.getElementById('compare-slider-controls');
+            const mTab = document.getElementById('stage-tab-mannequin');
+            const cTab = document.getElementById('stage-tab-compare');
+
+            if (view === 'mannequin') {
+                if (mPort) mPort.classList.remove('hidden');
+                if (cPort) cPort.classList.add('hidden');
+                if (sliderCtrl) sliderCtrl.classList.add('hidden');
+                if (mTab) mTab.className = "px-3 py-1 rounded-lg bg-imperial-red text-white shadow-sm transition-all";
+                if (cTab) cTab.className = "px-3 py-1 rounded-lg text-charcoal-muted hover:text-charcoal-ink transition-all";
+            } else {
+                if (mPort) mPort.classList.add('hidden');
+                if (cPort) cPort.classList.remove('hidden');
+                if (sliderCtrl) sliderCtrl.classList.remove('hidden');
+                if (cTab) cTab.className = "px-3 py-1 rounded-lg bg-imperial-red text-white shadow-sm transition-all";
+                if (mTab) mTab.className = "px-3 py-1 rounded-lg text-charcoal-muted hover:text-charcoal-ink transition-all";
+            }
+        }
+
+        // --- SELECT CHIP ITEM ---
+        function selectChip(cat, val) {
+            playEquipSound(660);
+            if (cat === 'robe') {
+                const sel = document.getElementById('garment-select');
+                let found = false;
+                for (let opt of sel.options) {
+                    if (opt.value === val) {
+                        sel.value = val;
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found && sel.options.length > 0) {
+                    sel.selectedIndex = 0;
+                    appState.selectedRobeId = sel.value;
+                } else {
+                    appState.selectedRobeId = val;
+                }
+            } else if (cat === 'style') {
+                const s = document.getElementById('wearing-style-select');
+                if (s) s.value = val;
+                appState.wearingStyle = val;
+            } else if (cat === 'inner') {
+                const s = document.getElementById('inner-top-select');
+                if (s) s.value = val;
+                appState.innerTop = val;
+            } else if (cat === 'bottom') {
+                const s = document.getElementById('bottom-select');
+                if (s) s.value = val;
+                appState.bottom = val;
+            } else if (cat === 'footwear') {
+                const s = document.getElementById('footwear-select');
+                if (s) s.value = val;
+                appState.footwear = val;
+            }
+            handleWardrobeChange();
+        }
+
+        // --- UPDATE CHIP HIGHLIGHTS ---
+        function updateChipHighlights() {
+            document.querySelectorAll('.garment-chip').forEach(btn => {
+                const cat = btn.getAttribute('data-chip-cat');
+                const val = btn.getAttribute('data-chip-val');
+                let isActive = false;
+                if (cat === 'robe' && appState.selectedRobeId && appState.selectedRobeId.includes(val.split('-')[0])) isActive = true;
+                if (cat === 'style' && appState.wearingStyle === val) isActive = true;
+                if (cat === 'inner' && appState.innerTop === val) isActive = true;
+                if (cat === 'bottom' && appState.bottom === val) isActive = true;
+                if (cat === 'footwear' && appState.footwear === val) isActive = true;
+
+                if (isActive) {
+                    btn.classList.add('border-imperial-red', 'bg-silk-paper', 'text-imperial-red', 'font-bold', 'shadow-sm');
+                    btn.classList.remove('border-hue-gold/30', 'bg-silk-ivory', 'text-charcoal-muted');
+                } else {
+                    btn.classList.remove('border-imperial-red', 'text-imperial-red', 'font-bold', 'shadow-sm');
+                    btn.classList.add('border-hue-gold/30', 'bg-silk-ivory', 'text-charcoal-muted');
+                }
+            });
+        }
+
+        // --- UPDATE FITTING STAGE MANNEQUIN ---
+        function updateFittingStage() {
+            const container = document.getElementById('mannequin-container');
+            if (!container) return;
+
+            // 1. Generate live SVG
+            const svgCode = generateMannequinSVG(appState);
+            container.innerHTML = svgCode;
+
+            // 2. Update floating pin badges
+            const garmentSelect = document.getElementById('garment-select');
+            const gName = garmentSelect && garmentSelect.selectedIndex >= 0 ? garmentSelect.options[garmentSelect.selectedIndex]?.text.split('(')[0].trim() : 'Cổ Phục';
+            const styleLabel = appState.wearingStyle === 'open-robe' ? 'Buông Tà' : (appState.wearingStyle === 'closed-five' ? 'Cài 5 Cúc' : 'Vắt Nửa Vai');
+            
+            const innerSelect = document.getElementById('inner-top-select');
+            const iName = innerSelect && innerSelect.selectedIndex >= 0 ? innerSelect.options[innerSelect.selectedIndex]?.text.split('(')[0].trim() : 'Áo Trong';
+
+            const bottomSelect = document.getElementById('bottom-select');
+            const bName = bottomSelect && bottomSelect.selectedIndex >= 0 ? bottomSelect.options[bottomSelect.selectedIndex]?.text.split('(')[0].trim() : 'Quần/Váy';
+
+            const footSelect = document.getElementById('footwear-select');
+            const fName = footSelect && footSelect.selectedIndex >= 0 ? footSelect.options[footSelect.selectedIndex]?.text.split('(')[0].trim() : 'Giày Dép';
+
+            const pinRobeText = document.getElementById('pin-robe-text');
+            if (pinRobeText) pinRobeText.textContent = `${gName} (${styleLabel})`;
+
+            const pinInnerText = document.getElementById('pin-inner-text');
+            if (pinInnerText) pinInnerText.textContent = iName;
+
+            const pinBottomText = document.getElementById('pin-bottom-text');
+            if (pinBottomText) pinBottomText.textContent = bName;
+
+            const pinShoesText = document.getElementById('pin-shoes-text');
+            if (pinShoesText) pinShoesText.textContent = fName;
+
+            const pinAccsText = document.getElementById('pin-accs-text');
+            if (pinAccsText) {
+                const accs = [];
+                if (appState.accessories?.glasses) accs.push("Kính Y2K");
+                if (appState.accessories?.chain) accs.push("Xà Tích Bạc");
+                if (appState.accessories?.bag) accs.push("Túi Baguette");
+                if (appState.accessories?.earphone) accs.push("Tai Nghe");
+                pinAccsText.textContent = accs.length > 0 ? accs.slice(0, 2).join(' • ') : 'Tối Giản';
+            }
+
+            // 3. Update landmark label on stage
+            const landmark = hueLandmarks.find(l => l.id === appState.selectedContextId);
+            const landmarkLabel = document.getElementById('stage-landmark-label');
+            if (landmarkLabel && landmark) {
+                landmarkLabel.textContent = `${landmark.name} (${landmark.style})`;
+            }
+
+            // 4. Update active states on visual chips
+            updateChipHighlights();
+
+            // 5. Pre-render image for Canvas Lookbook
+            try {
+                const svgBlob = new Blob([svgCode], { type: 'image/svg+xml;charset=utf-8' });
+                const URL = window.URL || window.webkitURL || window;
+                if (window._mannequinBlobUrl) URL.revokeObjectURL(window._mannequinBlobUrl);
+                window._mannequinBlobUrl = URL.createObjectURL(svgBlob);
+                const img = new Image();
+                img.onload = () => {
+                    window._cachedMannequinImg = img;
+                    renderLookbookCanvas();
+                };
+                img.src = window._mannequinBlobUrl;
+            } catch(e) {
+                console.log("SVG blob pre-render error:", e);
+            }
+        }
+
+        // --- RANDOMIZE OUTFIT ---
+        function randomizeOutfit() {
+            playEquipSound(784);
+            const robes = appState.gender === 'female' ? ['nhat-binh', 'ao-tac-nu', 'giao-linh-nu'] : ['ngu-than-che-nam', 'ao-tac-nam', 'giao-linh-nam'];
+            const styles = ['open-robe', 'closed-five', 'half-drape'];
+            const inners = ['baby-tee', 'crop-top', 'tank-top', 'thin-hoodie'];
+            const bottoms = ['wide-denim', 'cargo-parachute', 'pleated-trousers', 'silk-skirt'];
+            const shoes = ['chunky-sneaker', 'derby-leather', 'mary-jane'];
+            
+            appState.selectedRobeId = robes[Math.floor(Math.random() * robes.length)];
+            appState.wearingStyle = styles[Math.floor(Math.random() * styles.length)];
+            appState.innerTop = inners[Math.floor(Math.random() * inners.length)];
+            appState.bottom = bottoms[Math.floor(Math.random() * bottoms.length)];
+            appState.footwear = shoes[Math.floor(Math.random() * shoes.length)];
+            
+            // Sync dropdowns
+            const gSel = document.getElementById('garment-select');
+            if (gSel) gSel.value = appState.selectedRobeId;
+            const wSel = document.getElementById('wearing-style-select');
+            if (wSel) wSel.value = appState.wearingStyle;
+            const iSel = document.getElementById('inner-top-select');
+            if (iSel) iSel.value = appState.innerTop;
+            const bSel = document.getElementById('bottom-select');
+            if (bSel) bSel.value = appState.bottom;
+            const fSel = document.getElementById('footwear-select');
+            if (fSel) fSel.value = appState.footwear;
+            
+            handleWardrobeChange();
+            showToast("🎲 Đã phối ngẫu nhiên set đồ mới thành công!");
+        }
+
+function setGender(g) {
             appState.gender = g;
             const fBtn = document.getElementById('gender-female-btn');
             const mBtn = document.getElementById('gender-male-btn');
@@ -1243,20 +2019,36 @@
             }
             populateGarmentSelect();
             updateModelImages();
+            updateFittingStage();
             updateLookbookDetails();
             renderLookbookCanvas();
         }
 
         function populateGarmentSelect() {
             const select = document.getElementById('garment-select');
+            const chipsContainer = document.getElementById('robe-chips-container');
             const list = garmentOptions[appState.gender];
-            select.innerHTML = '';
-            list.forEach(item => {
-                const opt = document.createElement('option');
-                opt.value = item.id;
-                opt.textContent = item.name;
-                select.appendChild(opt);
-            });
+            if (select) {
+                select.innerHTML = '';
+                list.forEach(item => {
+                    const opt = document.createElement('option');
+                    opt.value = item.id;
+                    opt.textContent = item.name;
+                    select.appendChild(opt);
+                });
+            }
+            if (chipsContainer) {
+                const emojis = ['👘', '👔', '🎎', '🥻'];
+                chipsContainer.innerHTML = list.map((item, idx) => `
+                    <button type="button" onclick="selectChip('robe', '${item.id}')" data-chip-cat="robe" data-chip-val="${item.id}" class="garment-chip p-2.5 rounded-xl border border-hue-gold/30 bg-silk-ivory hover:border-imperial-red text-left transition-all flex items-center gap-2">
+                        <span class="text-base">${emojis[idx % emojis.length]}</span>
+                        <div class="overflow-hidden">
+                            <strong class="block text-charcoal-ink truncate text-[11px]">${item.name.split('(')[0].trim()}</strong>
+                            <span class="text-[9px] text-charcoal-muted block truncate">${item.desc || 'Di sản triều Nguyễn'}</span>
+                        </div>
+                    </button>
+                `).join('');
+            }
             appState.selectedRobeId = list[0].id;
         }
 
@@ -1280,19 +2072,29 @@
 
         function handleWardrobeChange() {
             const robeSelect = document.getElementById('garment-select');
-            appState.selectedRobeId = robeSelect.value;
-            appState.wearingStyle = document.getElementById('wearing-style-select').value;
-            appState.innerTop = document.getElementById('inner-top-select').value;
-            appState.bottom = document.getElementById('bottom-select').value;
-            appState.footwear = document.getElementById('footwear-select').value;
+            if (robeSelect && robeSelect.value) appState.selectedRobeId = robeSelect.value;
+            
+            const wStyle = document.getElementById('wearing-style-select');
+            if (wStyle) appState.wearingStyle = wStyle.value;
+            
+            const iTop = document.getElementById('inner-top-select');
+            if (iTop) appState.innerTop = iTop.value;
+            
+            const bPants = document.getElementById('bottom-select');
+            if (bPants) appState.bottom = bPants.value;
+            
+            const fShoes = document.getElementById('footwear-select');
+            if (fShoes) appState.footwear = fShoes.value;
+            
             appState.accessories = {
-                bag: document.getElementById('acc-bag').checked,
-                glasses: document.getElementById('acc-glasses').checked,
-                chain: document.getElementById('acc-chain').checked,
-                earphone: document.getElementById('acc-earphone').checked
+                bag: !!document.getElementById('acc-bag')?.checked,
+                glasses: !!document.getElementById('acc-glasses')?.checked,
+                chain: !!document.getElementById('acc-chain')?.checked,
+                earphone: !!document.getElementById('acc-earphone')?.checked
             };
 
             updateModelImages();
+            updateFittingStage();
             updateLookbookDetails();
             renderLookbookCanvas();
         }
@@ -1344,6 +2146,7 @@
                 appState.formalityLevel = landmark.formality;
             }
             calculateFiveElements();
+            updateFittingStage();
             updateLookbookDetails();
             renderLookbookCanvas();
         }
@@ -1553,6 +2356,7 @@
 
             setTimeout(() => {
                 modal.classList.add('hidden');
+                updateFittingStage();
                 updateLookbookDetails();
                 renderLookbookCanvas();
                 confetti({
@@ -1776,13 +2580,25 @@
             ctx.fillStyle = '#1B313B';
             ctx.fillRect(imgBoxX, imgBoxY, imgBoxW, imgBoxH);
 
-            if (modelImgEl && modelImgEl.complete && modelImgEl.naturalWidth > 0) {
+            // Render Assembled Outfit Mannequin or User Avatar
+            if (appState.userAvatarUrl) {
+                const avatarImg = new Image();
+                avatarImg.src = appState.userAvatarUrl;
+                if (avatarImg.complete) {
+                    ctx.drawImage(avatarImg, imgBoxX, imgBoxY, imgBoxW, imgBoxH);
+                }
+            } else if (window._cachedMannequinImg && window._cachedMannequinImg.complete) {
+                // Draw the user's live assembled modular outfit vector centered!
+                const mImg = window._cachedMannequinImg;
+                const mRatio = (mImg.naturalWidth || 400) / (mImg.naturalHeight || 650);
+                const drawW = imgBoxH * mRatio;
+                const drawX = imgBoxX + (imgBoxW - drawW) / 2;
+                ctx.drawImage(mImg, drawX, imgBoxY, drawW, imgBoxH);
+            } else if (modelImgEl && modelImgEl.complete && modelImgEl.naturalWidth > 0) {
                 try {
-                    // Draw model photo with cover fitting
                     const imgRatio = modelImgEl.naturalWidth / modelImgEl.naturalHeight;
                     const boxRatio = imgBoxW / imgBoxH;
                     let sw, sh, sx, sy;
-
                     if (imgRatio > boxRatio) {
                         sh = modelImgEl.naturalHeight;
                         sw = sh * boxRatio;
@@ -1792,7 +2608,7 @@
                         sw = modelImgEl.naturalWidth;
                         sh = sw / boxRatio;
                         sx = 0;
-                        sy = 0; // Top align for portrait
+                        sy = 0;
                     }
                     ctx.drawImage(modelImgEl, sx, sy, sw, sh, imgBoxX, imgBoxY, imgBoxW, imgBoxH);
                 } catch(e) {
@@ -1967,6 +2783,7 @@
             calculateFiveElements();
             updateModelImages();
             handleSliderChange(50);
+            updateFittingStage();
             updateLookbookDetails();
             lucide.createIcons();
         });
