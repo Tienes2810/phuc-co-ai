@@ -1045,8 +1045,14 @@
                     <!-- STAGE VIEWPORT 1: DYNAMIC MANNEQUIN DRESSING ROOM (DEFAULT ACTIVE) -->
                     <div id="stage-viewport-mannequin" class="relative w-full h-[520px] sm:h-[580px] rounded-2xl overflow-hidden border-2 border-hue-gold shadow-2xl bg-[#0D131F] flex items-center justify-center select-none group">
                         
+                        <!-- Real Heritage Landmark Background Image -->
+                        <img id="stage-landmark-bg" src="assets/cung_an_dinh.jpg" alt="Landmark Background" class="absolute inset-0 w-full h-full object-cover opacity-50 filter brightness-90 contrast-125 transition-all duration-700 pointer-events-none scale-105" />
+                        <!-- Cinematic Depth Vignette Overlays -->
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#0B0E14] via-[#0B0E14]/30 to-[#0B0E14]/75 pointer-events-none"></div>
+                        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,rgba(11,14,20,0.85)_100%)] pointer-events-none"></div>
+
                         <!-- Live SVG Character Container -->
-                        <div id="mannequin-container" class="w-full h-full flex items-center justify-center">
+                        <div id="mannequin-container" class="relative z-10 w-full h-full flex items-center justify-center">
                             <!-- Injected via generateMannequinSVG() -->
                         </div>
 
@@ -1501,6 +1507,14 @@
                 description: 'Sáu vài mười hai nhịp soi bóng sông Hương. Tuyệt vời cho bản phối Streetwear phóng khoáng dạo phố chiều lộng gió.'
             }
         ];
+        // Landmark Image Preloader for Canvas Lookbook
+        const _lmImages = {};
+        hueLandmarks.forEach(l => {
+            const im = new Image();
+            im.src = l.image;
+            _lmImages[l.id] = im;
+        });
+        window._landmarkImgs = _lmImages;
 
         // Garments Taxonomy by Gender
         const garmentOptions = {
@@ -1604,12 +1618,15 @@ function generateMannequinSVG(state) {
 
     let archName = "CUNG AN ĐỊNH • KIẾN TRÚC TÂN CỔ 1917";
     let bgGrad = '<stop offset="0%" stop-color="#241B20"/><stop offset="50%" stop-color="#181C26"/><stop offset="100%" stop-color="#0B0E14"/>';
-    if (landmark === 'ngo-mon') {
-        archName = "NGỌ MÔN • HOÀNG THÀNH HUẾ";
+    if (landmark === 'dai-noi-hue' || landmark === 'ngo-mon') {
+        archName = "NGỌ MÔN • HOÀNG THÀNH HUẾ (1833)";
         bgGrad = '<stop offset="0%" stop-color="#3B1017"/><stop offset="50%" stop-color="#200B10"/><stop offset="100%" stop-color="#0D0508"/>';
-    } else if (landmark === 'quoc-hoc') {
-        archName = "TRƯỜNG QUỐC HỌC HUẾ • PHONG CÁCH BẢO HỘ";
+    } else if (landmark === 'quoc-hoc-hue' || landmark === 'quoc-hoc') {
+        archName = "TRƯỜNG QUỐC HỌC HUẾ • GẠCH ĐỎ HỌC ĐƯỜNG (1896)";
         bgGrad = '<stop offset="0%" stop-color="#2C1B1E"/><stop offset="50%" stop-color="#1B1214"/><stop offset="100%" stop-color="#0E090A"/>';
+    } else if (landmark === 'cau-truong-tien') {
+        archName = "CẦU TRƯỜNG TIỀN & SÔNG HƯƠNG (1897)";
+        bgGrad = '<stop offset="0%" stop-color="#1A2634"/><stop offset="50%" stop-color="#111B24"/><stop offset="100%" stop-color="#090E14"/>';
     }
 
     let svg = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 400 650" width="100%" height="100%" id="fitting-stage-svg" class="w-full h-full select-none">
@@ -1711,7 +1728,7 @@ function generateMannequinSVG(state) {
     </defs>
 
     <!-- 2. BACKGROUND ARCHITECTURE -->
-    <rect width="400" height="650" fill="url(#m-bg-sky)" rx="16"/>
+    <rect width="400" height="650" fill="transparent" rx="16"/>
     <g opacity="0.35">
       <path d="M 30 650 L 30 180 Q 200 40 370 180 L 370 650" fill="none" stroke="rgba(212,175,55,0.35)" stroke-width="2"/>
       <path d="M 60 650 L 60 210 Q 200 90 340 210 L 340 650" fill="none" stroke="rgba(212,175,55,0.2)" stroke-width="1.5" stroke-dasharray="6,4"/>
@@ -2510,6 +2527,14 @@ function setGender(g) {
             const landmark = hueLandmarks.find(l => l.id === landmarkId);
             if (landmark) {
                 appState.formalityLevel = landmark.formality;
+                const bgImg = document.getElementById('stage-landmark-bg');
+                if (bgImg && landmark.image) {
+                    bgImg.src = landmark.image;
+                }
+                const labelEl = document.getElementById('stage-landmark-label');
+                if (labelEl) {
+                    labelEl.textContent = `${landmark.name} (${landmark.style})`;
+                }
             }
             calculateFiveElements();
             updateFittingStage();
@@ -2935,78 +2960,97 @@ function setGender(g) {
             ctx.lineTo(width - 50, 120);
             ctx.stroke();
 
-            // 4. Central Real Model / Avatar Image Frame
-            const modelImgEl = document.getElementById('modern-model-img');
+            // 4. Central Real Model / Avatar Image Frame (Landmark Background + Styled Outfit)
             const imgBoxX = 50;
             const imgBoxY = 135;
             const imgBoxW = width - 100;
             const imgBoxH = 340;
 
             ctx.save();
-            ctx.fillStyle = '#1B313B';
+            ctx.beginPath();
+            ctx.rect(imgBoxX, imgBoxY, imgBoxW, imgBoxH);
+            ctx.clip();
+
+            // A. Draw Chosen Heritage Landmark Background Photo
+            const landmark = hueLandmarks.find(l => l.id === appState.selectedContextId) || hueLandmarks[0];
+            const lmImg = (window._landmarkImgs && window._landmarkImgs[landmark.id]) || document.getElementById('stage-landmark-bg');
+            if (lmImg && (lmImg.complete || lmImg.naturalWidth > 0)) {
+                try {
+                    const natW = lmImg.naturalWidth || 800;
+                    const natH = lmImg.naturalHeight || 600;
+                    const imgRatio = natW / natH;
+                    const boxRatio = imgBoxW / imgBoxH;
+                    let sw, sh, sx, sy;
+                    if (imgRatio > boxRatio) {
+                        sh = natH;
+                        sw = sh * boxRatio;
+                        sx = (natW - sw) / 2;
+                        sy = 0;
+                    } else {
+                        sw = natW;
+                        sh = sw / boxRatio;
+                        sx = 0;
+                        sy = (natH - sh) / 2;
+                    }
+                    ctx.drawImage(lmImg, sx, sy, sw, sh, imgBoxX, imgBoxY, imgBoxW, imgBoxH);
+                } catch(e) {
+                    ctx.fillStyle = '#1B313B';
+                    ctx.fillRect(imgBoxX, imgBoxY, imgBoxW, imgBoxH);
+                }
+            } else {
+                ctx.fillStyle = '#1B313B';
+                ctx.fillRect(imgBoxX, imgBoxY, imgBoxW, imgBoxH);
+            }
+
+            // Cinematic Vignette Overlay on the Landmark
+            const lmGrad = ctx.createLinearGradient(0, imgBoxY, 0, imgBoxY + imgBoxH);
+            lmGrad.addColorStop(0, 'rgba(15, 23, 42, 0.45)');
+            lmGrad.addColorStop(0.5, 'rgba(15, 23, 42, 0.15)');
+            lmGrad.addColorStop(1, 'rgba(15, 23, 42, 0.75)');
+            ctx.fillStyle = lmGrad;
             ctx.fillRect(imgBoxX, imgBoxY, imgBoxW, imgBoxH);
 
-            // Render Assembled Outfit Mannequin or User Avatar
-            if (appState.userAvatarUrl) {
-                const avatarImg = new Image();
-                avatarImg.src = appState.userAvatarUrl;
-                if (avatarImg.complete) {
-                    ctx.drawImage(avatarImg, imgBoxX, imgBoxY, imgBoxW, imgBoxH);
-                }
-            } else if (window._cachedMannequinImg && window._cachedMannequinImg.complete) {
-                // Draw the user's live assembled modular outfit vector centered!
+            // B. Draw Assembled Styled Mannequin Model (Outfit Textures + Face Avatar)
+            if (window._cachedMannequinImg && (window._cachedMannequinImg.complete || window._cachedMannequinImg.naturalWidth > 0)) {
                 const mImg = window._cachedMannequinImg;
                 const mRatio = (mImg.naturalWidth || 400) / (mImg.naturalHeight || 650);
                 const drawW = imgBoxH * mRatio;
                 const drawX = imgBoxX + (imgBoxW - drawW) / 2;
                 ctx.drawImage(mImg, drawX, imgBoxY, drawW, imgBoxH);
-            } else if (modelImgEl && modelImgEl.complete && modelImgEl.naturalWidth > 0) {
-                try {
-                    const imgRatio = modelImgEl.naturalWidth / modelImgEl.naturalHeight;
-                    const boxRatio = imgBoxW / imgBoxH;
-                    let sw, sh, sx, sy;
-                    if (imgRatio > boxRatio) {
-                        sh = modelImgEl.naturalHeight;
-                        sw = sh * boxRatio;
-                        sx = (modelImgEl.naturalWidth - sw) / 2;
-                        sy = 0;
-                    } else {
-                        sw = modelImgEl.naturalWidth;
-                        sh = sw / boxRatio;
-                        sx = 0;
-                        sy = 0;
-                    }
-                    ctx.drawImage(modelImgEl, sx, sy, sw, sh, imgBoxX, imgBoxY, imgBoxW, imgBoxH);
-                } catch(e) {
-                    console.log("Canvas drawImage error", e);
+            } else {
+                const modelImgEl = document.getElementById('modern-model-img');
+                if (modelImgEl && modelImgEl.complete && modelImgEl.naturalWidth > 0) {
+                    ctx.drawImage(modelImgEl, imgBoxX, imgBoxY, imgBoxW, imgBoxH);
                 }
             }
 
-            // Dark gradient overlay at bottom of photo
-            const imgGrad = ctx.createLinearGradient(0, imgBoxY + imgBoxH - 90, 0, imgBoxY + imgBoxH);
+            // C. Bottom Caption Overlay Gradient
+            const imgGrad = ctx.createLinearGradient(0, imgBoxY + imgBoxH - 85, 0, imgBoxY + imgBoxH);
             imgGrad.addColorStop(0, 'rgba(0,0,0,0)');
-            imgGrad.addColorStop(1, 'rgba(0,0,0,0.85)');
+            imgGrad.addColorStop(1, 'rgba(0,0,0,0.92)');
             ctx.fillStyle = imgGrad;
-            ctx.fillRect(imgBoxX, imgBoxY + imgBoxH - 90, imgBoxW, 90);
+            ctx.fillRect(imgBoxX, imgBoxY + imgBoxH - 85, imgBoxW, 85);
 
-            // Text on image
+            // D. Caption Text (Landmark + Outfit)
             ctx.textAlign = 'left';
             ctx.fillStyle = '#D4AF37';
             ctx.font = 'bold 15px "Playfair Display", serif';
             const garmentSelect = document.getElementById('garment-select');
-            const gName = garmentSelect && garmentSelect.selectedIndex >= 0 ? garmentSelect.options[garmentSelect.selectedIndex]?.text.split('(')[0].trim() : 'Cổ Phục';
-            ctx.fillText(gName, imgBoxX + 16, imgBoxY + imgBoxH - 35);
+            const gName = garmentSelect && garmentSelect.selectedIndex >= 0 ? garmentSelect.options[garmentSelect.selectedIndex]?.text.split('(')[0].trim() : 'Cổ Phục Triều Nguyễn';
+            ctx.fillText(`${gName} • ${landmark.name}`, imgBoxX + 16, imgBoxY + imgBoxH - 35);
 
             ctx.fillStyle = '#FAF7F2';
             ctx.font = '11px "Plus Jakarta Sans", sans-serif';
             const bSelect = document.getElementById('bottom-select');
-            const bName = bSelect && bSelect.selectedIndex >= 0 ? bSelect.options[bSelect.selectedIndex]?.text.split('(')[0].trim() : 'Streetwear';
-            ctx.fillText(`Phối cùng: ${bName} • ${fabricSpecs[appState.fabricId].name}`, imgBoxX + 16, imgBoxY + imgBoxH - 16);
+            const bName = bSelect && bSelect.selectedIndex >= 0 ? bSelect.options[bSelect.selectedIndex]?.text.split('(')[0].trim() : 'Streetwear Đương Đại';
+            ctx.fillText(`Phối cùng: ${bName} • ${landmark.style}`, imgBoxX + 16, imgBoxY + imgBoxH - 16);
 
+            ctx.restore();
+
+            // Gold Border around photo frame
             ctx.strokeStyle = '#D4AF37';
             ctx.lineWidth = 2;
             ctx.strokeRect(imgBoxX, imgBoxY, imgBoxW, imgBoxH);
-            ctx.restore();
 
             // 5. Outfit Breakdown 4-Item Spec Card
             const specY = 490;
@@ -3022,7 +3066,6 @@ function setGender(g) {
 
             ctx.fillStyle = '#2B2B2B';
             ctx.font = '12px "Noto Serif", serif';
-            const landmark = hueLandmarks.find(l => l.id === appState.selectedContextId);
             const fabric = fabricSpecs[appState.fabricId];
             const innerSelect = document.getElementById('inner-top-select');
             const innerName = innerSelect && innerSelect.selectedIndex >= 0 ? innerSelect.options[innerSelect.selectedIndex]?.text.split('(')[0].trim() : 'Áo trong';
