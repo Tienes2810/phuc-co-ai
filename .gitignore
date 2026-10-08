@@ -1,5 +1,7 @@
 *.mp4
+*.webm
 video_demo_aistudio.webm
+video_demo_official.webm
 .DS_Store
 node_modules/
 scratch/
