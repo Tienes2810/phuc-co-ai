@@ -1441,7 +1441,7 @@
         function updateLookbookDetails() {
             const landmark = hueLandmarks.find(l => l.id === appState.selectedContextId);
             const garmentSelect = document.getElementById('garment-select');
-            if (!garmentSelect || !garmentSelect.selectedIndex) return;
+            if (!garmentSelect || garmentSelect.selectedIndex < 0) return;
             const garmentName = garmentSelect.options[garmentSelect.selectedIndex].text.split('(')[0].trim();
 
             document.getElementById('curated-look-name').textContent = `${garmentName} x ${landmark.name}`;
