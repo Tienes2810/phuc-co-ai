@@ -499,7 +499,7 @@
                         <!-- Avatar Preview & Upload Action -->
                         <div class="flex items-center gap-3">
                             <div class="relative w-16 h-16 rounded-full border-2 border-hue-gold overflow-hidden bg-charcoal-ink flex-shrink-0 shadow-seal flex items-center justify-center group">
-                                <img id="user-avatar-preview" src="assets/phoi_nhat_binh_nu.jpg" alt="Avatar" class="w-full h-full object-cover object-top">
+                                <img id="user-avatar-preview" src="assets/avatar_nu_genz.jpg" alt="Avatar" class="w-full h-full object-cover object-top">
                                 <div class="absolute inset-0 border border-white/20 rounded-full pointer-events-none"></div>
                             </div>
                             <div class="flex-1 space-y-1.5">
@@ -1457,7 +1457,7 @@
             formalityLevel: 85,
             selectedContextId: 'cung-an-dinh',
             sliderPos: 50,
-            userAvatarUrl: 'assets/phoi_nhat_binh_nu.jpg',
+            userAvatarUrl: 'assets/avatar_nu_genz.jpg',
             avatarScale: 1.0,
             avatarOffsetX: 0,
             avatarOffsetY: 0,
@@ -2162,16 +2162,25 @@ function generateMannequinSVG(state) {
             playEquipSound(520);
             const previewImg = document.getElementById('user-avatar-preview');
             const statusBadge = document.getElementById('avatar-status-badge');
+            const zoomSlider = document.getElementById('avatar-zoom-slider');
+            const xSlider = document.getElementById('avatar-x-slider');
+            const ySlider = document.getElementById('avatar-y-slider');
             
             if (preset === 'female') {
-                appState.userAvatarUrl = 'assets/phoi_nhat_binh_nu.jpg';
+                appState.userAvatarUrl = 'assets/avatar_nu_genz.jpg';
+                appState.avatarScale = 1.0;
+                appState.avatarOffsetX = 0;
+                appState.avatarOffsetY = 0;
                 if (previewImg) previewImg.src = appState.userAvatarUrl;
                 if (statusBadge) {
                     statusBadge.textContent = "✓ Mặt mẫu Nữ Gen Z";
                     statusBadge.className = "text-[10px] text-wood-green font-bold";
                 }
             } else if (preset === 'male') {
-                appState.userAvatarUrl = 'assets/phoi_ngu_than_nam.jpg';
+                appState.userAvatarUrl = 'assets/avatar_nam_genz.jpg';
+                appState.avatarScale = 1.0;
+                appState.avatarOffsetX = 0;
+                appState.avatarOffsetY = 0;
                 if (previewImg) previewImg.src = appState.userAvatarUrl;
                 if (statusBadge) {
                     statusBadge.textContent = "✓ Mặt mẫu Nam Gen Z";
@@ -2179,6 +2188,9 @@ function generateMannequinSVG(state) {
                 }
             } else if (preset === 'nam-phuong') {
                 appState.userAvatarUrl = 'assets/nam_phuong_hoang_hau_1934.jpg';
+                appState.avatarScale = 1.05;
+                appState.avatarOffsetX = 0;
+                appState.avatarOffsetY = 1;
                 if (previewImg) previewImg.src = appState.userAvatarUrl;
                 if (statusBadge) {
                     statusBadge.textContent = "✓ Chân dung Nam Phương (1934)";
@@ -2186,12 +2198,18 @@ function generateMannequinSVG(state) {
                 }
             } else { // 'sketch'
                 appState.userAvatarUrl = '';
-                if (previewImg) previewImg.src = 'assets/phoi_nhat_binh_nu.jpg';
+                appState.avatarScale = 1.0;
+                appState.avatarOffsetX = 0;
+                appState.avatarOffsetY = 0;
+                if (previewImg) previewImg.src = 'assets/avatar_nu_genz.jpg';
                 if (statusBadge) {
                     statusBadge.textContent = "✓ Minh họa vẽ tay nghệ thuật";
                     statusBadge.className = "text-[10px] text-charcoal-muted font-bold";
                 }
             }
+            if (zoomSlider) zoomSlider.value = appState.avatarScale;
+            if (xSlider) xSlider.value = appState.avatarOffsetX;
+            if (ySlider) ySlider.value = appState.avatarOffsetY;
             updateFittingStage();
             renderLookbookCanvas();
         }
