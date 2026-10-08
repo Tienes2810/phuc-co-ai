@@ -1,931 +1,1395 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="vi" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Phục Cố (PhucCo AI) - Bảo Tàng Số & Định Hình Cổ Phục Việt Đương Đại</title>
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Cinzel:wght@600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
-  <!-- Lucide Icons -->
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <!-- HTML2Canvas for Lookbook Export -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-
-  <style>
-    body { font-family: 'Plus Jakarta Sans', sans-serif; }
-    .font-heritage { font-family: 'Cinzel', serif; }
-    .font-serif-vn { font-family: 'Playfair Display', serif; }
-    .hue-gradient {
-      background: linear-gradient(135deg, #1A051D 0%, #380D39 40%, #150921 100%);
-    }
-    .museum-card {
-      background: radial-gradient(circle at top left, rgba(74, 21, 75, 0.08) 0%, rgba(255, 255, 255, 1) 70%);
-    }
-  </style>
-</head>
-<body class="bg-stone-900 text-stone-100 min-h-screen flex flex-col antialiased selection:bg-amber-400 selection:text-stone-950">
-
-  <!-- Top Announcement Bar -->
-  <div class="bg-gradient-to-r from-purple-950 via-amber-950 to-stone-950 border-b border-amber-500/20 text-center py-2 px-4 text-xs font-medium text-amber-200 flex items-center justify-center gap-2">
-    <span class="inline-flex items-center gap-1.5 bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded-full border border-amber-400/30 text-[10px] uppercase font-bold tracking-wider">Bảo Tàng Di Sản Số</span>
-    <span>Dự thi AI Arena Vietnam 2026 (Google x VNU) • Ứng dụng Gemini 2.0 Flash Thinking</span>
-  </div>
-
-  <!-- Header -->
-  <header class="hue-gradient border-b border-amber-500/20 sticky top-0 z-50 shadow-2xl backdrop-blur-md bg-opacity-95">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-amber-400 via-amber-500 to-orange-500 flex items-center justify-center text-stone-950 font-black shadow-lg shadow-amber-500/20">
-          <i data-lucide="sparkles" class="w-6 h-6"></i>
-        </div>
-        <div>
-          <div class="flex items-center gap-2">
-            <span class="font-heritage text-xl sm:text-2xl font-bold tracking-wider text-amber-200">PHỤC CỐ</span>
-            <span class="text-[9px] font-bold bg-amber-400/20 text-amber-300 px-2 py-0.5 rounded border border-amber-400/40 uppercase tracking-widest">Digital Museum</span>
-          </div>
-          <p class="text-[11px] text-stone-400">Không Gian Di Sản Triều Nguyễn & AI Stylist Đương Đại</p>
-        </div>
-      </div>
-
-      <!-- Action items -->
-      <div class="flex items-center gap-3">
-        <button onclick="openCompareModal()" class="flex items-center gap-1.5 bg-stone-800/80 hover:bg-stone-700 border border-stone-700 text-stone-200 px-3.5 py-1.5 rounded-xl text-xs font-semibold transition">
-          <i data-lucide="columns-2" class="w-3.5 h-3.5 text-amber-400"></i>
-          <span>So sánh A/B (<span id="compareCount">0</span>)</span>
-        </button>
-        <button onclick="toggleApiKeyModal()" class="flex items-center gap-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/40 px-3.5 py-1.5 rounded-xl text-xs font-semibold transition">
-          <i data-lucide="cpu" class="w-3.5 h-3.5"></i>
-          <span id="apiKeyStatusLabel">Flash Thinking</span>
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <!-- Museum Hero Exhibit Gallery -->
-  <section class="border-b border-stone-800 bg-stone-950 py-8 px-4">
-    <div class="max-w-7xl mx-auto space-y-4">
-      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
-        <div>
-          <span class="text-xs uppercase font-extrabold text-amber-400 tracking-widest flex items-center gap-1.5">
-            <i data-lucide="compass" class="w-4 h-4"></i> Tọa Độ Di Sản Cố Đô (Virtual Heritage Gallery)
-          </span>
-          <h2 class="text-2xl sm:text-3xl font-serif-vn font-bold text-stone-100 mt-1">
-            Không Gian Cổ Kính • Cảm Hứng Đương Đại
-          </h2>
-        </div>
-        <p class="text-xs text-stone-400 max-w-md">
-          Nhấp vào từng không gian bảo tàng để chiêm ngưỡng kiến trúc và tải bối cảnh di tích vào buồng phối đồ AI.
-        </p>
-      </div>
-
-      <!-- Gallery Grid of Real Hue Landmarks -->
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-        
-        <!-- Landmark 1: Cung An Dinh -->
-        <div onclick="selectLocationById('cung_an_dinh')" class="gallery-card group relative h-48 rounded-2xl overflow-hidden cursor-pointer border-2 border-amber-500/80 shadow-lg shadow-purple-950/40 transition-all hover:scale-[1.02]">
-          <img src="assets/cung_an_dinh.jpg" alt="Cung An Định Huế" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-          <div class="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/40 to-transparent"></div>
-          <div class="absolute top-2 right-2 bg-amber-400 text-stone-950 font-black text-[9px] px-2 py-0.5 rounded uppercase">Đang chọn</div>
-          <div class="absolute bottom-3 left-3 right-3">
-            <div class="text-[10px] text-amber-300 font-semibold font-heritage">1917 • Vua Khải Định</div>
-            <h4 class="font-bold text-sm text-white font-serif-vn">Cung An Định</h4>
-            <p class="text-[10px] text-stone-300 line-clamp-1">Kiến trúc Romanesque x Triều Nguyễn</p>
-          </div>
-        </div>
-
-        <!-- Landmark 2: Ngo Mon -->
-        <div onclick="selectLocationById('ngo_mon')" class="gallery-card group relative h-48 rounded-2xl overflow-hidden cursor-pointer border border-stone-800 hover:border-amber-500/60 transition-all hover:scale-[1.02]">
-          <img src="assets/ngo_mon.jpg" alt="Ngọ Môn Huế" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-          <div class="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/40 to-transparent"></div>
-          <div class="absolute bottom-3 left-3 right-3">
-            <div class="text-[10px] text-amber-300 font-semibold font-heritage">1833 • Vua Minh Mạng</div>
-            <h4 class="font-bold text-sm text-white font-serif-vn">Đại Nội & Ngọ Môn</h4>
-            <p class="text-[10px] text-stone-300 line-clamp-1">Lầu Ngũ Phụng hoàng gia uy nghiêm</p>
-          </div>
-        </div>
-
-        <!-- Landmark 3: Song Huong -->
-        <div onclick="selectLocationById('song_huong')" class="gallery-card group relative h-48 rounded-2xl overflow-hidden cursor-pointer border border-stone-800 hover:border-amber-500/60 transition-all hover:scale-[1.02]">
-          <img src="assets/song_huong.jpg" alt="Cầu Tràng Tiền Sông Hương" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-          <div class="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/40 to-transparent"></div>
-          <div class="absolute bottom-3 left-3 right-3">
-            <div class="text-[10px] text-amber-300 font-semibold font-heritage">1897 • Vua Thành Thái</div>
-            <h4 class="font-bold text-sm text-white font-serif-vn">Cầu Tràng Tiền</h4>
-            <p class="text-[10px] text-stone-300 line-clamp-1">Dạo bước sông Hương thơ mộng</p>
-          </div>
-        </div>
-
-        <!-- Landmark 4: Quoc Hoc -->
-        <div onclick="selectLocationById('quoc_hoc')" class="gallery-card group relative h-48 rounded-2xl overflow-hidden cursor-pointer border border-stone-800 hover:border-amber-500/60 transition-all hover:scale-[1.02]">
-          <img src="assets/quoc_hoc.jpg" alt="Quốc Học Huế" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-          <div class="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/40 to-transparent"></div>
-          <div class="absolute bottom-3 left-3 right-3">
-            <div class="text-[10px] text-amber-300 font-semibold font-heritage">1896 • Vua Thành Thái</div>
-            <h4 class="font-bold text-sm text-white font-serif-vn">THPT Quốc Học</h4>
-            <p class="text-[10px] text-stone-300 line-clamp-1">Kỷ yếu thanh xuân tường gạch đỏ</p>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- Main Workstation -->
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-      
-      <!-- LEFT CONTROLS: 5 Cols -->
-      <section class="lg:col-span-5 space-y-5">
-        <div class="bg-stone-950 rounded-2xl p-6 shadow-xl border border-stone-800 space-y-5">
-          
-          <div class="flex items-center justify-between border-b border-stone-800 pb-3">
-            <h2 class="font-bold text-stone-100 text-sm flex items-center gap-2">
-              <i data-lucide="sliders" class="w-4 h-4 text-amber-400"></i>
-              <span>Bộ Tùy Chọn Cổ Phục & Ngữ Cảnh</span>
-            </h2>
-            <span class="text-[10px] bg-amber-400/10 text-amber-300 font-bold px-2 py-0.5 rounded border border-amber-400/20">Gemini Reasoning</span>
-          </div>
-
-          <!-- Feature 1: Chọn Nhân vật / Avatar -->
-          <div class="space-y-1.5">
-            <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-400 flex items-center justify-between">
-              <span>👤 1. Nhân Vật Đại Diện / Giới Tính</span>
-              <span class="text-[10px] text-amber-400 font-semibold cursor-pointer hover:underline" onclick="document.getElementById('userAvatarInput').click()">+ Tải ảnh thật</span>
-            </label>
-            <input type="file" id="userAvatarInput" class="hidden" accept="image/*" onchange="handleUserAvatar(event)">
-            
-            <div class="grid grid-cols-3 gap-2">
-              <button type="button" onclick="setAvatar('male', 'Nam sinh viên', this)" class="avatar-btn p-2.5 rounded-xl border border-amber-400 bg-amber-500/10 text-amber-300 font-bold text-xs flex items-center justify-center gap-1.5 transition">
-                <span>🧑</span> <span>Nam sinh viên</span>
-              </button>
-              <button type="button" onclick="setAvatar('female', 'Nữ sinh viên', this)" class="avatar-btn p-2.5 rounded-xl border border-stone-800 bg-stone-900 text-stone-400 hover:text-stone-200 text-xs flex items-center justify-center gap-1.5 transition">
-                <span>👩</span> <span>Nữ sinh viên</span>
-              </button>
-              <button type="button" id="customAvatarBtn" onclick="document.getElementById('userAvatarInput').click()" class="avatar-btn p-2.5 rounded-xl border border-dashed border-stone-700 bg-stone-900 text-stone-500 text-xs flex items-center justify-center gap-1.5 transition">
-                <i data-lucide="upload" class="w-3.5 h-3.5"></i> <span id="customAvatarLabel">Tự tải ảnh</span>
-              </button>
-            </div>
-          </div>
-
-          <!-- Feature 2: Bối cảnh & Thời tiết -->
-          <div class="space-y-1.5">
-            <div class="flex justify-between items-center">
-              <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-400">🏛️ 2. Bối Cảnh & Thời Tiết Cố Đô</label>
-              <select id="weatherSelect" onchange="updateWeatherTip()" class="text-[11px] font-semibold bg-stone-900 border border-stone-800 rounded-lg px-2.5 py-1 text-amber-300 outline-none">
-                <option value="autumn_cool">🍂 Thu se lạnh (21°C)</option>
-                <option value="sunny">☀️ Nắng Cố Đô (29°C)</option>
-                <option value="rainy">🌧️ Mưa bay Huế (19°C)</option>
-              </select>
-            </div>
-
-            <!-- Active Landmark Preview Card -->
-            <div class="flex items-center gap-3 p-3 rounded-xl bg-stone-900 border border-stone-800">
-              <img id="activeLandmarkThumb" src="assets/cung_an_dinh.jpg" class="w-14 h-14 rounded-lg object-cover border border-amber-500/30">
-              <div class="flex-1">
-                <div class="flex items-center justify-between">
-                  <h4 id="activeLandmarkName" class="font-bold text-sm text-stone-100 font-serif-vn">Cung An Định</h4>
-                  <span class="text-[9px] text-amber-400 font-heritage font-bold">1917</span>
-                </div>
-                <p id="activeLandmarkDesc" class="text-[11px] text-stone-400 line-clamp-1">Kiến trúc giao thoa Đông Dương, thanh lịch, hoài cổ</p>
-              </div>
-            </div>
-
-            <div id="weatherTip" class="text-[11px] text-amber-200/90 bg-amber-500/10 p-2.5 rounded-lg border border-amber-500/20 font-medium">
-              💡 <strong>Gợi ý chất liệu:</strong> Tiết thu se lạnh thích hợp cho vải Đũi dệt thủ công hoặc Lụa tơ tằm hai lớp.
-            </div>
-          </div>
-
-          <!-- Feature 3: Chọn Loại Trang Phục -->
-          <div class="space-y-1.5">
-            <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-400">👘 3. Dòng Cổ Phục Hạt Nhân Triều Nguyễn</label>
-            <div class="space-y-1.5" id="garmentOptions">
-              <label class="flex items-center justify-between p-2.5 rounded-xl border border-amber-400 bg-amber-500/10 cursor-pointer text-xs font-semibold text-stone-200">
-                <div class="flex items-center gap-2">
-                  <input type="radio" name="garmentRadio" value="Áo ngũ thân tay chẽn" checked class="text-amber-500 focus:ring-amber-400">
-                  <span>Áo ngũ thân tay chẽn (Lập lĩnh, 5 khuy)</span>
-                </div>
-                <span class="text-[9px] bg-purple-900 text-purple-200 px-2 py-0.5 rounded font-bold">Thường nhật</span>
-              </label>
-
-              <label class="flex items-center justify-between p-2.5 rounded-xl border border-stone-800 bg-stone-900 hover:bg-stone-850 cursor-pointer text-xs font-semibold text-stone-300">
-                <div class="flex items-center gap-2">
-                  <input type="radio" name="garmentRadio" value="Áo Nhật Bình triều Nguyễn" class="text-amber-500 focus:ring-amber-400">
-                  <span>Áo Nhật Bình (Cổ chữ nhật, ngũ sắc)</span>
-                </div>
-                <span class="text-[9px] bg-amber-900 text-amber-200 px-2 py-0.5 rounded font-bold">Quý tộc</span>
-              </label>
-
-              <label class="flex items-center justify-between p-2.5 rounded-xl border border-stone-800 bg-stone-900 hover:bg-stone-850 cursor-pointer text-xs font-semibold text-stone-300">
-                <div class="flex items-center gap-2">
-                  <input type="radio" name="garmentRadio" value="Áo Tấc (Ngũ thân tay thụng)" class="text-amber-500 focus:ring-amber-400">
-                  <span>Áo Tấc (Tay thụng dài, trang trọng)</span>
-                </div>
-                <span class="text-[9px] bg-emerald-900 text-emerald-200 px-2 py-0.5 rounded font-bold">Lễ nghi</span>
-              </label>
-            </div>
-          </div>
-
-          <!-- Feature 4: Chọn Màu Sắc & Ngũ Hành -->
-          <div class="space-y-1.5">
-            <div class="flex justify-between items-center">
-              <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-400">🎨 4. Bảng Màu & Ngũ Hành Phong Thủy</label>
-              <span id="paletteName" class="text-xs font-bold text-amber-300">Tím hoa cà (Thủy)</span>
-            </div>
-            
-            <div class="grid grid-cols-5 gap-2">
-              <button onclick="setPalette('Tím hoa cà', '#4A154B', '#F5F5F0', '#2E112D', 'Thủy sinh Mộc (Hài hòa 98%)')" title="Tím hoa cà - Sông Hương" class="h-9 rounded-xl border-2 border-amber-400 shadow-sm flex items-center justify-center text-white" style="background-color: #4A154B;">
-                <i data-lucide="check" class="w-3.5 h-3.5 palette-check"></i>
-              </button>
-              <button onclick="setPalette('Hoàng lưu ly', '#D4AF37', '#1C1917', '#997300', 'Thổ sinh Kim (Cung đình 96%)')" title="Vàng hoàng lưu ly - Điện Thái Hòa" class="h-9 rounded-xl border border-stone-700 shadow-sm flex items-center justify-center text-stone-950" style="background-color: #D4AF37;">
-                <i data-lucide="check" class="w-3.5 h-3.5 palette-check hidden"></i>
-              </button>
-              <button onclick="setPalette('Đỏ son chu sa', '#8B1E1E', '#FDF8F0', '#541010', 'Hỏa sinh Thổ (Trang trọng 95%)')" title="Đỏ son chu sa - Sơn son thếp vàng" class="h-9 rounded-xl border border-stone-700 shadow-sm flex items-center justify-center text-white" style="background-color: #8B1E1E;">
-                <i data-lucide="check" class="w-3.5 h-3.5 palette-check hidden"></i>
-              </button>
-              <button onclick="setPalette('Xanh thiên thanh', '#2C5E7A', '#F0F9FF', '#153243', 'Thủy Mộc thanh nhã (Pháp Lam 97%)')" title="Xanh thiên thanh - Gốm Pháp Lam" class="h-9 rounded-xl border border-stone-700 shadow-sm flex items-center justify-center text-white" style="background-color: #2C5E7A;">
-                <i data-lucide="check" class="w-3.5 h-3.5 palette-check hidden"></i>
-              </button>
-              <button onclick="setPalette('Trắng ngà tơ tằm', '#E8E4DA', '#1C1917', '#5C5549', 'Kim bạch tinh khôi (Tối giản 99%)')" title="Trắng ngà tơ tằm" class="h-9 rounded-xl border border-stone-700 shadow-sm flex items-center justify-center text-stone-950" style="background-color: #E8E4DA;">
-                <i data-lucide="check" class="w-3.5 h-3.5 palette-check hidden"></i>
-              </button>
-            </div>
-            
-            <div class="flex items-center justify-between text-[11px] bg-stone-900 px-3 py-1.5 rounded-lg border border-stone-800">
-              <span class="text-stone-400 font-medium">Hài hòa màu sắc:</span>
-              <span id="harmonyBadge" class="font-bold text-emerald-400 flex items-center gap-1">
-                <i data-lucide="sparkles" class="w-3 h-3 text-emerald-400"></i>
-                <span id="harmonyText">Thủy sinh Mộc (Hài hòa 98%)</span>
-              </span>
-            </div>
-          </div>
-
-          <!-- Feature 5: Phụ kiện & Test Cảnh báo -->
-          <div class="space-y-1.5">
-            <div class="flex justify-between items-center">
-              <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-400">👟 5. Phụ Kiện Phối Đương Đại</label>
-              <span class="text-[10px] text-amber-400 font-semibold cursor-pointer hover:underline" onclick="simulateCulturalWarning()">⚠️ Test cảnh báo văn hóa</span>
-            </div>
-            <div class="grid grid-cols-2 gap-2 text-xs">
-              <label class="flex items-center gap-2 p-2 bg-stone-900 rounded-lg cursor-pointer hover:bg-stone-850 text-stone-300">
-                <input type="checkbox" id="itemTrousers" checked class="rounded text-amber-500 focus:ring-amber-400">
-                <span>Quần âu may đo ống suông</span>
-              </label>
-              <label class="flex items-center gap-2 p-2 bg-stone-900 rounded-lg cursor-pointer hover:bg-stone-850 text-stone-300">
-                <input type="checkbox" id="itemFootwear" checked class="rounded text-amber-500 focus:ring-amber-400">
-                <span>Giày da Loafer / Derby</span>
-              </label>
-              <label class="flex items-center gap-2 p-2 bg-stone-900 rounded-lg cursor-pointer hover:bg-stone-850 text-stone-300">
-                <input type="checkbox" id="itemGlasses" checked class="rounded text-amber-500 focus:ring-amber-400">
-                <span>Kính mắt vintage</span>
-              </label>
-              <label class="flex items-center gap-2 p-2 bg-stone-900 rounded-lg cursor-pointer hover:bg-stone-850 text-stone-300">
-                <input type="checkbox" id="itemTote" checked class="rounded text-amber-500 focus:ring-amber-400">
-                <span>Túi Tote vải gai thô</span>
-              </label>
-            </div>
-          </div>
-
-          <!-- Action Button -->
-          <button onclick="runStylistAI()" id="btnAction" class="w-full py-4 px-6 rounded-xl bg-gradient-to-r from-amber-400 via-amber-500 to-orange-500 text-stone-950 font-black text-xs sm:text-sm tracking-wider shadow-lg shadow-amber-500/20 hover:brightness-110 active:scale-[0.99] transition flex items-center justify-center gap-2 uppercase">
-            <i data-lucide="sparkles" class="w-4 h-4"></i>
-            <span id="btnActionText">PHỐI ĐỒ CÙNG GEMINI FLASH THINKING</span>
-          </button>
-
-        </div>
-      </section>
-
-      <!-- RIGHT DISPLAY: 7 Cols (Lookbook Output) -->
-      <section class="lg:col-span-7 space-y-5">
-        
-        <!-- Output Container -->
-        <div id="lookbookCard" class="bg-white text-stone-900 rounded-2xl border border-stone-200 shadow-2xl overflow-hidden transition-all">
-          
-          <!-- Card Header / Title -->
-          <div class="p-6 border-b border-stone-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-gradient-to-r from-stone-50 via-white to-purple-50/20">
-            <div>
-              <div class="flex items-center gap-2 mb-1">
-                <span id="cardBadge" class="text-[10px] uppercase tracking-widest font-extrabold px-2.5 py-0.5 rounded-full bg-purple-100 text-purple-950 border border-purple-200">Contemporary Heritage Set</span>
-                <span id="cardAvatarTag" class="text-xs text-stone-500 font-semibold">• Nam sinh viên</span>
-              </div>
-              <h3 id="cardTitle" class="text-2xl font-serif-vn font-bold text-stone-950">
-                Hoài Niệm An Định: Giao Thoa Trẻ Trung & Hoài Cổ
-              </h3>
-            </div>
-
-            <!-- Cultural Integrity Badge -->
-            <div class="flex sm:flex-col items-center sm:items-end justify-between w-full sm:w-auto bg-emerald-50 sm:bg-transparent p-2.5 sm:p-0 rounded-xl border sm:border-0 border-emerald-200">
-              <span class="text-[10px] uppercase font-bold text-stone-400">Cultural Integrity</span>
-              <div class="flex items-center gap-1.5 text-emerald-700 font-extrabold text-xl font-heritage">
-                <i data-lucide="shield-check" class="w-5 h-5 text-emerald-600"></i>
-                <span id="cardScore">96 / 100</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Visual Illustration & Mockup Area -->
-          <div class="p-6 bg-stone-100/60 border-b border-stone-200/80 flex flex-col md:flex-row gap-6 items-center">
-            
-            <!-- Real Artifact Photo & Graphic Illustration Preview -->
-            <div id="costumeGraphic" class="w-full md:w-64 h-72 rounded-2xl flex flex-col items-center justify-center p-3 relative overflow-hidden shadow-2xl border border-stone-200 bg-stone-950">
-              
-              <!-- Real Historical Photo Display -->
-              <div id="artifactPhotoContainer" class="w-full h-full relative rounded-xl overflow-hidden group">
-                <img id="artifactPhotoImg" src="assets/ao_ngu_than.jpg" alt="Hiện vật cổ phục thật" class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105">
-                <div class="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/20 to-transparent"></div>
-                <div class="absolute top-2 left-2 bg-amber-400 text-stone-950 font-black text-[9px] px-2 py-0.5 rounded uppercase tracking-wider flex items-center gap-1 shadow">
-                  <i data-lucide="camera" class="w-3 h-3"></i>
-                  <span>Ảnh Tư Liệu Thật</span>
-                </div>
-                <div class="absolute bottom-2 left-2 right-2 text-center">
-                  <span id="svgLabel" class="text-xs font-bold text-amber-200 tracking-wide font-serif-vn">Áo Ngũ Thân Lập Lĩnh</span>
-                  <p id="artifactCaption" class="text-[10px] text-stone-300 line-clamp-1 italic">Tư liệu bưu thiếp Đông Dương 1904</p>
-                </div>
-              </div>
-
-              <!-- SVG Schematic Mode (Hidden by default, togglable) -->
-              <div id="svgSchematicContainer" class="w-full h-full hidden flex flex-col items-center justify-center p-4 relative" style="background: linear-gradient(145deg, #4A154B 0%, #240825 100%);">
-                <svg viewBox="0 0 100 120" class="w-32 h-40 drop-shadow-2xl">
-                  <path d="M42,20 Q50,16 58,20 L58,25 Q50,22 42,25 Z" fill="#D4AF37"/>
-                  <path d="M42,25 L58,25 L68,45 L72,110 L30,110 L34,45 Z" fill="#F5F5F0" opacity="0.95"/>
-                  <path d="M42,25 Q50,26 58,25 L75,55 L68,110 L52,110 L48,50 L34,110 L28,110 L25,55 Z" fill="#4A154B" id="svgCostumeFill"/>
-                  <circle cx="53" cy="27" r="1.5" fill="#D4AF37"/>
-                  <circle cx="55" cy="33" r="1.5" fill="#D4AF37"/>
-                  <circle cx="56" cy="40" r="1.5" fill="#D4AF37"/>
-                  <circle cx="55" cy="48" r="1.5" fill="#D4AF37"/>
-                  <circle cx="53" cy="56" r="1.5" fill="#D4AF37"/>
-                </svg>
-                <div class="mt-2 text-center text-xs font-bold text-amber-200">Sơ Đồ Giải Phẫu 5 Thân</div>
-              </div>
-
-              <!-- Toggle Button Between Real Photo and Schematic -->
-              <button type="button" onclick="toggleArtifactView()" class="absolute top-2 right-2 bg-stone-900/80 hover:bg-stone-900 border border-stone-700 text-stone-200 text-[9px] font-bold px-2 py-1 rounded-lg backdrop-blur transition flex items-center gap-1 shadow">
-                <i data-lucide="layers" class="w-3 h-3 text-amber-400"></i>
-                <span id="btnToggleLabel">Xem Sơ đồ SVG</span>
-              </button>
-
-              <!-- User Uploaded Avatar Thumbnail if present -->
-              <div id="avatarOverlay" class="absolute bottom-2 right-2 w-10 h-10 rounded-full border-2 border-amber-300 overflow-hidden shadow hidden">
-                <img id="avatarImgPreview" class="w-full h-full object-cover">
-              </div>
-            </div>
-
-            <!-- Breakdown Information -->
-            <div class="flex-1 space-y-3 w-full">
-              <div>
-                <h4 class="text-xs font-bold uppercase tracking-wider text-stone-400">1. Trang Phục Di Sản Gốc</h4>
-                <p id="cardBaseDesc" class="text-sm font-semibold text-stone-900 mt-0.5">
-                  Áo ngũ thân tay chẽn may bằng đũi tơ tằm dệt thủ công, phom suông đứng, cổ lập lĩnh ôm sát cổ, cài 5 khuy tết đồng sang vạt phải.
-                </p>
-              </div>
-
-              <div>
-                <h4 class="text-xs font-bold uppercase tracking-wider text-purple-900">2. Bản Phối Đương Đại (Modern Layering)</h4>
-                <p id="cardRemixDesc" class="text-sm text-stone-700 mt-0.5">
-                  Mặc ngoài như một dạng Mandarin Collar Jacket, phối cùng quần âu may đo ống suông cạp cao màu than chì, giày Loafer da đen tối giản và kính mắt vintage.
-                </p>
-              </div>
-
-              <!-- Color chips -->
-              <div class="pt-1 flex items-center justify-between">
-                <div class="flex items-center gap-2">
-                  <span class="text-xs font-medium text-stone-400">Mã màu:</span>
-                  <div class="flex items-center gap-1.5" id="colorChipsContainer">
-                    <span class="w-5 h-5 rounded-full border border-stone-300 shadow-sm" style="background-color: #4A154B;" title="Tím hoa cà"></span>
-                    <span class="w-5 h-5 rounded-full border border-stone-300 shadow-sm" style="background-color: #F5F5F0;" title="Trắng ngà tơ tằm"></span>
-                    <span class="w-5 h-5 rounded-full border border-stone-300 shadow-sm" style="background-color: #1C1917;" title="Than chì"></span>
-                  </div>
-                </div>
-                <button onclick="addToCompare()" class="text-xs font-bold text-purple-900 hover:text-purple-700 flex items-center gap-1 bg-purple-50 px-2.5 py-1 rounded-lg border border-purple-200">
-                  <i data-lucide="plus" class="w-3 h-3"></i> Thêm vào so sánh
-                </button>
-              </div>
-            </div>
-
-          </div>
-
-          <!-- Cultural Heritage Guardrail -->
-          <div id="guardrailBox" class="p-6 bg-amber-50/70 border-b border-amber-200/60 space-y-2">
-            <div class="flex items-center justify-between text-amber-900 font-bold text-xs uppercase tracking-wider">
-              <div class="flex items-center gap-2">
-                <i data-lucide="shield-alert" class="w-4 h-4 text-amber-700"></i>
-                <span id="guardrailStatusTitle">Kiểm Định Tính Nguyên Bản & Ranh Giới Di Sản</span>
-              </div>
-              <span id="guardrailBadge" class="bg-emerald-100 text-emerald-800 text-[10px] px-2 py-0.5 rounded font-extrabold">ĐẠT CHUẨN</span>
-            </div>
-            <p id="cardGuardrail" class="text-xs text-amber-950/90 leading-relaxed font-normal">
-              Trang phục giữ trọn 100% giải phẫu 5 thân (ngũ thân) và 5 khuy tượng trưng cho Ngũ thường (Nhân - Lễ - Nghĩa - Trí - Tín). Tuyệt đối không biến dạng cổ áo hoặc xén tà ngắn ngang đùi để tránh phá vỡ tính tôn nghiêm của phục sức triều Nguyễn.
-            </p>
-          </div>
-
-          <!-- Historical Archive Note -->
-          <div class="p-6 bg-stone-950 text-stone-200 flex items-start gap-4">
-            <div class="p-2 bg-stone-800 rounded-lg text-amber-400 mt-0.5">
-              <i data-lucide="book-open" class="w-5 h-5"></i>
-            </div>
-            <div class="space-y-1">
-              <div class="text-xs font-bold text-amber-300 uppercase tracking-widest font-heritage">Nguồn Gốc & Ý Nghĩa Di Sản Triều Nguyễn</div>
-              <p id="cardHistory" class="text-xs text-stone-300 leading-relaxed italic">
-                "Năm 1744, Chúa Nguyễn Phúc Khoát tại Phú Xuân - Huế ban hành quy định trang phục tiền thân cho Áo ngũ thân. Đến năm 1827, Vua Minh Mạng chuẩn hóa trên toàn cõi, đưa Huế trở thành cái nôi của Áo dài Việt Nam."
-              </p>
-            </div>
-          </div>
-
-        </div>
-
-        <!-- Utility Bar (Lookbook Export & Share) -->
-        <div class="flex flex-wrap items-center justify-between gap-3 bg-stone-950 p-4 rounded-xl border border-stone-800 shadow-md text-stone-300">
-          <div class="flex items-center gap-2">
-            <button onclick="downloadLookbook()" class="inline-flex items-center gap-1.5 bg-gradient-to-r from-amber-400 to-amber-500 text-stone-950 px-4 py-2 rounded-xl text-xs font-bold transition shadow-sm hover:brightness-110">
-              <i data-lucide="download" class="w-4 h-4 text-stone-950"></i>
-              <span>Xuất Thẻ Lookbook (PNG)</span>
-            </button>
-            <button onclick="copyShareText()" class="inline-flex items-center gap-1.5 bg-stone-800 hover:bg-stone-700 text-stone-200 px-4 py-2 rounded-xl text-xs font-semibold transition border border-stone-700">
-              <i data-lucide="share-2" class="w-4 h-4"></i>
-              <span>Sao chép bản phối</span>
-            </button>
-          </div>
-
-          <div class="text-[11px] text-stone-400">
-            Powered by Google Gemini 2.0 Flash Thinking • AI Arena 2026
-          </div>
-        </div>
-
-      </section>
-
-    </div>
-  </main>
-
-  <!-- Digital Costume Anatomy Section (Format Bảo Tàng Số) -->
-  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 border-t border-stone-800">
-    <div class="text-center space-y-2 mb-8">
-      <span class="text-xs uppercase font-extrabold text-amber-400 tracking-widest">Digital Costume Anatomy</span>
-      <h3 class="text-2xl sm:text-3xl font-serif-vn font-bold text-stone-100">Bóc Tách Cấu Trúc Di Sản Triều Nguyễn</h3>
-      <p class="text-xs text-stone-400 max-w-xl mx-auto">
-        Tìm hiểu chi tiết các thành tố bất biến tạo nên vẻ đẹp trang nghiêm, mực thước của Cổ phục xứ Huế.
-      </p>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-      
-      <div class="bg-stone-950 p-5 rounded-2xl border border-stone-800 space-y-2">
-        <div class="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center font-bold text-xs font-heritage">01</div>
-        <h4 class="font-bold text-sm text-stone-100">Cổ Lập Lĩnh (Standing Collar)</h4>
-        <p class="text-xs text-stone-400 leading-relaxed">
-          Cổ đứng cao từ 2-3cm ôm khít quanh cổ, tạo nên phong thái đoan trang, kín đáo, mang ý nghĩa người quân tử luôn ngay thẳng, nghiêm cẩn.
-        </p>
-      </div>
-
-      <div class="bg-stone-950 p-5 rounded-2xl border border-stone-800 space-y-2">
-        <div class="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center font-bold text-xs font-heritage">02</div>
-        <h4 class="font-bold text-sm text-stone-100">Vạt Hò Cài Hữu (Right Overlap)</h4>
-        <p class="text-xs text-stone-400 leading-relaxed">
-          Thân trước áo cài khuy chéo sang bên phải, tạo vệt vạt hò đặc trưng của phục trang phương Nam, phân biệt rõ nét với trang phục các quốc gia lân cận.
-        </p>
-      </div>
-
-      <div class="bg-stone-950 p-5 rounded-2xl border border-stone-800 space-y-2">
-        <div class="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center font-bold text-xs font-heritage">03</div>
-        <h4 class="font-bold text-sm text-stone-100">Ngũ Khuy Đồng (5 Buttons)</h4>
-        <p class="text-xs text-stone-400 leading-relaxed">
-          Hàng 5 cúc tượng trưng cho Ngũ thường của Nho gia: <strong>Nhân - Lễ - Nghĩa - Trí - Tín</strong>, nhắc nhở người mặc tu dưỡng đạo đức trọn đời.
-        </p>
-      </div>
-
-      <div class="bg-stone-950 p-5 rounded-2xl border border-stone-800 space-y-2">
-        <div class="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center font-bold text-xs font-heritage">04</div>
-        <h4 class="font-bold text-sm text-stone-100">Cấu Trúc Ngũ Thân (5 Panels)</h4>
-        <p class="text-xs text-stone-400 leading-relaxed">
-          Gồm 4 thân ngoài tượng trưng cho "tứ thân phụ mẫu" (cha mẹ ruột và cha mẹ chồng/vợ) bao bọc thân con bé bên trong tượng trưng cho bản thân người mặc.
-        </p>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- Modal 1: So Sánh A/B -->
-  <div id="compareModal" class="fixed inset-0 bg-stone-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-stone-900 rounded-2xl max-w-4xl w-full p-6 shadow-2xl border border-stone-800 space-y-4 max-h-[90vh] overflow-y-auto text-stone-100">
-      <div class="flex justify-between items-center border-b border-stone-800 pb-3">
-        <h3 class="font-bold text-stone-100 flex items-center gap-2 text-base">
-          <i data-lucide="columns-2" class="w-5 h-5 text-amber-400"></i>
-          <span>So Sánh Các Phương Án Phối Đồ (A/B Comparison)</span>
-        </h3>
-        <button onclick="openCompareModal()" class="text-stone-400 hover:text-stone-200">
-          <i data-lucide="x" class="w-5 h-5"></i>
-        </button>
-      </div>
-
-      <div id="compareGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
-
-      <div class="flex justify-between items-center pt-2 border-t border-stone-800">
-        <button onclick="clearCompare()" class="text-xs text-red-400 hover:underline">Xóa danh sách so sánh</button>
-        <button onclick="openCompareModal()" class="px-4 py-2 bg-stone-800 hover:bg-stone-700 text-white rounded-xl text-xs font-bold">Đóng</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal 2: API Key Configuration -->
-  <div id="apiKeyModal" class="fixed inset-0 bg-stone-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-stone-900 rounded-2xl max-w-md w-full p-6 shadow-2xl border border-stone-800 space-y-4 text-stone-100">
-      <div class="flex justify-between items-center border-b border-stone-800 pb-3">
-        <h3 class="font-bold text-stone-100 flex items-center gap-2 text-sm">
-          <i data-lucide="key" class="w-4 h-4 text-amber-400"></i>
-          <span>Cấu hình Google Gemini Flash Thinking</span>
-        </h3>
-        <button onclick="toggleApiKeyModal()" class="text-stone-400 hover:text-stone-200">
-          <i data-lucide="x" class="w-4 h-4"></i>
-        </button>
-      </div>
-
-      <p class="text-xs text-stone-400 leading-relaxed">
-        Nhập khóa Gemini API (tạo miễn phí trên Google AI Studio) để suy luận thời gian thực với chế độ <strong>Gemini Flash Mở Rộng (Thinking Mode)</strong>.
-      </p>
-
-      <div>
-        <label class="block text-xs font-bold text-stone-300 uppercase mb-1">Gemini API Key</label>
-        <input type="password" id="inputApiKey" placeholder="AIzaSy..." class="w-full text-xs p-3 bg-stone-950 border border-stone-800 rounded-xl outline-none focus:ring-2 focus:ring-amber-400 text-stone-100">
-      </div>
-
-      <div class="flex justify-end gap-2 pt-2">
-        <button onclick="clearApiKey()" class="px-3 py-2 text-xs text-stone-400 hover:text-stone-200">Xóa key</button>
-        <button onclick="saveApiKey()" class="px-4 py-2 bg-amber-400 hover:bg-amber-300 text-stone-950 rounded-xl text-xs font-bold shadow">Lưu khóa</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Footer -->
-  <footer class="bg-stone-950 text-stone-400 text-xs py-8 border-t border-stone-800 mt-12">
-    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-      <div>
-        <p class="font-semibold text-stone-200">Phục Cố (PhucCo AI) • Đội thi AI Arena Vietnam 2026</p>
-        <p class="text-stone-500 mt-0.5">Xây dựng trên nền tảng Google Gemini & Google AI Studio (Flash Thinking Mode)</p>
-      </div>
-      <div class="text-stone-500">
-        Đại học Quốc gia Hà Nội (VNU) x Google
-      </div>
-    </div>
-  </footer>
-
-  <!-- Core Javascript Application Logic -->
-  <script>
-    lucide.createIcons();
-
-    const landmarks = {
-      'cung_an_dinh': {
-        name: 'Cung An Định',
-        year: '1917',
-        desc: 'Kiến trúc giao thoa Đông Dương, thanh lịch, hoài cổ',
-        thumb: 'assets/cung_an_dinh.jpg'
-      },
-      'ngo_mon': {
-        name: 'Đại Nội & Ngọ Môn',
-        year: '1833',
-        desc: 'Không gian hoàng gia cổ kính, uy nghiêm, trang trọng',
-        thumb: 'assets/ngo_mon.jpg'
-      },
-      'song_huong': {
-        name: 'Cầu Tràng Tiền & Sông Hương',
-        year: '1897',
-        desc: 'Dạo phố cuối tuần, ngắm hoàng hôn, tối giản nhẹ nhàng',
-        thumb: 'assets/song_huong.jpg'
-      },
-      'quoc_hoc': {
-        name: 'THPT Chuyên Quốc Học',
-        year: '1896',
-        desc: 'Kỷ yếu học đường, thanh xuân, trẻ trung trí thức',
-        thumb: 'assets/quoc_hoc.jpg'
-      }
-    };
-
-    let currentContext = {
-      avatarRole: 'Nam sinh viên',
-      locationId: 'cung_an_dinh',
-      location: 'Cung An Định',
-      locDesc: 'Kiến trúc giao thoa Đông Dương, thanh lịch, hoài cổ',
-      weather: 'Thu se lạnh (21°C)',
-      garment: 'Áo ngũ thân tay chẽn',
-      paletteName: 'Tím hoa cà',
-      primaryColor: '#4A154B',
-      secondaryColor: '#F5F5F0',
-      accentColor: '#1C1917',
-      harmony: 'Thủy sinh Mộc (Hài hòa 98%)'
-    };
-
-    let savedOutfits = [];
-
-    function selectLocationById(id) {
-      currentContext.locationId = id;
-      const data = landmarks[id];
-      currentContext.location = data.name;
-      currentContext.locDesc = data.desc;
-
-      document.getElementById('activeLandmarkName').innerText = data.name;
-      document.getElementById('activeLandmarkDesc').innerText = data.desc;
-      document.getElementById('activeLandmarkThumb').src = data.thumb;
-
-      document.querySelectorAll('.gallery-card').forEach(c => {
-        c.classList.remove('border-amber-500/80', 'border-2', 'shadow-lg');
-        c.classList.add('border-stone-800');
-        const badge = c.querySelector('.absolute.top-2.right-2');
-        if (badge) badge.remove();
-      });
-
-      const activeCard = event.currentTarget;
-      if (activeCard) {
-        activeCard.classList.remove('border-stone-800');
-        activeCard.classList.add('border-amber-500/80', 'border-2', 'shadow-lg');
-        const badge = document.createElement('div');
-        badge.className = 'absolute top-2 right-2 bg-amber-400 text-stone-950 font-black text-[9px] px-2 py-0.5 rounded uppercase';
-        badge.innerText = 'Đang chọn';
-        activeCard.appendChild(badge);
-      }
-    }
-
-    function setAvatar(type, label, el) {
-      document.querySelectorAll('.avatar-btn').forEach(btn => {
-        btn.classList.remove('border-amber-400', 'bg-amber-500/10', 'text-amber-300', 'font-bold');
-        btn.classList.add('border-stone-800', 'bg-stone-900', 'text-stone-400');
-      });
-      el.classList.remove('border-stone-800', 'bg-stone-900', 'text-stone-400');
-      el.classList.add('border-amber-400', 'bg-amber-500/10', 'text-amber-300', 'font-bold');
-      currentContext.avatarRole = label;
-      document.getElementById('cardAvatarTag').innerText = `• ${label}`;
-    }
-
-    function handleUserAvatar(event) {
-      const file = event.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          document.getElementById('avatarImgPreview').src = e.target.result;
-          document.getElementById('avatarOverlay').classList.remove('hidden');
-          document.getElementById('customAvatarLabel').innerText = 'Ảnh đã nạp';
-          setAvatar('custom', 'Ảnh người dùng', document.getElementById('customAvatarBtn'));
-        };
-        reader.readAsDataURL(file);
-      }
-    }
-
-    function updateWeatherTip() {
-      const w = document.getElementById('weatherSelect').value;
-      const tipBox = document.getElementById('weatherTip');
-      if (w === 'autumn_cool') {
-        currentContext.weather = 'Thu se lạnh (21°C)';
-        tipBox.innerHTML = '💡 <strong>Gợi ý chất liệu:</strong> Tiết thu se lạnh thích hợp cho vải Đũi dệt thủ công hoặc Lụa tơ tằm hai lớp.';
-      } else if (w === 'sunny') {
-        currentContext.weather = 'Nắng Cố Đô (29°C)';
-        tipBox.innerHTML = '💡 <strong>Gợi ý chất liệu:</strong> Thời tiết nắng ấm nên dùng tơ lụa mỏng nhẹ thoáng khí, phối nón bài thơ hoặc kính râm.';
-      } else {
-        currentContext.weather = 'Mưa bay Huế (19°C)';
-        tipBox.innerHTML = '💡 <strong>Gợi ý chất liệu:</strong> Tiết trời ẩm lạnh ưu tiên gấm dệt dày dặn, kết hợp ô che giấy dầu hoặc áo khoác ngoài.';
-      }
-    }
-
-    function setPalette(name, primary, secondary, accent, harmonyText) {
-      currentContext.paletteName = name;
-      currentContext.primaryColor = primary;
-      currentContext.secondaryColor = secondary;
-      currentContext.accentColor = accent;
-      currentContext.harmony = harmonyText;
-
-      document.getElementById('paletteName').innerText = name;
-      document.getElementById('harmonyText').innerText = harmonyText;
-      document.getElementById('svgCostumeFill').setAttribute('fill', primary);
-      
-      const container = document.getElementById('colorChipsContainer');
-      container.innerHTML = `
-        <span class="w-5 h-5 rounded-full border border-stone-300 shadow-sm" style="background-color: ${primary};" title="${name}"></span>
-        <span class="w-5 h-5 rounded-full border border-stone-300 shadow-sm" style="background-color: ${secondary};"></span>
-        <span class="w-5 h-5 rounded-full border border-stone-300 shadow-sm" style="background-color: ${accent};"></span>
-      `;
-    }
-
-    // Modal API Key
-    function toggleApiKeyModal() {
-      document.getElementById('apiKeyModal').classList.toggle('hidden');
-    }
-
-    function saveApiKey() {
-      const key = document.getElementById('inputApiKey').value.trim();
-      if (key) {
-        localStorage.setItem('GEMINI_API_KEY', key);
-        document.getElementById('apiKeyStatusLabel').innerText = 'Thinking (Connected)';
-      }
-      toggleApiKeyModal();
-    }
-
-    function clearApiKey() {
-      localStorage.removeItem('GEMINI_API_KEY');
-      document.getElementById('inputApiKey').value = '';
-      document.getElementById('apiKeyStatusLabel').innerText = 'Flash Thinking';
-      toggleApiKeyModal();
-    }
-
-    // Modal Compare
-    function openCompareModal() {
-      const modal = document.getElementById('compareModal');
-      const grid = document.getElementById('compareGrid');
-      
-      if (savedOutfits.length === 0) {
-        grid.innerHTML = `
-          <div class="col-span-2 text-center py-8 text-stone-500 text-xs">
-            Chưa có set đồ nào được lưu. Hãy bấm nút "Thêm vào so sánh" ở bên dưới mỗi bản phối để so sánh A/B!
-          </div>
-        `;
-      } else {
-        grid.innerHTML = savedOutfits.map((item, idx) => `
-          <div class="p-4 rounded-xl border border-stone-800 bg-stone-950 space-y-2">
-            <div class="flex justify-between items-center">
-              <span class="text-[10px] font-bold uppercase tracking-wider bg-amber-400 text-stone-950 px-2 py-0.5 rounded">Set ${idx === 0 ? 'A' : 'B'} (${item.role})</span>
-              <span class="text-xs font-black text-emerald-400">${item.score}</span>
-            </div>
-            <h4 class="font-bold text-sm text-stone-100 font-serif-vn">${item.title}</h4>
-            <p class="text-xs text-stone-400"><strong>Di sản:</strong> ${item.base}</p>
-            <p class="text-xs text-stone-400"><strong>Remix:</strong> ${item.remix}</p>
-            <div class="text-[10px] text-amber-200/90 bg-amber-500/10 p-2 rounded border border-amber-500/20">${item.guardrail}</div>
-          </div>
-        `).join('');
-      }
-
-      modal.classList.toggle('hidden');
-    }
-
-    function addToCompare() {
-      const current = {
-        title: document.getElementById('cardTitle').innerText,
-        score: document.getElementById('cardScore').innerText,
-        role: currentContext.avatarRole,
-        base: document.getElementById('cardBaseDesc').innerText,
-        remix: document.getElementById('cardRemixDesc').innerText,
-        guardrail: document.getElementById('cardGuardrail').innerText
-      };
-
-      if (savedOutfits.length >= 2) {
-        savedOutfits.shift();
-      }
-      savedOutfits.push(current);
-      document.getElementById('compareCount').innerText = savedOutfits.length;
-      alert(`Đã lưu "${current.title}" vào danh sách so sánh A/B!`);
-    }
-
-    function clearCompare() {
-      savedOutfits = [];
-      document.getElementById('compareCount').innerText = '0';
-      openCompareModal();
-    }
-
-    // Cultural Warning Simulator
-    function simulateCulturalWarning() {
-      const box = document.getElementById('guardrailBox');
-      
-      document.getElementById('cardTitle').innerText = '⚠️ CẢNH BÁO SAI LỆCH QUY CHUẨN CỔ PHỤC';
-      document.getElementById('cardScore').innerText = '42 / 100';
-      document.getElementById('cardScore').className = 'text-red-600 font-black text-xl font-heritage';
-      document.getElementById('guardrailBadge').innerText = 'CẢNH BÁO VI PHẠM';
-      document.getElementById('guardrailBadge').className = 'bg-red-100 text-red-800 text-[10px] px-2 py-0.5 rounded font-extrabold';
-      
-      document.getElementById('cardBaseDesc').innerText = 'Phát hiện yêu cầu: "Cắt ngắn tà áo Nhật Bình thành váy mini skirt và dùng hoa văn Rồng 5 móng".';
-      document.getElementById('cardRemixDesc').innerText = 'Cách kết hợp này phá vỡ hoàn toàn cấu trúc giải phẫu và ý nghĩa biểu trưng lịch sử của di sản.';
-      document.getElementById('cardGuardrail').innerHTML = '<strong>Lý do từ chối:</strong> Áo Nhật Bình là trang phục tôn nghiêm của bậc Hoàng thái hậu, Hoàng hậu và Công chúa triều Nguyễn với dải ngũ sắc biểu trưng cho Ngũ hành. Việc cắt xén tà áo hoặc dùng hoa văn Rồng 5 móng (vốn chỉ dành cho Hoàng đế) bị coi là lai căng và làm sai lệch nghiêm trọng đặc trưng văn hóa di sản. Hệ thống đề xuất giữ nguyên vạt áo và chỉ cách tân ở phụ kiện đi kèm.';
-
-      box.className = 'p-6 bg-red-50 border-b border-red-200 space-y-2';
-      alert('Đã kích hoạt chế độ kiểm thử bộ lọc Cultural Guardrail: Mô hình phát hiện và cảnh báo thành công trường hợp phối đồ sai lệch văn hóa!');
-      lucide.createIcons();
-    }
-
-    // Run AI Stylist (Simulates or executes with Gemini Flash Thinking)
-    async function runStylistAI() {
-      const btn = document.getElementById('btnAction');
-      const btnText = document.getElementById('btnActionText');
-      const garment = document.querySelector('input[name="garmentRadio"]:checked').value;
-      const key = localStorage.getItem('GEMINI_API_KEY');
-
-      btn.disabled = true;
-      btnText.innerText = 'GEMINI FLASH ĐANG TƯ DUY & SUY LUẬN MỞ RỘNG (THINKING)...';
-
-      if (key) {
-        try {
-          const systemPrompt = `You are an expert AI Fashion Consultant specializing in Nguyen Dynasty Vietnamese traditional attire from Hue.
-Strict JSON format: { "outfit_title": "...", "base_garment_desc": "...", "contemporary_styling": "...", "cultural_integrity_score": 96, "guardrail_advice": "...", "historical_archive": "..." }`;
-
-          const userPrompt = `Đối tượng: ${currentContext.avatarRole}. Địa điểm: ${currentContext.location}. Thời tiết: ${currentContext.weather}. Trang phục: ${garment}. Bảng màu: ${currentContext.paletteName}. Hãy phối đồ chuẩn mực Contemporary Heritage với chế độ Thinking sâu sắc.`;
-
-          const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${key}`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              contents: [{ parts: [{ text: userPrompt }] }],
-              systemInstruction: { parts: [{ text: systemPrompt }] },
-              generationConfig: { responseMimeType: "application/json" }
-            })
-          });
-
-          const data = await response.json();
-          const result = JSON.parse(data.candidates[0].content.parts[0].text);
-          renderOutput(result.outfit_title, result.cultural_integrity_score, result.base_garment_desc, result.contemporary_styling, result.guardrail_advice, result.historical_archive, garment);
-
-        } catch (e) {
-          fallbackStyling(garment);
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phục Cố AI | Contemporary Heritage Styling - Nguyễn Dynasty x Gen Z</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Playfair Display, Noto Serif Vietnamese, Cinzel, and Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,500;0,700;0,900;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'hue-gold': '#D4AF37',
+                        'hue-gold-light': '#F6E7B0',
+                        'hue-gold-dark': '#997A15',
+                        'imperial-red': '#990000',
+                        'imperial-crimson': '#800020',
+                        'royal-indigo': '#264653',
+                        'royal-indigo-deep': '#1B313B',
+                        'silk-ivory': '#FAF7F2',
+                        'silk-paper': '#F4EBD9',
+                        'charcoal-ink': '#2B2B2B',
+                        'charcoal-muted': '#6B6862',
+                        'wood-green': '#2D6A4F',
+                        'water-blue': '#1D3557',
+                        'earth-ochre': '#C58940'
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', '"Noto Serif"', 'serif'],
+                        viet: ['"Noto Serif"', 'serif'],
+                        cinzel: ['"Cinzel"', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'royal': '0 12px 36px -4px rgba(212, 175, 55, 0.22), 0 8px 16px -6px rgba(153, 0, 0, 0.12)',
+                        'paper': '0 8px 30px rgba(43, 43, 43, 0.06)',
+                        'seal': '0 4px 20px rgba(153, 0, 0, 0.28)',
+                    }
+                }
+            }
         }
-      } else {
-        setTimeout(() => fallbackStyling(garment), 600);
-      }
+    </script>
 
-      btn.disabled = false;
-      btnText.innerText = 'PHỐI ĐỒ CÙNG GEMINI FLASH THINKING';
-    }
+    <style>
+        :root {
+            --gold-primary: #D4AF37;
+            --red-imperial: #990000;
+        }
 
-    function fallbackStyling(garment) {
-      let title = `Hoài Niệm ${currentContext.location.split(' ')[0]}: Phong Cách Đương Đại`;
-      let score = 96;
-      let baseDesc = `${garment} may đo trên nền chất liệu đũi tơ tằm dệt thủ công (${currentContext.weather}), lấy cảm hứng từ gam màu ${currentContext.paletteName}. Cấu trúc giữ nguyên vạt hò sang hữu, cổ lập lĩnh nghiêm cẩn.`;
-      let remixDesc = `Mặc phối tầng (layering) cùng quần âu may đo ống suông cạp cao màu than chì, giày Loafer da đen tối giản, kết hợp túi vải gai thô và kính mắt kim loại vintage thanh mảnh.`;
-      let guardrail = `Trang phục giữ nguyên 100% giải phẫu 5 thân và 5 cúc khuy cài tượng trưng cho Ngũ thường (Nhân - Lễ - Nghĩa - Trí - Tín). Tuyệt đối không biến dạng cổ áo hay cắt xén tà áo để giữ trọn tính tôn nghiêm của cổ phục xứ Huế.`;
-      let history = `Năm 1744 tại Phú Xuân - Huế, Chúa Nguyễn Phúc Khoát ban hành quy định trang phục tiền thân cho Áo ngũ thân. Đến năm 1827, Vua Minh Mạng chuẩn hóa trên toàn cõi, đưa Huế thành Kinh đô Áo dài Việt Nam.`;
+        body {
+            background-color: #FAF7F2;
+            color: #2B2B2B;
+            background-image: 
+                radial-gradient(circle at 100% 0%, rgba(212, 175, 55, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 0% 100%, rgba(153, 0, 0, 0.06) 0%, transparent 45%),
+                url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23d4af37' fill-opacity='0.035' fill-rule='evenodd'%3E%3Cpath d='M40 0l40 40-40 40L0 40zM40 10L10 40l30 30 30-30z'/%3E%3Cpath d='M40 24l16 16-16 16-16-16z'/%3E%3C/g%3E%3C/svg%3E");
+        }
 
-      if (garment.includes('Nhật Bình')) {
-        title = `Sắc Cung Đình: Nhật Bình Outerwear Phối Lụa Đương Đại`;
-        baseDesc = `Áo Nhật Bình cổ chữ nhật viền ngũ sắc nguyên bản, tà áo thêu họa tiết dệt chìm truyền thống hoàng gia Huế.`;
-        remixDesc = `Khoác ngoài như một dạng Statement Outerwear sang trọng, mặc ngoài đầm suông lụa đơn sắc tối giản, phối giày Loafer da hoặc boots cổ lửng.`;
-        guardrail = `Cổ áo Nhật Bình mang dải ngũ sắc tượng trưng cho Ngũ hành phương Đông. Lưu ý không tự ý thay đổi trật tự màu sắc cổ áo hoặc dùng sai hoa văn cung đình kiêng kỵ.`;
-        score = 98;
-      }
+        .gold-seal-border {
+            border: 1px solid rgba(212, 175, 55, 0.45);
+            position: relative;
+        }
 
-      renderOutput(title, score, baseDesc, remixDesc, guardrail, history, garment);
-    }
+        .gold-seal-border::before {
+            content: '';
+            position: absolute;
+            inset: 3px;
+            border: 1px dashed rgba(212, 175, 55, 0.3);
+            pointer-events: none;
+            border-radius: inherit;
+        }
 
-    let isSvgView = false;
-    function toggleArtifactView() {
-      isSvgView = !isSvgView;
-      const photoBox = document.getElementById('artifactPhotoContainer');
-      const svgBox = document.getElementById('svgSchematicContainer');
-      const btnLabel = document.getElementById('btnToggleLabel');
-      
-      if (isSvgView) {
-        photoBox.classList.add('hidden');
-        svgBox.classList.remove('hidden');
-        btnLabel.innerText = 'Xem Ảnh Thật';
-      } else {
-        photoBox.classList.remove('hidden');
-        svgBox.classList.add('hidden');
-        btnLabel.innerText = 'Xem Sơ đồ SVG';
-      }
-      lucide.createIcons();
-    }
+        .royal-gradient-text {
+            background: linear-gradient(135deg, #990000 0%, #D4AF37 60%, #800020 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-    function renderOutput(title, score, baseDesc, remixDesc, guardrail, history, garment) {
-      document.getElementById('cardTitle').innerText = title;
-      document.getElementById('cardScore').innerText = `${score} / 100`;
-      document.getElementById('cardScore').className = 'text-emerald-700 font-extrabold text-xl font-heritage';
-      document.getElementById('guardrailBadge').innerText = 'ĐẠT CHUẨN';
-      document.getElementById('guardrailBadge').className = 'bg-emerald-100 text-emerald-800 text-[10px] px-2 py-0.5 rounded font-extrabold';
-      document.getElementById('guardrailBox').className = 'p-6 bg-amber-50/70 border-b border-amber-200/60 space-y-2';
+        .gold-text-shimmer {
+            background: linear-gradient(90deg, #997A15 0%, #D4AF37 50%, #997A15 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-      document.getElementById('cardBaseDesc').innerText = baseDesc;
-      document.getElementById('cardRemixDesc').innerText = remixDesc;
-      document.getElementById('cardGuardrail').innerText = guardrail;
-      document.getElementById('cardHistory').innerText = `"${history}"`;
-      document.getElementById('svgLabel').innerText = garment;
+        .dynasty-card {
+            background: rgba(254, 252, 248, 0.88);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(212, 175, 55, 0.28);
+        }
 
-      // Update authentic photo
-      if (garment.includes('Nhật Bình')) {
-        document.getElementById('artifactPhotoImg').src = 'assets/ao_nhat_binh.jpg';
-        document.getElementById('artifactCaption').innerText = 'Hoàng hậu Nam Phương trong triều phục Áo Nhật Bình (1934)';
-      } else {
-        document.getElementById('artifactPhotoImg').src = 'assets/ao_ngu_than.jpg';
-        document.getElementById('artifactCaption').innerText = 'Trang phục Áo ngũ thân lập lĩnh trên bưu thiếp năm 1904';
-      }
+        ::-webkit-scrollbar {
+            width: 7px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FAF7F2;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D4AF37;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #990000;
+        }
 
-      const card = document.getElementById('lookbookCard');
-      card.classList.add('ring-2', 'ring-purple-700/50');
-      setTimeout(() => card.classList.remove('ring-2', 'ring-purple-700/50'), 800);
-      lucide.createIcons();
-    }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #D4AF37;
+            cursor: ew-resize;
+            border: 2px solid #FAF7F2;
+            box-shadow: 0 0 10px rgba(153, 0, 0, 0.4);
+        }
+    </style>
+</head>
+<body class="font-sans antialiased selection:bg-hue-gold selection:text-charcoal-ink flex flex-col min-h-screen">
 
-    // Export lookbook image
-    function downloadLookbook() {
-      const card = document.getElementById('lookbookCard');
-      html2canvas(card, { scale: 2 }).then(canvas => {
-        const link = document.createElement('a');
-        link.download = `PhucCo_Lookbook_${Date.now()}.png`;
-        link.href = canvas.toDataURL('image/png');
-        link.click();
-      });
-    }
+    <!-- Top Royal Marquee Bar -->
+    <div class="bg-imperial-red text-silk-ivory text-xs py-2 px-4 border-b border-hue-gold/30">
+        <div class="max-w-7xl mx-auto flex justify-between items-center tracking-wider font-viet text-[11px] sm:text-xs">
+            <span class="flex items-center gap-2">
+                <span class="inline-block w-2 h-2 rounded-full bg-hue-gold animate-ping"></span>
+                <span>AUDITION AI ARENA 2026 • DỰ ÁN <strong>PHỤC CỐ AI</strong></span>
+            </span>
+            <span class="hidden md:inline text-hue-gold-light italic">
+                “Đồng sáng tạo cùng Google Gemini (Flash Mở rộng) • Bảo Tàng Số & Định Hình Cổ Phục Đương Đại”
+            </span>
+            <span class="font-semibold text-hue-gold uppercase tracking-widest text-[10px]">Cố Đô Huế x Gen Z Style</span>
+        </div>
+    </div>
 
-    function copyShareText() {
-      const title = document.getElementById('cardTitle').innerText;
-      const base = document.getElementById('cardBaseDesc').innerText;
-      const remix = document.getElementById('cardRemixDesc').innerText;
-      const text = `[Phục Cố - AI Heritage Stylist]\nSet đồ: ${title}\n- Trang phục di sản: ${base}\n- Phối đương đại: ${remix}\nĐược hỗ trợ bởi Google Gemini Flash Thinking!`;
-      navigator.clipboard.writeText(text).then(() => {
-        alert('Đã sao chép nội dung bản phối vào clipboard!');
-      });
-    }
-  </script>
+    <!-- Navigation Bar -->
+    <header class="sticky top-0 z-50 bg-silk-ivory/95 backdrop-blur-md border-b border-hue-gold/25 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-12 h-12 rounded-lg bg-imperial-red border border-hue-gold flex items-center justify-center shadow-seal group-hover:rotate-3 transition-transform">
+                    <span class="font-cinzel text-hue-gold font-bold text-2xl tracking-tighter">故</span>
+                </div>
+                <div class="flex flex-col">
+                    <div class="flex items-center gap-2">
+                        <span class="font-serif text-2xl sm:text-3xl font-bold tracking-tight text-charcoal-ink">PHỤC CỐ</span>
+                        <span class="px-1.5 py-0.5 rounded text-[10px] bg-hue-gold/20 text-hue-gold-dark font-semibold border border-hue-gold/40">AI 2026</span>
+                    </div>
+                    <span class="text-[10px] tracking-widest uppercase font-sans text-charcoal-muted">Contemporary Heritage Styling AI</span>
+                </div>
+            </a>
+
+            <!-- Quick Jump Navigation -->
+            <nav class="hidden lg:flex items-center gap-8 text-sm font-medium text-charcoal-muted font-viet">
+                <a href="#context-module" class="hover:text-imperial-red transition-colors flex items-center gap-1.5">
+                    <i data-lucide="map-pin" class="w-4 h-4 text-hue-gold"></i> Bối Cảnh Cố Đô
+                </a>
+                <a href="#harmony-module" class="hover:text-imperial-red transition-colors flex items-center gap-1.5">
+                    <i data-lucide="compass" class="w-4 h-4 text-hue-gold"></i> Ngũ Hành Phục Trang
+                </a>
+                <a href="#compare-module" class="hover:text-imperial-red transition-colors flex items-center gap-1.5">
+                    <i data-lucide="sliders-horizontal" class="w-4 h-4 text-hue-gold"></i> So Sánh A/B
+                </a>
+                <a href="#export-module" class="hover:text-imperial-red transition-colors flex items-center gap-1.5">
+                    <i data-lucide="sparkles" class="w-4 h-4 text-hue-gold"></i> Xuất Lookbook
+                </a>
+            </nav>
+
+            <!-- Action Button -->
+            <div class="flex items-center gap-3">
+                <button onclick="scrollToStudio()" class="px-5 py-2.5 rounded-full bg-gradient-to-r from-imperial-red to-imperial-crimson text-silk-ivory text-xs sm:text-sm font-semibold tracking-wide border border-hue-gold shadow-md hover:shadow-royal hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center gap-2">
+                    <i data-lucide="wand-2" class="w-4 h-4 text-hue-gold"></i>
+                    <span>Tạo Bản Phối Ngay</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden pt-12 pb-16 lg:pt-20 lg:pb-24 border-b border-hue-gold/20">
+        <!-- Floating Motif Decorations -->
+        <div class="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-hue-gold/10 blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-24 -left-24 w-96 h-96 rounded-full bg-imperial-red/10 blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Left Narrative Column -->
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-silk-paper border border-hue-gold/40 shadow-sm text-xs text-charcoal-ink font-viet">
+                        <i data-lucide="award" class="w-4 h-4 text-hue-gold"></i>
+                        <span>Đề án Vòng Audition — <strong>AI Arena 2026</strong></span>
+                        <span class="text-imperial-red font-bold">#PhucCoAI</span>
+                    </div>
+
+                    <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-charcoal-ink leading-[1.18]">
+                        Đưa Tinh Hoa <span class="royal-gradient-text italic">Cổ Phục Huế</span> <br>
+                        Vào Nhịp Thở <span class="underline decoration-hue-gold decoration-4 underline-offset-4">Thời Trang Gen Z</span>
+                    </h1>
+
+                    <p class="font-viet text-base sm:text-lg text-charcoal-muted leading-relaxed max-w-2xl mx-auto lg:mx-0">
+                        Phục Cố AI ứng dụng thuật toán hòa sắc Ngũ Hành triều Nguyễn và giải mã cấu trúc phục trang (Áo Tấc, Nhật Bình, Ngũ Thân) kết hợp cùng Streetwear đương đại. Giữ trọn <strong>Điểm Di Sản (Cultural Integrity)</strong>, mở lối biểu đạt cá tính tự tin xuống phố.
+                    </p>
+
+                    <!-- Feature Badges -->
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2 text-left">
+                        <div class="p-3.5 rounded-xl dynasty-card border border-hue-gold/30">
+                            <div class="text-imperial-red text-xs font-bold uppercase tracking-wider mb-1 flex items-center gap-1.5">
+                                <i data-lucide="landmark" class="w-3.5 h-3.5 text-hue-gold"></i> Bối Cảnh Di Sản Huế
+                            </div>
+                            <div class="text-xs text-charcoal-muted">Chuẩn hóa độ trang trọng hoàng triều</div>
+                        </div>
+
+                        <div class="p-3.5 rounded-xl dynasty-card border border-hue-gold/30">
+                            <div class="text-royal-indigo text-xs font-bold uppercase tracking-wider mb-1 flex items-center gap-1.5">
+                                <i data-lucide="shield-check" class="w-3.5 h-3.5 text-hue-gold"></i> Ngũ Hành Chuẩn
+                            </div>
+                            <div class="text-xs text-charcoal-muted">Tương sinh - Hóa giải xung khắc</div>
+                        </div>
+
+                        <div class="col-span-2 sm:col-span-1 p-3.5 rounded-xl dynasty-card border border-hue-gold/30">
+                            <div class="text-hue-gold-dark text-xs font-bold uppercase tracking-wider mb-1 flex items-center gap-1.5">
+                                <i data-lucide="share-2" class="w-3.5 h-3.5 text-imperial-red"></i> Thẻ Triện Đỏ 4K
+                            </div>
+                            <div class="text-xs text-charcoal-muted">Xuất Lookbook Canvas một chạm</div>
+                        </div>
+                    </div>
+
+                    <!-- CTA Buttons -->
+                    <div class="pt-4 flex flex-wrap items-center justify-center lg:justify-start gap-4">
+                        <a href="#interactive-studio" class="px-7 py-3.5 rounded-full bg-imperial-red hover:bg-imperial-crimson text-silk-ivory font-semibold text-sm tracking-wide shadow-royal hover:scale-105 active:scale-95 transition-all flex items-center gap-2 border border-hue-gold">
+                            <i data-lucide="palette" class="w-4 h-4 text-hue-gold"></i>
+                            <span>Bắt Đầu Trải Nghiệm Studio</span>
+                        </a>
+                        <button onclick="quickInspirePreset('nhatbinh-street')" class="px-6 py-3.5 rounded-full bg-silk-paper border border-charcoal-muted/20 hover:border-hue-gold text-charcoal-ink font-viet text-sm font-medium hover:bg-silk-paper/80 transition-all flex items-center gap-2">
+                            <i data-lucide="sparkle" class="w-4 h-4 text-hue-gold-dark"></i>
+                            <span>Xem Gợi Ý Xu Hướng #1</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Right Hero Visual Showcase -->
+                <div class="lg:col-span-5">
+                    <div class="relative mx-auto max-w-md gold-seal-border rounded-3xl bg-silk-paper/90 p-6 shadow-2xl backdrop-blur">
+                        <!-- Royal Seal Badge at corner -->
+                        <div class="absolute -top-4 -right-4 w-14 h-14 bg-imperial-red border-2 border-hue-gold rounded-full flex items-center justify-center shadow-seal text-silk-ivory font-cinzel text-xs font-bold text-center leading-none">
+                            <span>PHỤC<br>CỐ</span>
+                        </div>
+
+                        <div class="flex items-center justify-between pb-4 border-b border-hue-gold/30">
+                            <div>
+                                <span class="text-[11px] font-bold uppercase tracking-widest text-imperial-red font-sans">Lookbook Tiêu Biểu</span>
+                                <h3 class="font-serif text-xl font-bold text-charcoal-ink">Áo Nhật Bình x Cargo Suông</h3>
+                            </div>
+                            <span class="px-2.5 py-1 rounded-full text-xs font-bold bg-hue-gold/20 text-hue-gold-dark border border-hue-gold/50">
+                                Di Sản: 96/100
+                            </span>
+                        </div>
+
+                        <!-- Illustrated Real Museum Asset & Stylized Heritage Silhouette -->
+                        <div class="my-5 relative rounded-2xl overflow-hidden bg-gradient-to-b from-royal-indigo-deep to-charcoal-ink p-4 text-silk-ivory flex flex-col items-center justify-center min-h-[280px] border border-hue-gold/30">
+                            <div class="relative w-full h-44 rounded-xl overflow-hidden mb-3 border border-hue-gold/40 shadow-inner group">
+                                <img src="assets/cung_an_dinh.jpg" alt="Cung An Định" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                                <div class="absolute inset-0 bg-gradient-to-t from-charcoal-ink via-charcoal-ink/30 to-transparent"></div>
+                                <div class="absolute top-2 left-2 bg-imperial-red text-silk-ivory text-[9px] font-bold px-2 py-0.5 rounded border border-hue-gold/40 flex items-center gap-1 shadow">
+                                    <i data-lucide="camera" class="w-3 h-3 text-hue-gold"></i>
+                                    <span>Tư Liệu Hiện Vật Thực Tế</span>
+                                </div>
+                                <div class="absolute bottom-2 left-3 right-3 flex items-center justify-between">
+                                    <span class="text-xs font-serif font-bold text-hue-gold-light">Cung An Định (1917)</span>
+                                    <span class="text-[10px] text-silk-paper/80 italic">Đông Dương x Triều Nguyễn</span>
+                                </div>
+                            </div>
+
+                            <div class="text-center space-y-1">
+                                <span class="text-xs uppercase tracking-widest text-hue-gold font-sans font-semibold">Tân Cổ Giao Thoa</span>
+                                <p class="text-xs text-silk-ivory/80 font-viet">Bản phối lụa sa đỏ hoàng triều, kết hợp phụ kiện bạc và giày platform hiện đại.</p>
+                            </div>
+
+                            <!-- Color Spectrum Pills -->
+                            <div class="flex items-center gap-1.5 mt-3">
+                                <span class="w-4 h-4 rounded-full bg-imperial-red border border-silk-ivory/40" title="Đỏ Chu Sa"></span>
+                                <span class="w-4 h-4 rounded-full bg-hue-gold border border-silk-ivory/40" title="Vàng Hoàng Gia"></span>
+                                <span class="w-4 h-4 rounded-full bg-royal-indigo border border-silk-ivory/40" title="Xanh Chàm"></span>
+                                <span class="w-4 h-4 rounded-full bg-silk-ivory border border-silk-ivory/40" title="Trắng Lụa Ngà"></span>
+                                <span class="w-4 h-4 rounded-full bg-charcoal-ink border border-silk-ivory/40" title="Đen Mực Nho"></span>
+                            </div>
+                        </div>
+
+                        <!-- Card Footer Details -->
+                        <div class="grid grid-cols-2 gap-2 text-xs font-viet pt-2">
+                            <div class="bg-silk-ivory p-2.5 rounded-lg border border-hue-gold/20">
+                                <span class="text-charcoal-muted block text-[10px]">Bối cảnh đề xuất:</span>
+                                <span class="font-bold text-imperial-red">Cung An Định</span>
+                            </div>
+                            <div class="bg-silk-ivory p-2.5 rounded-lg border border-hue-gold/20">
+                                <span class="text-charcoal-muted block text-[10px]">Ngũ Hành Tương Sinh:</span>
+                                <span class="font-bold text-wood-green">Hỏa Sinh Thổ (+98đ)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- MAIN INTERACTIVE STUDIO -->
+    <main id="interactive-studio" class="flex-grow py-14 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+
+        <!-- Studio Section Header -->
+        <div class="text-center max-w-3xl mx-auto mb-12">
+            <span class="px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-widest bg-imperial-red/10 text-imperial-red border border-imperial-red/30 inline-block mb-3">
+                Interactive Styling Lab
+            </span>
+            <h2 class="font-serif text-3xl sm:text-4xl font-bold text-charcoal-ink">
+                Phòng Thí Nghiệm Phối Trang Phục Hoàng Triều
+            </h2>
+            <p class="font-viet text-sm sm:text-base text-charcoal-muted mt-2">
+                Tùy chỉnh 4 thông số tương tác thông minh để AI tổng hợp phong cách mang đậm bản sắc Cố đô Huế.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            
+            <!-- LEFT WORKSPACE: Input Controls & Modules 1 & 2 -->
+            <div class="lg:col-span-5 space-y-8">
+                
+                <!-- MODULE 1: HUE HERITAGE CONTEXT SELECTOR -->
+                <section id="context-module" class="dynasty-card rounded-2xl p-6 border border-hue-gold/40 shadow-paper">
+                    <div class="flex items-center justify-between pb-4 mb-4 border-b border-hue-gold/20">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-8 h-8 rounded-lg bg-imperial-red text-hue-gold flex items-center justify-center font-bold text-sm">
+                                1
+                            </div>
+                            <div>
+                                <h3 class="font-serif font-bold text-lg text-charcoal-ink">Bối Cảnh Cố Đô Huế</h3>
+                                <p class="text-[11px] text-charcoal-muted font-viet">Hue Heritage Context Selector</p>
+                            </div>
+                        </div>
+                        <span id="formality-badge" class="px-2.5 py-1 rounded-full text-xs font-semibold bg-imperial-red text-silk-ivory">
+                            Trang trọng: 98%
+                        </span>
+                    </div>
+
+                    <div class="space-y-3" id="context-selector-container">
+                        <!-- Landmarks populated dynamically via JS -->
+                    </div>
+
+                    <!-- Context Detail Card with Real Heritage Photo Preview -->
+                    <div id="context-info-box" class="mt-4 p-3.5 rounded-xl bg-silk-paper/80 border border-hue-gold/30 text-xs font-viet space-y-1.5 transition-all">
+                        <!-- Populated by JS -->
+                    </div>
+                </section>
+
+                <!-- CORE GARMENT & GEN Z ITEM CUSTOMIZER -->
+                <section class="dynasty-card rounded-2xl p-6 border border-hue-gold/40 shadow-paper space-y-5">
+                    <div class="flex items-center gap-2.5 pb-3 border-b border-hue-gold/20">
+                        <div class="w-8 h-8 rounded-lg bg-royal-indigo text-hue-gold flex items-center justify-center font-bold text-sm">
+                            2
+                        </div>
+                        <div>
+                            <h3 class="font-serif font-bold text-lg text-charcoal-ink">Tùy Chọn Phục Trang & Phối Kiểu</h3>
+                            <p class="text-[11px] text-charcoal-muted font-viet">Garment Architecture & Contemporary Mix</p>
+                        </div>
+                    </div>
+
+                    <!-- Traditional Garment Selection -->
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-charcoal-ink mb-2">
+                            Cổ Phục Triều Nguyễn Chủ Đạo:
+                        </label>
+                        <select id="garment-select" onchange="handleGarmentChange()" class="w-full bg-silk-paper border border-hue-gold/50 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-charcoal-ink focus:outline-none focus:ring-2 focus:ring-hue-gold font-viet">
+                            <option value="nhat-binh">Áo Nhật Bình (Cung đình quý phái - Ngực áo ngũ sắc)</option>
+                            <option value="ao-tac">Áo Tấc / Ngũ Thân tay thụng (Lễ nghi truyền thống trang trọng)</option>
+                            <option value="ngu-than-che">Áo Ngũ Thân tay chẽn (Năng động, nhã nhặn, tôn phom dáng)</option>
+                            <option value="giao-linh">Áo Giao Lĩnh (Cổ chéo truyền thống thời sơ Nguyễn)</option>
+                        </select>
+                    </div>
+
+                    <!-- Gen Z Item Pairing -->
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-charcoal-ink mb-2">
+                            Item Gen Z Phối Cùng:
+                        </label>
+                        <div class="grid grid-cols-2 gap-2 text-xs font-viet">
+                            <label class="flex items-center gap-2 p-2.5 rounded-xl border border-hue-gold/30 bg-silk-ivory cursor-pointer hover:border-imperial-red transition-all">
+                                <input type="checkbox" id="item-pants" checked onchange="updateStylingComposition()" class="accent-imperial-red w-4 h-4 rounded">
+                                <span>Quần Denim ống suông</span>
+                            </label>
+                            <label class="flex items-center gap-2 p-2.5 rounded-xl border border-hue-gold/30 bg-silk-ivory cursor-pointer hover:border-imperial-red transition-all">
+                                <input type="checkbox" id="item-shoes" checked onchange="updateStylingComposition()" class="accent-imperial-red w-4 h-4 rounded">
+                                <span>Sneaker Chunky / Retro</span>
+                            </label>
+                            <label class="flex items-center gap-2 p-2.5 rounded-xl border border-hue-gold/30 bg-silk-ivory cursor-pointer hover:border-imperial-red transition-all">
+                                <input type="checkbox" id="item-bag" checked onchange="updateStylingComposition()" class="accent-imperial-red w-4 h-4 rounded">
+                                <span>Túi kẹp nách mini thổ cẩm</span>
+                            </label>
+                            <label class="flex items-center gap-2 p-2.5 rounded-xl border border-hue-gold/30 bg-silk-ivory cursor-pointer hover:border-imperial-red transition-all">
+                                <input type="checkbox" id="item-glasses" onchange="updateStylingComposition()" class="accent-imperial-red w-4 h-4 rounded">
+                                <span>Kính râm gọng kim loại Y2K</span>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- MODULE 2: FIVE-ELEMENT HARMONY VALIDATOR (NGŨ HÀNH) -->
+                <section id="harmony-module" class="dynasty-card rounded-2xl p-6 border border-hue-gold/40 shadow-paper space-y-4">
+                    <div class="flex items-center justify-between pb-3 border-b border-hue-gold/20">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-8 h-8 rounded-lg bg-hue-gold text-charcoal-ink flex items-center justify-center font-bold text-sm">
+                                3
+                            </div>
+                            <div>
+                                <h3 class="font-serif font-bold text-lg text-charcoal-ink">Thước Đo Ngũ Hành Cung Đình</h3>
+                                <p class="text-[11px] text-charcoal-muted font-viet">Five-Element Harmony Validator</p>
+                            </div>
+                        </div>
+                        <span id="harmony-score-tag" class="px-2.5 py-1 rounded-full text-xs font-bold bg-wood-green text-silk-ivory">
+                            Tương Sinh: 96/100
+                        </span>
+                    </div>
+
+                    <p class="text-xs text-charcoal-muted font-viet">
+                        Kiểm tra tương tác năng lượng ngũ hành giữa <strong>Màu Cốt Lõi Phục Trang</strong> và <strong>Sắc Điểm Xuyết Phụ Kiện</strong>.
+                    </p>
+
+                    <!-- Element Selectors -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-[11px] font-bold uppercase tracking-wider text-charcoal-ink mb-1.5">
+                                Bản Mệnh Áo Cổ (Chủ):
+                            </label>
+                            <select id="primary-element" onchange="calculateFiveElements()" class="w-full bg-silk-paper border border-hue-gold/50 rounded-xl px-3 py-2 text-xs font-viet font-semibold text-charcoal-ink focus:outline-none focus:ring-2 focus:ring-hue-gold">
+                                <option value="Hoa">Hỏa (Đỏ Chu Sa / Tía)</option>
+                                <option value="Tho">Thổ (Vàng Hoàng Gia / Nâu)</option>
+                                <option value="Kim">Kim (Trắng Lụa / Bạc Ánh)</option>
+                                <option value="Thuy">Thủy (Xanh Chàm / Đen Huyền)</option>
+                                <option value="Moc">Mộc (Xanh Lục Sa / Ngọc Bích)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold uppercase tracking-wider text-charcoal-ink mb-1.5">
+                                Sắc Phụ Kiện (Khách):
+                            </label>
+                            <select id="secondary-element" onchange="calculateFiveElements()" class="w-full bg-silk-paper border border-hue-gold/50 rounded-xl px-3 py-2 text-xs font-viet font-semibold text-charcoal-ink focus:outline-none focus:ring-2 focus:ring-hue-gold">
+                                <option value="Tho">Thổ (Vàng / Da Nâu)</option>
+                                <option value="Hoa">Hỏa (Đỏ Son / Hồng Đào)</option>
+                                <option value="Kim">Kim (Bạc Crom / Trắng Sữa)</option>
+                                <option value="Thuy">Thủy (Denim Xanh Đậm / Đen)</option>
+                                <option value="Moc">Mộc (Xanh Rêu / Ngọc Bích)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Live Harmony Assessment Display Box -->
+                    <div id="harmony-result-card" class="p-4 rounded-xl border border-hue-gold/40 bg-silk-paper text-xs font-viet space-y-2">
+                        <!-- Populated by calculateFiveElements() -->
+                    </div>
+
+                    <!-- Five-Element Mini Matrix Indicator -->
+                    <div class="pt-2 flex items-center justify-between text-[11px] font-medium text-charcoal-muted">
+                        <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-red-600"></span> Hỏa</span>
+                        <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-yellow-600"></span> Thổ</span>
+                        <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-slate-300 border border-slate-400"></span> Kim</span>
+                        <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-blue-900"></span> Thủy</span>
+                        <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-emerald-700"></span> Mộc</span>
+                    </div>
+                </section>
+            </div>
+
+            <!-- RIGHT WORKSPACE: Visual Showcase, Module 3 (A/B Slider), and Lookbook Deck -->
+            <div class="lg:col-span-7 space-y-8">
+                
+                <!-- MODULE 3: TRADITIONAL VS CONTEMPORARY A/B COMPARE SLIDER -->
+                <section id="compare-module" class="dynasty-card rounded-2xl p-6 border border-hue-gold/40 shadow-paper space-y-5">
+                    <div class="flex items-center justify-between pb-3 border-b border-hue-gold/20">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-8 h-8 rounded-lg bg-charcoal-ink text-hue-gold flex items-center justify-center font-bold text-sm">
+                                4
+                            </div>
+                            <div>
+                                <h3 class="font-serif font-bold text-lg text-charcoal-ink">So Sánh Tương Phản A/B Trực Quan</h3>
+                                <p class="text-[11px] text-charcoal-muted font-viet">Traditional vs Contemporary Mix Slider</p>
+                            </div>
+                        </div>
+                        <span class="text-xs font-viet text-charcoal-muted italic">Kéo thanh trượt để cảm nhận sự chuyển biến</span>
+                    </div>
+
+                    <!-- A/B Comparison Visual Container -->
+                    <div class="relative w-full h-[380px] sm:h-[440px] rounded-2xl overflow-hidden border-2 border-hue-gold shadow-lg select-none bg-charcoal-ink">
+                        
+                        <!-- Layer B: Contemporary Heritage Mix (Background / Right Side) -->
+                        <div class="absolute inset-0 bg-gradient-to-tr from-[#1E293B] via-[#2B2B2B] to-[#3B1E22] flex flex-col justify-between p-6 text-silk-ivory">
+                            <div class="flex justify-end">
+                                <span class="px-3 py-1 rounded-full text-xs font-bold bg-hue-gold text-charcoal-ink shadow border border-silk-ivory">
+                                    Bản Phối Đương Đại (Gen Z Mix)
+                                </span>
+                            </div>
+                            
+                            <!-- Stylized Modern Composition Graphic -->
+                            <div class="flex flex-col items-center justify-center my-auto space-y-3">
+                                <div class="relative w-36 h-36 rounded-full border border-hue-gold/40 flex items-center justify-center bg-white/5 backdrop-blur-md">
+                                    <svg class="w-24 h-24 text-hue-gold" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M30 25 L45 25 L40 60 L32 85" stroke="#D4AF37" stroke-width="2.5" stroke-linecap="round"/>
+                                        <path d="M70 25 L55 25 L60 60 L68 85" stroke="#D4AF37" stroke-width="2.5" stroke-linecap="round"/>
+                                        <path d="M43 35 L57 35 L55 52 L45 52 Z" fill="#990000" fill-opacity="0.8"/>
+                                        <path d="M46 25 Q50 32 54 25" stroke="#FAF7F2" stroke-width="1.5" stroke-dasharray="2 2"/>
+                                        <circle cx="50" cy="18" r="7" stroke="#FAF7F2" stroke-width="2"/>
+                                        <rect x="44" y="16" width="5" height="3" rx="1" fill="#FAF7F2"/>
+                                        <rect x="51" y="16" width="5" height="3" rx="1" fill="#FAF7F2"/>
+                                    </svg>
+                                </div>
+                                <div class="text-center">
+                                    <h4 class="font-serif font-bold text-lg text-hue-gold-light" id="preview-modern-title">Nhật Bình Phá Cách</h4>
+                                    <p class="text-xs text-silk-paper/80 font-viet max-w-xs mx-auto" id="preview-modern-desc">
+                                        Khoác ngoài form relaxed, phối jeans suông & sneaker. Khí chất phóng khoáng, thanh tân.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center justify-between text-xs text-silk-paper/60 border-t border-white/10 pt-3 font-viet">
+                                <span>Tính Ứng Dụng: <strong class="text-hue-gold">96%</strong></span>
+                                <span>Streetwear Gen Z Ready</span>
+                            </div>
+                        </div>
+
+                        <!-- Layer A: Traditional (Clipped overlay on the Left with Authentic Historical Photo) -->
+                        <div id="traditional-clip-layer" class="absolute inset-0 bg-gradient-to-br from-imperial-red via-imperial-crimson to-charcoal-ink flex flex-col justify-between p-6 text-silk-ivory overflow-hidden transition-[clip-path] duration-75" style="clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);">
+                            <div class="flex justify-start">
+                                <span class="px-3 py-1 rounded-full text-xs font-bold bg-silk-paper text-imperial-red shadow border border-hue-gold">
+                                    100% Cổ Phục Nguyên Bản
+                                </span>
+                            </div>
+
+                            <!-- Authentic Historical Photo Gallery Frame -->
+                            <div class="flex flex-col items-center justify-center my-auto space-y-3">
+                                <div class="relative w-36 h-48 rounded-xl border-2 border-hue-gold/60 overflow-hidden shadow-2xl bg-black/40 group">
+                                    <img id="trad-garment-img" src="assets/ao_nhat_binh.jpg" alt="Hiện vật cổ phục thật" class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                                    <span class="absolute bottom-1.5 left-1.5 right-1.5 text-center text-[9px] font-bold text-hue-gold-light uppercase tracking-wider bg-black/60 py-0.5 rounded backdrop-blur">
+                                        Ảnh Tư Liệu Thật
+                                    </span>
+                                </div>
+                                <div class="text-center">
+                                    <h4 class="font-serif font-bold text-base sm:text-lg text-silk-ivory" id="preview-trad-title">Nhật Bình Cung Đình Triều Nguyễn</h4>
+                                    <p class="text-[11px] text-silk-paper/80 font-viet max-w-xs mx-auto" id="preview-trad-desc">
+                                        Vạt ngũ sắc ngự chế, vấn khăn vành kim tuyến, xà tích bạc, hài phượng chỉ thêu tay.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center justify-between text-xs text-silk-paper/60 border-t border-white/10 pt-3 font-viet">
+                                <span>Điểm Di Sản: <strong class="text-hue-gold">100/100</strong></span>
+                                <span>Quy Thức Lễ Nghi Triều Đình</span>
+                            </div>
+                        </div>
+
+                        <!-- Divider line in the center -->
+                        <div id="slider-divider-line" class="absolute top-0 bottom-0 w-1 bg-hue-gold pointer-events-none shadow-[0_0_12px_#D4AF37]" style="left: 50%;">
+                            <div class="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-silk-ivory border-2 border-imperial-red flex items-center justify-center shadow-lg">
+                                <i data-lucide="split" class="w-4 h-4 text-imperial-red"></i>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Range Input Controller -->
+                    <div class="space-y-2">
+                        <div class="flex justify-between text-xs font-viet font-bold text-charcoal-ink">
+                            <span class="text-imperial-red">← Nghi Lễ Cổ Điển (100% Cổ phục)</span>
+                            <span id="slider-percentage" class="text-hue-gold-dark font-mono text-sm">50% / 50%</span>
+                            <span class="text-royal-indigo">Đương Đại Phá Cách (Gen Z) →</span>
+                        </div>
+                        <input type="range" id="compare-slider-input" min="0" max="100" value="50" oninput="handleSliderChange(this.value)" class="w-full h-2 bg-silk-paper rounded-lg appearance-none cursor-pointer border border-hue-gold/40">
+                    </div>
+                </section>
+
+                <!-- REAL-TIME LOOKBOOK DETAILS & COMPOSITION REPORT -->
+                <section class="dynasty-card rounded-2xl p-6 border border-hue-gold/40 shadow-paper space-y-5">
+                    <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-hue-gold/20">
+                        <div>
+                            <span class="text-[11px] font-bold uppercase tracking-widest text-imperial-red font-sans">AI Curated Lookbook</span>
+                            <h3 class="font-serif font-bold text-xl text-charcoal-ink" id="curated-look-name">Hoàng Triều Tái Khởi #01</h3>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="px-3 py-1 rounded-full text-xs font-bold bg-silk-paper border border-hue-gold text-charcoal-ink flex items-center gap-1.5 font-viet">
+                                <i data-lucide="shield-check" class="w-3.5 h-3.5 text-imperial-red"></i>
+                                <span>Bảo Tồn Di Sản: <strong id="score-integrity" class="text-imperial-red">94%</strong></span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Lookbook Breakdown Grid -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs font-viet">
+                        <div class="p-3 rounded-xl bg-silk-ivory border border-hue-gold/20">
+                            <span class="text-charcoal-muted block text-[10px]">Chất liệu thượng tiến:</span>
+                            <p class="font-bold text-charcoal-ink mt-0.5" id="fabric-info">Lụa Vạn Phúc & Sa Hà Đông dệt vân mây</p>
+                        </div>
+                        <div class="p-3 rounded-xl bg-silk-ivory border border-hue-gold/20">
+                            <span class="text-charcoal-muted block text-[10px]">Phom dáng đương đại:</span>
+                            <p class="font-bold text-charcoal-ink mt-0.5" id="silhouette-info">Áo Nhật Bình khoác hờ ngoài Crop-top</p>
+                        </div>
+                        <div class="p-3 rounded-xl bg-silk-ivory border border-hue-gold/20">
+                            <span class="text-charcoal-muted block text-[10px]">Phụ kiện gợi ý:</span>
+                            <p class="font-bold text-charcoal-ink mt-0.5" id="accessory-info">Khuyên tai bạc chạm lộng hoa cúc</p>
+                        </div>
+                    </div>
+
+                    <!-- AI Stylist Note Box -->
+                    <div class="p-4 rounded-xl bg-silk-paper/90 border-l-4 border-imperial-red text-xs font-viet leading-relaxed">
+                        <div class="flex items-center gap-2 text-imperial-red font-bold mb-1">
+                            <i data-lucide="quote" class="w-3.5 h-3.5"></i>
+                            <span>Lời khuyên của Phục Cố AI Stylist (Google Gemini Flash Thinking):</span>
+                        </div>
+                        <p class="text-charcoal-ink" id="ai-stylist-notes">
+                            Khi diện cổ phục dạo bước tại Cung An Định, hãy ưu tiên các tông màu ấm ấm áp tương hợp kiến trúc Baroque - Á Đông. Sự kết hợp giữa tà áo sa mỏng và quần denim tạo nên độ tương phản bất ngờ nhưng giữ trọn vẻ tôn nghiêm.
+                        </p>
+                    </div>
+
+                    <!-- MODULE 4 TRIGGER BUTTON -->
+                    <div class="pt-2 flex flex-col sm:flex-row gap-3">
+                        <button onclick="openExportModal()" class="flex-1 py-3.5 px-6 rounded-xl bg-gradient-to-r from-imperial-red to-imperial-crimson hover:from-imperial-crimson hover:to-imperial-red text-silk-ivory font-semibold text-sm shadow-royal border border-hue-gold flex items-center justify-center gap-2.5 transition-all hover:scale-[1.01] active:scale-[0.98]">
+                            <i data-lucide="download" class="w-4 h-4 text-hue-gold"></i>
+                            <span>Xuất Thẻ Lookbook Đóng Dấu Triện (Module 4)</span>
+                        </button>
+                        <button onclick="regeneratePaletteSurprise()" class="py-3.5 px-5 rounded-xl bg-silk-paper border border-hue-gold/50 hover:bg-silk-paper/60 text-charcoal-ink font-viet text-xs font-semibold flex items-center justify-center gap-2 transition-all">
+                            <i data-lucide="refresh-cw" class="w-4 h-4 text-hue-gold-dark"></i>
+                            <span>Đổi Phối Cảnh Ngẫu Nhiên</span>
+                        </button>
+                    </div>
+                </section>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- MODULE 4: EXPORT HERITAGE LOOKBOOK CARD MODAL -->
+    <div id="export-modal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="relative w-full max-w-2xl bg-silk-ivory rounded-3xl border-2 border-hue-gold shadow-2xl overflow-hidden p-6 sm:p-8 my-8 text-charcoal-ink">
+            
+            <!-- Close Button -->
+            <button onclick="closeExportModal()" class="absolute top-5 right-5 w-9 h-9 rounded-full bg-silk-paper border border-hue-gold flex items-center justify-center text-charcoal-muted hover:text-imperial-red transition-colors">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+
+            <!-- Modal Header -->
+            <div class="text-center mb-6">
+                <span class="text-[11px] font-bold uppercase tracking-widest text-imperial-red font-sans">Module 4 • HTML5 Canvas Engine</span>
+                <h3 class="font-serif text-2xl sm:text-3xl font-bold text-charcoal-ink mt-1">Xuất Thẻ Heritage Lookbook</h3>
+                <p class="text-xs text-charcoal-muted font-viet mt-1">
+                    Thẻ đồ họa phân giải cao kèm hoa văn Kỷ Hà triều Nguyễn & con dấu triện đỏ độc bản.
+                </p>
+            </div>
+
+            <!-- Canvas Container -->
+            <div class="flex justify-center mb-6">
+                <div class="p-2 rounded-2xl bg-silk-paper border border-hue-gold/40 shadow-inner max-w-full overflow-hidden">
+                    <canvas id="lookbook-canvas" width="600" height="900" class="w-[280px] sm:w-[320px] h-auto rounded-xl shadow-md border border-hue-gold/20 block"></canvas>
+                </div>
+            </div>
+
+            <!-- Action Controls inside Modal -->
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+                <button onclick="downloadLookbookImage()" class="w-full sm:w-auto px-8 py-3.5 rounded-full bg-imperial-red hover:bg-imperial-crimson text-silk-ivory font-semibold text-sm shadow-royal border border-hue-gold flex items-center justify-center gap-2 transition-transform hover:scale-105 active:scale-95">
+                    <i data-lucide="download-cloud" class="w-4 h-4 text-hue-gold"></i>
+                    <span>Tải Về Ảnh PNG Phân Giải Cao</span>
+                </button>
+                <button onclick="copyLookbookShareText()" class="w-full sm:w-auto px-6 py-3.5 rounded-full bg-silk-paper border border-hue-gold hover:bg-silk-paper/80 text-charcoal-ink font-viet text-xs font-semibold flex items-center justify-center gap-2 transition-all">
+                    <i data-lucide="share" class="w-4 h-4 text-imperial-red"></i>
+                    <span>Sao Chép Nội Dung Chia Sẻ</span>
+                </button>
+            </div>
+
+            <!-- Notice message box -->
+            <div id="toast-message" class="mt-4 p-2.5 rounded-xl text-center text-xs font-viet font-semibold text-emerald-800 bg-emerald-50 border border-emerald-200 hidden">
+                Đã sao chép nội dung vào Clipboard!
+            </div>
+        </div>
+    </div>
+
+    <!-- EDUCATIONAL HERITAGE ACCORDION -->
+    <section class="py-12 border-t border-hue-gold/20 bg-silk-paper/50">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6">
+            <div class="text-center mb-8">
+                <h3 class="font-serif text-2xl font-bold text-charcoal-ink">Cẩm Nang Quy Thức Cổ Phục Nguyễn</h3>
+                <p class="text-xs text-charcoal-muted font-viet">Hiểu đúng quy chuẩn để ứng dụng văn minh trong phong cách đương đại</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-viet">
+                <div class="p-4 rounded-xl dynasty-card border border-hue-gold/30 space-y-1.5">
+                    <div class="font-bold text-imperial-red flex items-center gap-1.5">
+                        <i data-lucide="book-open" class="w-4 h-4 text-hue-gold"></i>
+                        <span>Áo Nhật Bình: Biểu Tượng Nữ Lưu Hoàng Cung</span>
+                    </div>
+                    <p class="text-charcoal-muted leading-relaxed">
+                        Đặc trưng bởi dải cổ áo hình chữ nhật ghép dải ngũ sắc (xanh, vàng, trắng, đỏ, lục) biểu trưng cho ngũ hành bao bọc vũ trụ. Thường dành cho Hoàng hậu, Công chúa và mệnh phụ quý tộc.
+                    </p>
+                </div>
+
+                <div class="p-4 rounded-xl dynasty-card border border-hue-gold/30 space-y-1.5">
+                    <div class="font-bold text-royal-indigo flex items-center gap-1.5">
+                        <i data-lucide="feather" class="w-4 h-4 text-hue-gold"></i>
+                        <span>Áo Ngũ Thân & Áo Tấc: Tinh Thần Lễ Nhạc</span>
+                    </div>
+                    <p class="text-charcoal-muted leading-relaxed">
+                        Gồm 5 thân áo tượng trưng cho Tứ thân phụ mẫu và bản thân người mặc; 5 chiếc cúc cài đại diện cho Ngũ Thường (Nhân, Lễ, Nghĩa, Trí, Tín) – nền tảng đạo đức Á Đông.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-charcoal-ink text-silk-paper border-t border-hue-gold/30 py-10 font-sans text-xs">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6 pb-8 border-b border-white/10">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-lg bg-imperial-red border border-hue-gold flex items-center justify-center font-cinzel text-hue-gold text-xl font-bold">
+                        故
+                    </div>
+                    <div>
+                        <div class="font-serif text-lg font-bold text-hue-gold">PHỤC CỐ AI • 2026</div>
+                        <div class="text-[11px] text-silk-paper/60 font-viet">Đề tài thi đấu Vòng Audition — AI Arena 2026 (Google x VNU)</div>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-6 font-viet text-silk-paper/80">
+                    <span>Mỹ Cảm: Modern Indochine x Gen Z</span>
+                    <span class="hidden sm:inline">•</span>
+                    <span>Nền Tảng: Google Gemini Flash Thinking</span>
+                </div>
+            </div>
+
+            <div class="pt-6 flex flex-col sm:flex-row items-center justify-between text-[11px] text-silk-paper/50 font-viet gap-4">
+                <p>© 2026 Phục Cố Team. Toàn bộ mã nguồn viết theo tinh thần Vibe Coding & bảo tồn di sản.</p>
+                <div class="flex items-center gap-4">
+                    <span class="hover:text-hue-gold transition-colors">HTML5 Canvas Ready</span>
+                    <span>•</span>
+                    <span class="hover:text-hue-gold transition-colors">Five Elements Engine</span>
+                    <span>•</span>
+                    <span class="hover:text-hue-gold transition-colors">Tailwind CSS Pure</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        /* 
+         * PHỤC CỐ AI - CORE ENGINE JAVASCRIPT
+         * 4 Interactive Modules Co-created with Google Gemini:
+         * 1. Hue Heritage Context Selector
+         * 2. Five-Element Harmony Validator
+         * 3. Traditional vs Contemporary A/B Compare Slider
+         * 4. Export Heritage Lookbook Card (HTML5 Canvas)
+         */
+
+        // State Store
+        const appState = {
+            selectedContextId: 'cung-an-dinh',
+            selectedGarmentId: 'nhat-binh',
+            primaryElement: 'Hoa',
+            secondaryElement: 'Tho',
+            sliderPos: 50,
+            activeModernPairings: {
+                pants: true,
+                shoes: true,
+                bag: true,
+                glasses: false
+            },
+            culturalScore: 94,
+            formalityLevel: 98
+        };
+
+        // Module 1 Data: Hue Heritage Contexts with Authentic High-Resolution Photos
+        const hueLandmarks = [
+            {
+                id: 'cung-an-dinh',
+                name: 'Cung An Định',
+                style: 'Tân Cổ Điển (Tây - Á Giao Hòa)',
+                formality: 92,
+                image: 'assets/cung_an_dinh.jpg',
+                colors: ['#D4AF37', '#990000', '#F4EBD9'],
+                recommendedElements: 'Hỏa & Thổ',
+                description: 'Kiến trúc Romanesque kết hợp họa tiết cung đình thời Khải Định (1917). Thích hợp cho các bản phối cổ phục khoác hờ mang hơi thở quý tộc tân thời.',
+                idealGarment: 'Áo Nhật Bình hoặc Ngũ Thân tay chẽn'
+            },
+            {
+                id: 'dai-noi-hue',
+                name: 'Đại Nội Huế (Ngọ Môn - Thái Hòa)',
+                style: 'Hoàng Triều Chính Thống Uy Nghiêm',
+                formality: 99,
+                image: 'assets/ngo_mon.jpg',
+                colors: ['#990000', '#D4AF37', '#2B2B2B'],
+                recommendedElements: 'Thổ & Kim',
+                description: 'Cửa Ngọ Môn & Điện Thái Hòa (1833) - Trung tâm quyền lực tối cao triều Nguyễn. Đòi hỏi độ chuẩn mực cao, sắc đỏ chu sa và vàng chính hoàng uy quyền.',
+                idealGarment: 'Áo Tấc nghiêm trang hoặc Nhật Bình chuẩn ngự chế'
+            },
+            {
+                id: 'quoc-hoc-hue',
+                name: 'THPT Chuyên Quốc Học Huế',
+                style: 'Kỷ Yếu Học Đường & Tường Gạch Đỏ',
+                formality: 88,
+                image: 'assets/quoc_hoc.jpg',
+                colors: ['#800020', '#FAF7F2', '#264653'],
+                recommendedElements: 'Mộc & Hỏa',
+                description: 'Ngôi trường cổ kính (1896) bên dòng Hương Giang với kiến trúc Pháp gạch đỏ đặc trưng. Bối cảnh tuyệt hảo cho tà áo ngũ thân thanh thuần tuổi trẻ.',
+                idealGarment: 'Áo Ngũ Thân tay chẽn bằng tơ tằm thanh nhã'
+            },
+            {
+                id: 'cau-truong-tien',
+                name: 'Cầu Trường Tiền & Sông Hương',
+                style: 'Hơi Thở Phố Thị & Thanh Niên Gen Z',
+                formality: 82,
+                image: 'assets/song_huong.jpg',
+                colors: ['#264653', '#FAF7F2', '#D4AF37'],
+                recommendedElements: 'Kim & Thủy',
+                description: 'Sáu vài mười hai nhịp (1897) soi bóng Hương Giang qua bao thế hệ tuổi trẻ Cố Đô. Tuyệt vời cho bản phối Streetwear phóng khoáng dạo phố chiều lộng gió.',
+                idealGarment: 'Cổ phục cách tân phối Quần Denim & Sneaker'
+            }
+        ];
+
+        // Initialize Module 1 (Context Selector)
+        function initContextModule() {
+            const container = document.getElementById('context-selector-container');
+            container.innerHTML = '';
+
+            hueLandmarks.forEach((landmark) => {
+                const isSelected = landmark.id === appState.selectedContextId;
+                const card = document.createElement('div');
+                card.className = `p-3 rounded-xl border cursor-pointer transition-all flex items-center justify-between ${
+                    isSelected 
+                        ? 'border-imperial-red bg-silk-paper shadow-sm ring-1 ring-imperial-red' 
+                        : 'border-hue-gold/30 bg-silk-ivory hover:border-hue-gold'
+                }`;
+                card.onclick = () => selectContext(landmark.id);
+
+                card.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <img src="${landmark.image}" alt="${landmark.name}" class="w-11 h-11 rounded-lg object-cover border ${isSelected ? 'border-imperial-red shadow' : 'border-hue-gold/30'}">
+                        <div>
+                            <div class="font-serif font-bold text-xs sm:text-sm text-charcoal-ink">${landmark.name}</div>
+                            <div class="text-[10px] text-charcoal-muted font-viet">${landmark.style}</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-1.5">
+                        ${landmark.colors.map(c => `<span class="w-3.5 h-3.5 rounded-full border border-black/20" style="background-color: ${c}"></span>`).join('')}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+
+            updateContextInfo();
+            lucide.createIcons();
+        }
+
+        function selectContext(landmarkId) {
+            appState.selectedContextId = landmarkId;
+            const landmark = hueLandmarks.find(l => l.id === landmarkId);
+            if (landmark) {
+                appState.formalityLevel = landmark.formality;
+                document.getElementById('formality-badge').textContent = `Trang trọng: ${landmark.formality}%`;
+            }
+            initContextModule();
+            calculateFiveElements();
+            updateLookbookDetails();
+            renderLookbookCanvas();
+        }
+
+        function updateContextInfo() {
+            const landmark = hueLandmarks.find(l => l.id === landmarkStateId());
+            const box = document.getElementById('context-info-box');
+            if (!landmark || !box) return;
+
+            box.innerHTML = `
+                <div class="flex items-center gap-3 mb-2">
+                    <img src="${landmark.image}" alt="${landmark.name}" class="w-16 h-16 rounded-xl object-cover border border-hue-gold/40 shadow-sm">
+                    <div class="flex-1">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-imperial-red font-serif">${landmark.name}</span>
+                            <span class="text-[9px] px-2 py-0.5 rounded bg-hue-gold/20 text-hue-gold-dark font-bold uppercase tracking-wider">Ảnh Tư Liệu Thật</span>
+                        </div>
+                        <div class="text-[11px] font-semibold text-charcoal-ink mt-0.5">Gợi ý: <span class="text-imperial-red">${landmark.idealGarment}</span></div>
+                    </div>
+                </div>
+                <p class="text-charcoal-muted leading-relaxed">${landmark.description}</p>
+            `;
+        }
+
+        function landmarkStateId() {
+            return appState.selectedContextId;
+        }
+
+        // MODULE 2: FIVE-ELEMENT HARMONY VALIDATOR LOGIC
+        const elementsRelations = {
+            'Hoa': {
+                name: 'Hỏa (Lửa/Son)',
+                sinh: 'Tho',    // Hỏa sinh Thổ
+                khac: 'Kim',    // Hỏa khắc Kim
+                duocSinh: 'Moc',// Mộc sinh Hỏa
+                biKhac: 'Thuy', // Thủy khắc Hỏa
+                meaning: 'Nhiệt huyết, vinh hoa, cung đình thịnh trị.'
+            },
+            'Tho': {
+                name: 'Thổ (Đất/Hoàng)',
+                sinh: 'Kim',    // Thổ sinh Kim
+                khac: 'Thuy',   // Thổ khắc Thủy
+                duocSinh: 'Hoa',// Hỏa sinh Thổ
+                biKhac: 'Moc',  // Mộc khắc Thổ
+                meaning: 'Vững chãi, bao dung, vị thế trung tâm hoàng triều.'
+            },
+            'Kim': {
+                name: 'Kim (Kim Loại/Bạch)',
+                sinh: 'Thuy',   // Kim sinh Thủy
+                khac: 'Moc',    // Kim khắc Mộc
+                duocSinh: 'Tho',// Thổ sinh Kim
+                biKhac: 'Hoa',  // Hỏa khắc Kim
+                meaning: 'Thanh khiết, sắc sảo, kiên định và cao quý.'
+            },
+            'Thuy': {
+                name: 'Thủy (Nước/Huyền)',
+                sinh: 'Moc',    // Thủy sinh Mộc
+                khac: 'Hoa',    // Thủy khắc Hỏa
+                duocSinh: 'Kim',// Kim sinh Thủy
+                biKhac: 'Tho',  // Thổ khắc Thủy
+                meaning: 'Linh hoạt, uyển chuyển, trầm mặc tựa dòng Hương Giang.'
+            },
+            'Moc': {
+                name: 'Mộc (Cây/Thanh)',
+                sinh: 'Hoa',    // Mộc sinh Hỏa
+                khac: 'Tho',    // Mộc khắc Thổ
+                duocSinh: 'Thuy',// Thủy sinh Mộc
+                biKhac: 'Kim',  // Kim khắc Mộc
+                meaning: 'Sinh sôi nảy nở, thanh tân, khởi nguồn cảm hứng.'
+            }
+        };
+
+        function calculateFiveElements() {
+            const primary = document.getElementById('primary-element').value;
+            const secondary = document.getElementById('secondary-element').value;
+            appState.primaryElement = primary;
+            appState.secondaryElement = secondary;
+
+            const primData = elementsRelations[primary];
+            let score = 85;
+            let relationType = 'Tỉ Hòa (Đồng điệu)';
+            let analysis = '';
+            let colorBadge = 'bg-hue-gold text-charcoal-ink';
+
+            if (primary === secondary) {
+                score = 88;
+                relationType = 'Tỉ Hòa (Song hành vững bền)';
+                analysis = `Hai sắc thái cùng hành tụ hội gia tăng trường năng lượng đồng điệu, tạo nên tổng thể nhất quán, trang nhã.`;
+                colorBadge = 'bg-hue-gold-dark text-silk-ivory';
+            } else if (primData.sinh === secondary) {
+                score = 98;
+                relationType = 'Tương Sinh (Chủ sinh Khách - Đại Cát)';
+                analysis = `Màu áo chủ đạo bồi đắp cho phụ kiện. Phong thái tỏa sáng, toát lên sự nồng hậu và hòa nhã tuyệt đỉnh.`;
+                colorBadge = 'bg-wood-green text-silk-ivory';
+            } else if (primData.duocSinh === secondary) {
+                score = 95;
+                relationType = 'Tương Sinh (Khách dưỡng Chủ - Hưng Vượng)';
+                analysis = `Phụ kiện nâng tầm nét đẹp cung đình của tà áo cổ. Tạo cảm giác tương trợ, tăng cường vượng khí cho người mặc.`;
+                colorBadge = 'bg-wood-green text-silk-ivory';
+            } else if (primData.khac === secondary) {
+                score = 65;
+                relationType = 'Tương Khắc (Chủ khắc Khách - Cần Tiết Chế)';
+                analysis = `Có sự đối kháng thị giác mạnh. AI Stylist khuyên thêm dải khăn hoặc trang sức trung gian để hóa giải và tăng độ sâu.`;
+                colorBadge = 'bg-imperial-crimson text-silk-ivory';
+            } else if (primData.biKhac === secondary) {
+                score = 58;
+                relationType = 'Tương Khắc (Khách lấn Chủ - Phá Cách Nghịch Khí)';
+                analysis = `Cặp màu mang tính đột phá cao của Gen Z nhưng cần sự tự tin. Thích hợp cho thời trang trình diễn đường phố.`;
+                colorBadge = 'bg-imperial-red text-silk-ivory';
+            }
+
+            // Update UI Tag
+            const scoreTag = document.getElementById('harmony-score-tag');
+            scoreTag.className = `px-2.5 py-1 rounded-full text-xs font-bold ${colorBadge}`;
+            scoreTag.textContent = `${relationType.split('(')[0]}: ${score}/100`;
+
+            // Update Result Card
+            const resultBox = document.getElementById('harmony-result-card');
+            resultBox.innerHTML = `
+                <div class="flex items-center justify-between font-bold">
+                    <span class="text-charcoal-ink">${primData.name} ⟷ ${elementsRelations[secondary].name}</span>
+                    <span class="text-imperial-red font-mono">${score} Điểm Cát Lợi</span>
+                </div>
+                <div class="text-[11px] font-semibold text-hue-gold-dark">${relationType}</div>
+                <p class="text-charcoal-muted leading-relaxed">${analysis}</p>
+            `;
+
+            appState.culturalScore = Math.round((appState.formalityLevel * 0.5) + (score * 0.5));
+            document.getElementById('score-integrity').textContent = `${appState.culturalScore}%`;
+            
+            updateLookbookDetails();
+            renderLookbookCanvas();
+        }
+
+        // MODULE 3: TRADITIONAL VS CONTEMPORARY A/B COMPARE SLIDER
+        function handleSliderChange(val) {
+            appState.sliderPos = val;
+            const clipLayer = document.getElementById('traditional-clip-layer');
+            const divider = document.getElementById('slider-divider-line');
+            const percentLabel = document.getElementById('slider-percentage');
+
+            clipLayer.style.clipPath = `polygon(0 0, ${val}% 0, ${val}% 100%, 0 100%)`;
+            divider.style.left = `${val}%`;
+            percentLabel.textContent = `${val}% Cổ Điển / ${100 - val}% Tân Thời`;
+        }
+
+        function handleGarmentChange() {
+            appState.selectedGarmentId = document.getElementById('garment-select').value;
+            updateGarmentVisualText();
+            updateLookbookDetails();
+            renderLookbookCanvas();
+        }
+
+        function updateStylingComposition() {
+            appState.activeModernPairings = {
+                pants: document.getElementById('item-pants').checked,
+                shoes: document.getElementById('item-shoes').checked,
+                bag: document.getElementById('item-bag').checked,
+                glasses: document.getElementById('item-glasses').checked
+            };
+            updateLookbookDetails();
+            renderLookbookCanvas();
+        }
+
+        function updateGarmentVisualText() {
+            const tradTitle = document.getElementById('preview-trad-title');
+            const tradDesc = document.getElementById('preview-trad-desc');
+            const modernTitle = document.getElementById('preview-modern-title');
+            const modernDesc = document.getElementById('preview-modern-desc');
+            const tradImg = document.getElementById('trad-garment-img');
+
+            switch(appState.selectedGarmentId) {
+                case 'nhat-binh':
+                    if (tradImg) tradImg.src = 'assets/ao_nhat_binh.jpg';
+                    tradTitle.textContent = "Áo Nhật Bình Ngự Chế Triều Nguyễn";
+                    tradDesc.textContent = "Hoàng hậu Nam Phương trong hôn lễ 1934: Cổ áo chữ nhật viền ngũ sắc, vành kim tuyến, xà tích bạc.";
+                    modernTitle.textContent = "Nhật Bình Phối Relaxed Streetwear";
+                    modernDesc.textContent = "Áo Nhật Bình khoác buông tà như kimono jacket, lót trong crop-top lụa, phối jeans suông & sneaker.";
+                    break;
+                case 'ao-tac':
+                    if (tradImg) tradImg.src = 'assets/ao_ngu_than.jpg';
+                    tradTitle.textContent = "Áo Tấc Lễ Phục Tay Thụng Trang Trọng";
+                    tradDesc.textContent = "Tay áo thụng dài chấm gối, khăn đóng 7 nếp, năm khuy đồng biểu trưng Ngũ Thường nghiêm cẩn.";
+                    modernTitle.textContent = "Áo Tấc Layering Blazer Hiện Đại";
+                    modernDesc.textContent = "Tay thụng tạo độ rủ tự nhiên, phối cùng giày da Derby đế dày và túi đeo chéo mini.";
+                    break;
+                case 'ngu-than-che':
+                    if (tradImg) tradImg.src = 'assets/ao_ngu_than.jpg';
+                    tradTitle.textContent = "Áo Ngũ Thân Tay Chẽn Chuẩn Mực";
+                    tradDesc.textContent = "Tư liệu 1904: Năm thân áo cài năm khuy đồng, cổ lập lĩnh thẳng thớm, biểu tượng của người quân tử.";
+                    modernTitle.textContent = "Ngũ Thân Tay Chẽn x Cargo Pants";
+                    modernDesc.textContent = "Phom ôm thanh thoát phối cùng quần cargo vải dù và sneaker retro, tạo phong thái thư sinh năng động.";
+                    break;
+                case 'giao-linh':
+                    if (tradImg) tradImg.src = 'assets/ao_ngu_than.jpg';
+                    tradTitle.textContent = "Áo Giao Lĩnh (Cổ Chéo Hoàng Gia)";
+                    tradDesc.textContent = "Vạt áo đắp chéo cổ kính, buộc thắt lưng lụa thả dài, phong cách cổ phong thanh cao.";
+                    modernTitle.textContent = "Giao Lĩnh Draping Avant-Garde";
+                    modernDesc.textContent = "Thiết kế vạt chéo buông tự do, phụ kiện bạc điêu khắc 3D và kính mắt Matrix Y2K.";
+                    break;
+            }
+        }
+
+        function updateLookbookDetails() {
+            const landmark = hueLandmarks.find(l => l.id === appState.selectedContextId);
+            const garmentSelect = document.getElementById('garment-select');
+            const garmentName = garmentSelect.options[garmentSelect.selectedIndex].text.split('(')[0].trim();
+
+            document.getElementById('curated-look-name').textContent = `${garmentName} x ${landmark.name}`;
+            
+            const modernPieces = [];
+            if (appState.activeModernPairings.pants) modernPieces.push("Denim suông");
+            if (appState.activeModernPairings.shoes) modernPieces.push("Sneaker Chunky");
+            if (appState.activeModernPairings.bag) modernPieces.push("Túi kẹp nách");
+            if (appState.activeModernPairings.glasses) modernPieces.push("Kính mắt Y2K");
+            
+            document.getElementById('silhouette-info').textContent = modernPieces.length > 0 
+                ? `${garmentName} phối ${modernPieces.slice(0, 2).join(' & ')}`
+                : `${garmentName} phong cách tối giản`;
+
+            const notes = document.getElementById('ai-stylist-notes');
+            notes.textContent = `Tại không gian ${landmark.name}, bản phối ${garmentName} tạo điểm cân bằng tuyệt hảo giữa quá khứ và đương đại. Điểm Ngũ Hành đạt ${appState.culturalScore}% cho thấy năng lượng hài hòa, phù hợp cho thế hệ Gen Z tự tin ghi lại những khoảnh khắc di sản sống động.`;
+        }
+
+        // MODULE 4: EXPORT HERITAGE LOOKBOOK CARD USING HTML5 CANVAS
+        function openExportModal() {
+            document.getElementById('export-modal').classList.remove('hidden');
+            renderLookbookCanvas();
+            confetti({
+                particleCount: 50,
+                spread: 60,
+                origin: { y: 0.7 },
+                colors: ['#D4AF37', '#990000', '#264653']
+            });
+        }
+
+        function closeExportModal() {
+            document.getElementById('export-modal').classList.add('hidden');
+        }
+
+        function renderLookbookCanvas() {
+            const canvas = document.getElementById('lookbook-canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+
+            // 1. Background: Raw Silk Ivory Gradient
+            const bgGradient = ctx.createLinearGradient(0, 0, width, height);
+            bgGradient.addColorStop(0, '#FAF7F2');
+            bgGradient.addColorStop(0.5, '#F4EBD9');
+            bgGradient.addColorStop(1, '#ECE3CF');
+            ctx.fillStyle = bgGradient;
+            ctx.fillRect(0, 0, width, height);
+
+            // 2. Nguyen Dynasty Royal Geometric Border (Kỷ Hà & Hồi Văn)
+            ctx.strokeStyle = '#D4AF37';
+            ctx.lineWidth = 3;
+            ctx.strokeRect(20, 20, width - 40, height - 40);
+
+            ctx.strokeStyle = 'rgba(153, 0, 0, 0.4)';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([6, 4]);
+            ctx.strokeRect(28, 28, width - 56, height - 56);
+            ctx.setLineDash([]);
+
+            drawCornerMotif(ctx, 28, 28);
+            drawCornerMotif(ctx, width - 28, 28);
+            drawCornerMotif(ctx, 28, height - 28);
+            drawCornerMotif(ctx, width - 28, height - 28);
+
+            // 3. Header Title & Dynasty Badges
+            ctx.fillStyle = '#990000';
+            ctx.font = 'bold 16px "Plus Jakarta Sans", sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('PHỤC CỐ AI • AUDITION AI ARENA 2026', width / 2, 65);
+
+            ctx.fillStyle = '#2B2B2B';
+            ctx.font = 'bold 30px "Playfair Display", serif';
+            ctx.fillText('LOOKBOOK DI SẢN HUẾ', width / 2, 105);
+
+            ctx.fillStyle = '#6B6862';
+            ctx.font = 'italic 14px "Noto Serif", serif';
+            ctx.fillText('Contemporary Heritage Styling System', width / 2, 128);
+
+            ctx.strokeStyle = '#D4AF37';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(70, 145);
+            ctx.lineTo(width - 70, 145);
+            ctx.stroke();
+
+            // 4. Central Visual Art (Nguyen Dynasty Phoenix Silhouette + Color Bands)
+            const landmark = hueLandmarks.find(l => l.id === appState.selectedContextId);
+            const garmentSelect = document.getElementById('garment-select');
+            const garmentName = garmentSelect.options[garmentSelect.selectedIndex].text.split('(')[0].trim();
+
+            ctx.fillStyle = '#1D3557';
+            ctx.roundRect ? ctx.roundRect(50, 165, width - 100, 260, 16) : ctx.fillRect(50, 165, width - 100, 260);
+            ctx.fill();
+            ctx.strokeStyle = '#D4AF37';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            ctx.fillStyle = '#D4AF37';
+            ctx.beginPath();
+            ctx.arc(width / 2, 220, 24, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Nhật Bình Collar Bands
+            ctx.fillStyle = '#990000';
+            ctx.beginPath();
+            ctx.moveTo(width / 2, 220);
+            ctx.lineTo(width / 2 - 50, 380);
+            ctx.lineTo(width / 2 - 20, 380);
+            ctx.lineTo(width / 2, 250);
+            ctx.lineTo(width / 2 + 20, 380);
+            ctx.lineTo(width / 2 + 50, 380);
+            ctx.closePath();
+            ctx.fill();
+
+            ctx.fillStyle = '#264653';
+            ctx.beginPath();
+            ctx.moveTo(width / 2, 240);
+            ctx.lineTo(width / 2 - 30, 380);
+            ctx.lineTo(width / 2 - 15, 380);
+            ctx.lineTo(width / 2, 265);
+            ctx.lineTo(width / 2 + 15, 380);
+            ctx.lineTo(width / 2 + 30, 380);
+            ctx.closePath();
+            ctx.fill();
+
+            ctx.fillStyle = '#FAF7F2';
+            ctx.font = 'bold 15px "Playfair Display", serif';
+            ctx.fillText(garmentName, width / 2, 400);
+
+            // 5. Lookbook Specs Card
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+            ctx.fillRect(50, 445, width - 100, 230);
+            ctx.strokeStyle = 'rgba(212, 175, 55, 0.4)';
+            ctx.strokeRect(50, 445, width - 100, 230);
+
+            ctx.textAlign = 'left';
+            ctx.fillStyle = '#990000';
+            ctx.font = 'bold 13px "Plus Jakarta Sans", sans-serif';
+            ctx.fillText('THÔNG SỐ BẢN PHỐI HOÀNG TRIỀU', 70, 475);
+
+            ctx.fillStyle = '#2B2B2B';
+            ctx.font = '13px "Noto Serif", serif';
+            ctx.fillText(`• Bối Cảnh: ${landmark.name}`, 70, 505);
+            ctx.fillText(`• Cổ Phục Cốt Lõi: ${garmentName}`, 70, 532);
+            ctx.fillText(`• Hòa Sắc Ngũ Hành: ${appState.primaryElement} ⟷ ${appState.secondaryElement}`, 70, 560);
+            ctx.fillText(`• Phong Cách Phối: Contemporary Streetwear x Indochine`, 70, 588);
+            ctx.fillText(`• Tỉ Lệ Tương Hợp: ${100 - appState.sliderPos}% Gen Z / ${appState.sliderPos}% Cổ Điển`, 70, 616);
+
+            // Cultural Integrity Meter on Canvas
+            ctx.fillStyle = '#6B6862';
+            ctx.font = 'bold 12px "Plus Jakarta Sans", sans-serif';
+            ctx.fillText('ĐIỂM BẢO TỒN DI SẢN (CULTURAL INTEGRITY):', 70, 648);
+
+            ctx.fillStyle = '#D4AF37';
+            ctx.font = 'bold 16px "Plus Jakarta Sans", sans-serif';
+            ctx.fillText(`${appState.culturalScore}/100`, width - 130, 648);
+
+            // Progress Bar
+            ctx.fillStyle = '#E5E0D5';
+            ctx.fillRect(70, 658, width - 140, 7);
+            ctx.fillStyle = '#990000';
+            ctx.fillRect(70, 658, (width - 140) * (appState.culturalScore / 100), 7);
+
+            // 6. Authentic Vermilion Royal Seal (Ấn Triện Cung Đình)
+            drawImperialRedSeal(ctx, width - 150, height - 170, 86);
+
+            // Heritage Authentication Signature
+            ctx.textAlign = 'left';
+            ctx.fillStyle = '#2B2B2B';
+            ctx.font = 'bold 12px "Noto Serif", serif';
+            ctx.fillText('Chứng Nhận Phục Cố AI', 60, height - 120);
+
+            ctx.fillStyle = '#6B6862';
+            ctx.font = '11px "Plus Jakarta Sans", sans-serif';
+            ctx.fillText('Bảo chứng bởi tiêu chuẩn thẩm mỹ Cố Đô Huế 2026', 60, height - 100);
+            ctx.fillText('Đồng sáng tạo: Google Gemini Flash Mở Rộng', 60, height - 82);
+        }
+
+        // Draw Corner Geometry for Nguyen Dynasty Aesthetic
+        function drawCornerMotif(ctx, x, y) {
+            ctx.save();
+            ctx.strokeStyle = '#D4AF37';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.arc(x, y, 8, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.restore();
+        }
+
+        // Authentic Imperial Red Seal ("PHỤC CỐ DI SẢN")
+        function drawImperialRedSeal(ctx, x, y, size) {
+            ctx.save();
+            ctx.strokeStyle = '#990000';
+            ctx.lineWidth = 3.5;
+            ctx.strokeRect(x, y, size, size);
+
+            ctx.lineWidth = 1.2;
+            ctx.strokeRect(x + 4, y + 4, size - 8, size - 8);
+
+            ctx.fillStyle = 'rgba(153, 0, 0, 0.08)';
+            ctx.fillRect(x, y, size, size);
+
+            ctx.fillStyle = '#990000';
+            ctx.font = 'bold 16px "Noto Serif", serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+
+            // 4 quadrants: Phục - Cố - Di - Sản
+            const half = size / 2;
+            ctx.fillText('復', x + half * 1.45, y + half * 0.55); // Phục (Right-top)
+            ctx.fillText('故', x + half * 0.55, y + half * 0.55); // Cố (Left-top)
+            ctx.fillText('產', x + half * 0.55, y + half * 1.45); // Sản (Left-bottom)
+            ctx.fillText('遺', x + half * 1.45, y + half * 1.45); // Di (Right-bottom)
+
+            ctx.restore();
+        }
+
+        // Download PNG Image One-click
+        function downloadLookbookImage() {
+            const canvas = document.getElementById('lookbook-canvas');
+            const link = document.createElement('a');
+            const timestamp = new Date().toISOString().slice(0, 10);
+            link.download = `PhucCo-AI-Lookbook-${timestamp}.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+
+            showToast("Đã tải xuống Thẻ Lookbook phân giải cao thành công!");
+        }
+
+        // Copy Share Text for Instagram & TikTok
+        function copyLookbookShareText() {
+            const landmark = hueLandmarks.find(l => l.id === appState.selectedContextId);
+            const garmentSelect = document.getElementById('garment-select');
+            const garmentName = garmentSelect.options[garmentSelect.selectedIndex].text.split('(')[0].trim();
+
+            const shareText = `✨ Lookbook Phục Cố AI 2026: ${garmentName} tại ${landmark.name}!\n` +
+                `🏮 Hòa sắc Ngũ Hành: ${appState.primaryElement} ⟷ ${appState.secondaryElement}\n` +
+                `🏛️ Điểm Bảo Tồn Di Sản: ${appState.culturalScore}/100\n` +
+                `#PhucCoAI #AIArena2026 #CoPhucVietNam #HueHeritage #GenZLookbook`;
+
+            const tempInput = document.createElement("textarea");
+            tempInput.value = shareText;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+
+            showToast("Đã sao chép nội dung đăng bài Instagram/TikTok vào bộ nhớ tạm!");
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast-message');
+            toast.textContent = msg;
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3000);
+        }
+
+        // Quick Preset Inspiration
+        function quickInspirePreset(preset) {
+            if (preset === 'nhatbinh-street') {
+                selectContext('cung-an-dinh');
+                document.getElementById('garment-select').value = 'nhat-binh';
+                document.getElementById('primary-element').value = 'Hoa';
+                document.getElementById('secondary-element').value = 'Tho';
+                handleSliderChange(55);
+                document.getElementById('compare-slider-input').value = 55;
+            }
+            handleGarmentChange();
+            calculateFiveElements();
+            scrollToStudio();
+        }
+
+        function regeneratePaletteSurprise() {
+            const randomContext = hueLandmarks[Math.floor(Math.random() * hueLandmarks.length)];
+            const garments = ['nhat-binh', 'ao-tac', 'ngu-than-che', 'giao-linh'];
+            const randomGarment = garments[Math.floor(Math.random() * garments.length)];
+            const elements = ['Hoa', 'Tho', 'Kim', 'Thuy', 'Moc'];
+            const randomPrim = elements[Math.floor(Math.random() * elements.length)];
+            const randomSec = elements[Math.floor(Math.random() * elements.length)];
+
+            selectContext(randomContext.id);
+            document.getElementById('garment-select').value = randomGarment;
+            document.getElementById('primary-element').value = randomPrim;
+            document.getElementById('secondary-element').value = randomSec;
+
+            handleGarmentChange();
+            calculateFiveElements();
+
+            confetti({
+                particleCount: 30,
+                spread: 45,
+                colors: ['#D4AF37', '#990000']
+            });
+        }
+
+        function scrollToStudio() {
+            document.getElementById('interactive-studio').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Window Load Bootstrapper
+        window.addEventListener('DOMContentLoaded', () => {
+            initContextModule();
+            calculateFiveElements();
+            handleGarmentChange();
+            updateStylingComposition();
+            handleSliderChange(50);
+            lucide.createIcons();
+        });
+    </script>
 </body>
 </html>
