@@ -1745,10 +1745,10 @@ function generateMannequinSVG(state) {
       <path d="M 174 300 L 165 440 L 160 560 L 176 560 L 186 440 L 193 300 Z" fill="url(#m-skin)"/>
       <path d="M 226 300 L 235 440 L 240 560 L 224 560 L 214 440 L 207 300 Z" fill="url(#m-skin)"/>
       <path d="M 158 158 Q 148 215 168 258 L 232 258 Q 252 215 242 158 Z" fill="url(#m-skin)"/>
-      <path d="M 188 118 L 188 158 L 212 158 L 212 118 Z" fill="url(#m-skin)"/>
-      <!-- Arms -->
-      <path d="M 158 162 Q 133 218 143 278 L 153 278 Q 146 222 168 168 Z" fill="url(#m-skin)"/>
-      <path d="M 242 162 Q 267 218 257 282 L 247 282 Q 254 222 232 168 Z" fill="url(#m-skin)"/>
+      <path d="M 191 114 Q 190 135 188 155 L 212 155 Q 210 135 209 114 Z" fill="url(#m-skin)"/>
+      <!-- Arms: Natural contoured fashion silhouette with smooth bicep & forearm -->
+      <path d="M 158 156 C 150 175, 144 205, 144 235 C 144 265, 147 295, 149 322 L 153 338 L 158 338 L 157 322 C 158 295, 160 265, 160 235 C 160 210, 164 185, 166 170 Z" fill="url(#m-skin)"/>
+      <path d="M 242 156 C 250 175, 256 205, 256 235 C 256 265, 253 295, 251 322 L 247 338 L 242 338 L 243 322 C 242 295, 240 265, 240 235 C 240 210, 236 185, 234 170 Z" fill="url(#m-skin)"/>
     </g>
 
     <!-- 4. AVATAR FACE SLOT (Face photo integration with clipPath) -->
@@ -1826,10 +1826,19 @@ function generateMannequinSVG(state) {
     <!-- 6. Inner Top Layer -->
 `;
     if (innerTop === 'crop-top') {
-        // High-waist elegant knit top meeting the waistband smoothly with cap sleeves
+        // High-waist elegant knit top with clean sleeves and no armpit gaps
         svg += `    <g id="m-inner-crop">
-      <!-- Cap sleeves covering shoulders and upper arms -->
-      <path d="M 158 158 L 140 192 L 154 196 L 168 174 L 168 248 L 232 248 L 232 174 L 246 196 L 260 192 L 242 158 Z" fill="#1E1E24" stroke="#121216" stroke-width="0.8"/>
+      <path d="M 158 155 
+               L 140 200 
+               L 162 204 
+               L 166 204 
+               L 168 248 
+               L 232 248 
+               L 234 204 
+               L 238 204 
+               L 260 200 
+               L 242 155 
+               Q 200 166 158 155 Z" fill="#1E1E24" stroke="#121216" stroke-width="0.8"/>
       <!-- Ribbed knit texture lines -->
       <line x1="178" y1="170" x2="178" y2="246" stroke="#32323A" stroke-width="1.2"/>
       <line x1="185" y1="166" x2="185" y2="246" stroke="#32323A" stroke-width="1.2"/>
@@ -1864,9 +1873,25 @@ function generateMannequinSVG(state) {
     </g>`;
     } else {
         svg += `    <g id="m-inner-babytee">
-      <!-- Short sleeve graphic tee tucked neatly into waistband -->
-      <path d="M 158 158 L 138 194 L 154 200 L 166 180 L 168 248 L 232 248 L 234 180 L 246 200 L 262 194 L 242 158 Q 200 170 158 158 Z" fill="#F8F6F0" stroke="#DDD7CA" stroke-width="1"/>
-      <path d="M 185 158 Q 200 170 215 158" fill="none" stroke="#D4AF37" stroke-width="1.5"/>
+      <!-- Tailored short-sleeve graphic tee with full arm coverage and no armpit gap -->
+      <path d="M 158 155 
+               L 138 206 
+               L 162 210 
+               L 166 210 
+               L 168 248 
+               L 232 248 
+               L 234 210 
+               L 238 210 
+               L 262 206 
+               L 242 155 
+               Q 200 166 158 155 Z" fill="#F8F6F0" stroke="#DDD7CA" stroke-width="1"/>
+      <!-- Sleeve hem accent seams -->
+      <line x1="138" y1="206" x2="162" y2="210" stroke="#DDD7CA" stroke-width="1.2"/>
+      <line x1="262" y1="206" x2="238" y2="210" stroke="#DDD7CA" stroke-width="1.2"/>
+      <!-- Tailored crewneck ribbed collar band -->
+      <path d="M 186 155 Q 200 167 214 155" fill="none" stroke="#DDD7CA" stroke-width="2.5"/>
+      <path d="M 187 155 Q 200 165 213 155" fill="none" stroke="#D4AF37" stroke-width="1"/>
+      <!-- Graphic Art Print -->
       <text x="200" y="198" font-family="'Cinzel', serif" font-size="7" font-weight="900" fill="#990000" text-anchor="middle" letter-spacing="1.5">HUE 2026</text>
       <text x="200" y="206" font-family="'Plus Jakarta Sans', sans-serif" font-size="4" font-weight="bold" fill="#666" text-anchor="middle" letter-spacing="1">HERITAGE CLUB</text>
     </g>`;
@@ -2077,8 +2102,9 @@ function generateMannequinSVG(state) {
 `;
     if (accs.kieng) {
         svg += `    <g id="acc-kieng-bac">
-      <path d="M 184 150 Q 200 162 216 150" fill="none" stroke="url(#silver-metal)" stroke-width="3.5" filter="url(#m-glow-gold)"/>
-      <circle cx="200" cy="158" r="3" fill="#B8860B"/>
+      <!-- Authentic Hue Silver Torc resting naturally on collarbone -->
+      <path d="M 185 156 Q 200 169 215 156" fill="none" stroke="url(#silver-metal)" stroke-width="3.5" filter="url(#m-glow-gold)"/>
+      <circle cx="200" cy="166" r="3" fill="#B8860B"/>
     </g>`;
     }
     if (accs.glasses) {
